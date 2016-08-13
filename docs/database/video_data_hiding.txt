@@ -1,0 +1,84 @@
+/*
+SQLyog Community v11.24 (32 bit)
+MySQL - 5.5.8 : Database - video_data_hiding
+*********************************************************************
+*/
+
+/*!40101 SET NAMES utf8 */;
+
+/*!40101 SET SQL_MODE=''*/;
+
+/*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
+/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
+/*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
+CREATE DATABASE /*!32312 IF NOT EXISTS*/`video_data_hiding` /*!40100 DEFAULT CHARACTER SET latin1 */;
+
+USE `video_data_hiding`;
+
+/*Table structure for table `tbl_encrption_algorithms` */
+
+DROP TABLE IF EXISTS `tbl_encrption_algorithms`;
+
+CREATE TABLE `tbl_encrption_algorithms` (
+  `algorithm_id` int(11) NOT NULL AUTO_INCREMENT,
+  `algorithm_name` varchar(100) DEFAULT NULL,
+  `algorithm_description` varchar(1000) DEFAULT NULL,
+  PRIMARY KEY (`algorithm_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+/*Table structure for table `tbl_file_process_history` */
+
+DROP TABLE IF EXISTS `tbl_file_process_history`;
+
+CREATE TABLE `tbl_file_process_history` (
+  `history_id` int(11) NOT NULL AUTO_INCREMENT,
+  `user_id` int(11) DEFAULT NULL,
+  `cover_file` varchar(500) DEFAULT NULL,
+  `password` varchar(100) DEFAULT NULL,
+  `cipher_type` int(11) DEFAULT NULL,
+  `encryption_algorithm_id` int(11) DEFAULT NULL,
+  `cover_file_size` double DEFAULT NULL,
+  `cover_file_name` varchar(50) DEFAULT NULL,
+  `cipher_file` varchar(500) DEFAULT NULL,
+  `cipher_file_name` varchar(50) DEFAULT NULL,
+  `cipher_file_size` double DEFAULT NULL,
+  `encrption_start_time` datetime DEFAULT NULL,
+  `encryption_complete_time` datetime DEFAULT NULL,
+  `encrption_duration` int(11) DEFAULT NULL,
+  `file_processed_date` date DEFAULT NULL,
+  PRIMARY KEY (`history_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+/*Table structure for table `tbl_transactions` */
+
+DROP TABLE IF EXISTS `tbl_transactions`;
+
+CREATE TABLE `tbl_transactions` (
+  `transaction_id` int(11) NOT NULL AUTO_INCREMENT,
+  `sender_id` int(11) DEFAULT NULL,
+  `received_id` int(11) DEFAULT NULL,
+  `file` varchar(500) DEFAULT NULL,
+  `send` tinyint(1) DEFAULT NULL,
+  `transaction_date` datetime DEFAULT NULL,
+  `encryption_password` varchar(100) DEFAULT NULL,
+  PRIMARY KEY (`transaction_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+/*Table structure for table `tbl_user_details` */
+
+DROP TABLE IF EXISTS `tbl_user_details`;
+
+CREATE TABLE `tbl_user_details` (
+  `user_id` int(11) NOT NULL AUTO_INCREMENT,
+  `user_name` varchar(100) DEFAULT NULL,
+  `email_id` varchar(100) DEFAULT NULL,
+  `phone_number` varchar(10) DEFAULT NULL,
+  `password` varchar(100) DEFAULT NULL,
+  `created_at` date DEFAULT NULL,
+  `last_updated_at` date DEFAULT NULL,
+  PRIMARY KEY (`user_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+/*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
+/*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
+/*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;

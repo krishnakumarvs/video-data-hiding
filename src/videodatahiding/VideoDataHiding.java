@@ -6,6 +6,8 @@
 
 package videodatahiding;
 
+import View.Login;
+
 /**
  *
  * @author Jithinpv
@@ -17,6 +19,8 @@ public class VideoDataHiding {
      */
     public static void main(String[] args) {
         // TODO code application logic here
+         Login login = new Login();
+         login.setVisible(true);
     }
     
 }

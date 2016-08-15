@@ -6,6 +6,9 @@
 
 package View;
 
+import db.Dbcon;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author Jithinpv
@@ -146,9 +149,41 @@ public class Register extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
-        this.dispose();
-        Login login=new Login();
-        login.setVisible(true);
+        String userName=jTextField1.getText();
+        String email=jTextField2.getText();
+        String phoneNumber=jTextField3.getText();
+        String password=new String(jPasswordField1.getPassword());
+        String confirmPassword=new String(jPasswordField2.getPassword());
+        if(userName.equals("")){
+            
+            JOptionPane.showMessageDialog(rootPane, "Enter your name");
+        }else if(email.equals("")){
+            
+            JOptionPane.showMessageDialog(rootPane, "Enter your email");
+        }else if(phoneNumber.equals("")){
+            
+            JOptionPane.showMessageDialog(rootPane, "Enter your phonenumber");
+        }else if(password.equals("")){
+            
+            JOptionPane.showMessageDialog(rootPane, "Enter your password");
+        }else if(confirmPassword.equals("")){
+            
+            JOptionPane.showMessageDialog(rootPane, "Enter your confirmPassword");
+        }
+             else if(password.equals(confirmPassword)){
+                Dbcon dbcon=new Dbcon();
+                int ins=dbcon.insert("insert into tbl_user_details(user_name,email_id,phone_number,password,created_at,last_updated_at)values('"+userName+"','"+email+"','"+phoneNumber+"','"+password+"','"+System.currentTimeMillis()+"','"+System.currentTimeMillis()+"')");
+                if(ins>0){
+                this.dispose();
+                Login login=new Login();
+                login.setVisible(true);
+                }
+                }else{
+                    JOptionPane.showMessageDialog(rootPane, "invalid");
+                }
+        
+        
+        
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed

@@ -6,6 +6,8 @@
 
 package View;
 
+import db.Dbcon;
+
 /**
  *
  * @author Jithinpv
@@ -29,6 +31,12 @@ public class SelectAlgorithm extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        buttonGroup1 = new javax.swing.ButtonGroup();
+        buttonGroup2 = new javax.swing.ButtonGroup();
+        buttonGroup3 = new javax.swing.ButtonGroup();
+        buttonGroup4 = new javax.swing.ButtonGroup();
+        buttonGroup5 = new javax.swing.ButtonGroup();
+        buttonGroup6 = new javax.swing.ButtonGroup();
         jLabel1 = new javax.swing.JLabel();
         jRadioButton1 = new javax.swing.JRadioButton();
         jRadioButton2 = new javax.swing.JRadioButton();
@@ -126,6 +134,12 @@ public class SelectAlgorithm extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
+        String des=jRadioButton1.getText();
+        String tdes=jRadioButton2.getText();
+        String rsa=jRadioButton3.getText();
+        
+         Dbcon dbcon=new Dbcon();
+        //dbcon.insert("insert into tbl_file_process_history(encryption_algorithm_id,encrption_start_time)values(1,'"+System.currentTimeMillis()+"'))");
         this.dispose();
         Processing processing=new Processing();
         processing.setVisible(true);
@@ -133,6 +147,7 @@ public class SelectAlgorithm extends javax.swing.JFrame {
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
+       
         this.dispose();
         InputContent inputContent=new InputContent();
         inputContent.setVisible(true);
@@ -174,6 +189,12 @@ public class SelectAlgorithm extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.ButtonGroup buttonGroup1;
+    private javax.swing.ButtonGroup buttonGroup2;
+    private javax.swing.ButtonGroup buttonGroup3;
+    private javax.swing.ButtonGroup buttonGroup4;
+    private javax.swing.ButtonGroup buttonGroup5;
+    private javax.swing.ButtonGroup buttonGroup6;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;

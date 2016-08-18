@@ -205,7 +205,8 @@ public class InputContent extends javax.swing.JFrame {
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         // TODO add your handling code here:
-        
+        jTabbedPane1.getSelectedIndex();
+                
         String msg=jTextArea1.getText();
         String password=new String(jPasswordField1.getPassword());
         Dbcon dbcon=new Dbcon();

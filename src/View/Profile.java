@@ -41,8 +41,6 @@ public class Profile extends javax.swing.JFrame {
         jTextField2 = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
         jTextField3 = new javax.swing.JTextField();
-        jLabel4 = new javax.swing.JLabel();
-        jPasswordField1 = new javax.swing.JPasswordField();
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
         jLabel5 = new javax.swing.JLabel();
@@ -60,8 +58,6 @@ public class Profile extends javax.swing.JFrame {
         jLabel2.setText("E-Mail");
 
         jLabel3.setText("Phone Number");
-
-        jLabel4.setText("Change Password");
 
         jButton1.setText("EDIT");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
@@ -104,26 +100,19 @@ public class Profile extends javax.swing.JFrame {
                                 .addGap(31, 31, 31)
                                 .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                        .addComponent(jButton3)
-                                        .addGap(28, 28, 28)))
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addGap(31, 31, 31)
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                            .addComponent(jTextField3, javax.swing.GroupLayout.DEFAULT_SIZE, 148, Short.MAX_VALUE)
-                                            .addComponent(jPasswordField1)))
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addGap(3, 3, 3)
-                                        .addComponent(jButton1)
-                                        .addGap(18, 18, 18)
-                                        .addComponent(jButton2))))))
+                                .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(31, 31, 31)
+                                .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE))))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(142, 142, 142)
-                        .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 66, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 66, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(53, 53, 53)
+                        .addComponent(jButton3)
+                        .addGap(44, 44, 44)
+                        .addComponent(jButton1)
+                        .addGap(34, 34, 34)
+                        .addComponent(jButton2)))
                 .addContainerGap(67, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -143,16 +132,12 @@ public class Profile extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
                     .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
+                .addGap(32, 32, 32)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel4)
-                    .addComponent(jPasswordField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(35, 35, 35)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jButton3)
                     .addComponent(jButton1)
-                    .addComponent(jButton2)
-                    .addComponent(jButton3))
-                .addContainerGap(59, Short.MAX_VALUE))
+                    .addComponent(jButton2))
+                .addContainerGap(74, Short.MAX_VALUE))
         );
 
         pack();
@@ -170,7 +155,7 @@ public class Profile extends javax.swing.JFrame {
         jTextField1.setEditable(false);
         jTextField2.setEditable(false);
         jTextField3.setEditable(false);
-        jPasswordField1.setEditable(false);
+       // jPasswordField1.setEditable(false);
         Dbcon dbcon=new Dbcon();
         ResultSet rs =dbcon.select("select * from tbl_user_details where user_id='"+Login.logged_in_user_id+"'");
         try {
@@ -182,7 +167,7 @@ public class Profile extends javax.swing.JFrame {
                 String phone=rs.getString(4);
                 jTextField3.setText(phone);
                 String password=rs.getString(5);
-                jPasswordField1.setText(password);
+                //jPasswordField1.setText(password);
                 
             }
         } catch (Exception e) {
@@ -195,7 +180,7 @@ public class Profile extends javax.swing.JFrame {
         jTextField1.setEditable(true);
         jTextField2.setEditable(true);
         jTextField3.setEditable(true);
-        jPasswordField1.setEditable(true);
+       // jPasswordField1.setEditable(true);
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
@@ -203,10 +188,10 @@ public class Profile extends javax.swing.JFrame {
         String name=jTextField1.getText();
         String mail=jTextField2.getText();
         String phone=jTextField3.getText();
-        String password=new String(jPasswordField1.getPassword());
+       // String password=new String(jPasswordField1.getPassword());
         
         Dbcon dbcon=new Dbcon();
-        dbcon.update("update tbl_user_details set user_name='"+name+"',email_id='"+mail+"',phone_number='"+phone+"',password='"+password+"',last_updated_at='"+System.currentTimeMillis()+"' where user_id='"+Login.logged_in_user_id+"'");
+        dbcon.update("update tbl_user_details set user_name='"+name+"',email_id='"+mail+"',phone_number='"+phone+"',last_updated_at='"+System.currentTimeMillis()+"' where user_id='"+Login.logged_in_user_id+"'");
         
     }//GEN-LAST:event_jButton2ActionPerformed
 
@@ -252,9 +237,7 @@ public class Profile extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
-    private javax.swing.JPasswordField jPasswordField1;
     private javax.swing.JTextField jTextField1;
     private javax.swing.JTextField jTextField2;
     private javax.swing.JTextField jTextField3;

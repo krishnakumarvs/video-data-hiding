@@ -59,6 +59,11 @@ public class InputContent extends javax.swing.JFrame {
         jButton4 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowOpened(java.awt.event.WindowEvent evt) {
+                formWindowOpened(evt);
+            }
+        });
 
         jLabel1.setText("Enter Your Text Here :");
 
@@ -203,12 +208,13 @@ public class InputContent extends javax.swing.JFrame {
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         // TODO add your handling code here:
-        jTabbedPane1.getSelectedIndex();
-                
+        
         String msg=jTextArea1.getText();
         String password=new String(jPasswordField1.getPassword());
        
        {
+           Dbcon dbcon=new Dbcon();
+           dbcon.update("update tbl_file_process_history set password='"+password+"' where user_id='"+Login.logged_in_user_id+"'");
            this.dispose();
         SelectAlgorithm selectAlgorithm=new SelectAlgorithm();
         selectAlgorithm.setVisible(true);
@@ -244,6 +250,17 @@ public class InputContent extends javax.swing.JFrame {
            
         }
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
+        // TODO add your handling code here:
+        int index=jTabbedPane1.getSelectedIndex();
+        System.out.println(index);
+        if(jPanel1.isShowing()){
+            System.out.println("message");
+        }else if(jPanel2.isShowing()){
+            System.out.println("file");
+        }
+    }//GEN-LAST:event_formWindowOpened
 
     /**
      * @param args the command line arguments

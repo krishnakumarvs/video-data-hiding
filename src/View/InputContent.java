@@ -21,9 +21,7 @@ import javax.swing.filechooser.FileNameExtensionFilter;
  * @author Jithinpv
  */
 public class InputContent extends javax.swing.JFrame {
-     public static String name;
-   public static String path="";
-   public static long size;
+   
     
 
     /**
@@ -209,9 +207,7 @@ public class InputContent extends javax.swing.JFrame {
                 
         String msg=jTextArea1.getText();
         String password=new String(jPasswordField1.getPassword());
-        Dbcon dbcon=new Dbcon();
-       int ins= dbcon.insert("insert into tbl_file_process_history(user_id,cover_file,password,cover_file_size,cover_file_name)values('"+Login.logged_in_user_id+"','"+InputContent.path+"','"+password+"','"+InputContent.size+"','"+InputContent.name+"')");
-       if(ins>0)
+       
        {
            this.dispose();
         SelectAlgorithm selectAlgorithm=new SelectAlgorithm();
@@ -229,9 +225,9 @@ public class InputContent extends javax.swing.JFrame {
         chooser.setFileFilter(filter);
         int returnVal = chooser.showOpenDialog(this);
         if (returnVal == JFileChooser.APPROVE_OPTION) {
-             path=chooser.getSelectedFile().getPath();
+             String path=chooser.getSelectedFile().getPath();
             jLabel3.setText(chooser.getSelectedFile().getName());
-            name=chooser.getSelectedFile().getName();
+           String name=chooser.getSelectedFile().getName();
             System.out.println("You chose to open this file: "
                     + path);
             BufferedImage img = null;
@@ -243,7 +239,7 @@ public class InputContent extends javax.swing.JFrame {
             } catch (IOException e) {
                 e.printStackTrace();
             }
-             size=(chooser.getSelectedFile().length())/1024;
+           long  size=(chooser.getSelectedFile().length())/1024;
             
            
         }

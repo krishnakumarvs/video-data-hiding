@@ -6,6 +6,12 @@
 
 package View;
 
+import db.Dbcon;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 /**
  *
  * @author Jithinpv
@@ -43,6 +49,11 @@ public class Profile extends javax.swing.JFrame {
         jButton3 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowOpened(java.awt.event.WindowEvent evt) {
+                formWindowOpened(evt);
+            }
+        });
 
         jLabel1.setText("Name");
 
@@ -53,8 +64,18 @@ public class Profile extends javax.swing.JFrame {
         jLabel4.setText("Change Password");
 
         jButton1.setText("EDIT");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         jButton2.setText("SAVE");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
 
         jLabel5.setText("PROFILE");
 
@@ -143,6 +164,51 @@ public class Profile extends javax.swing.JFrame {
         Home home=new Home();
         home.setVisible(true);
     }//GEN-LAST:event_jButton3ActionPerformed
+
+    private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
+        // TODO add your handling code here:
+        jTextField1.setEditable(false);
+        jTextField2.setEditable(false);
+        jTextField3.setEditable(false);
+        jPasswordField1.setEditable(false);
+        Dbcon dbcon=new Dbcon();
+        ResultSet rs =dbcon.select("select * from tbl_user_details where user_id='"+Login.logged_in_user_id+"'");
+        try {
+            if(rs.next()){
+                String name=rs.getString(2);
+                jTextField1.setText(name);
+                String mail=rs.getString(3);
+                jTextField2.setText(mail);
+                String phone=rs.getString(4);
+                jTextField3.setText(phone);
+                String password=rs.getString(5);
+                jPasswordField1.setText(password);
+                
+            }
+        } catch (Exception e) {
+           
+        }
+    }//GEN-LAST:event_formWindowOpened
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+        jTextField1.setEditable(true);
+        jTextField2.setEditable(true);
+        jTextField3.setEditable(true);
+        jPasswordField1.setEditable(true);
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        // TODO add your handling code here:
+        String name=jTextField1.getText();
+        String mail=jTextField2.getText();
+        String phone=jTextField3.getText();
+        String password=new String(jPasswordField1.getPassword());
+        
+        Dbcon dbcon=new Dbcon();
+        dbcon.update("update tbl_user_details set user_name='"+name+"',email_id='"+mail+"',phone_number='"+phone+"',password='"+password+"',last_updated_at='"+System.currentTimeMillis()+"' where user_id='"+Login.logged_in_user_id+"'");
+        
+    }//GEN-LAST:event_jButton2ActionPerformed
 
     /**
      * @param args the command line arguments

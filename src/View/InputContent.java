@@ -6,6 +6,7 @@
 
 package View;
 
+import General.Configuration;
 import db.Dbcon;
 import java.awt.Image;
 import java.awt.image.BufferedImage;
@@ -30,7 +31,11 @@ public class InputContent extends javax.swing.JFrame {
     public InputContent() {
         initComponents();
         this.setLocationRelativeTo(null);
+        loadIcons();
     }
+      private void loadIcons() {
+        Configuration.setIconOnLabel("Untitled-2.png", jLabel2);
+      }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -153,6 +158,11 @@ public class InputContent extends javax.swing.JFrame {
         jLabel6.setText("Password :");
 
         jButton2.setText("CLEAR");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
 
         jButton3.setText("NEXT");
         jButton3.addActionListener(new java.awt.event.ActionListener() {
@@ -261,6 +271,13 @@ public class InputContent extends javax.swing.JFrame {
             System.out.println("file");
         }
     }//GEN-LAST:event_formWindowOpened
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        // TODO add your handling code here:
+        jTextArea1.setText("");
+        jPasswordField1.setText("");
+        jLabel2.setIcon(null);
+    }//GEN-LAST:event_jButton2ActionPerformed
 
     /**
      * @param args the command line arguments

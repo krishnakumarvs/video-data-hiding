@@ -139,7 +139,10 @@ public class ChangePassword extends javax.swing.JFrame {
         if(newPassword.equals(confirmPassword))
         {
         Dbcon dbcon=new Dbcon();
-        dbcon.update("update tbl_user_details set password='"+confirmPassword+"' where user_id='"+Login.logged_in_user_id+"'");
+        int r=dbcon.update("update tbl_user_details set password='"+confirmPassword+"' where user_id='"+Login.logged_in_user_id+"'");
+            if(r>0){
+            JOptionPane.showMessageDialog(rootPane, "Your New Password is "+confirmPassword);
+             }
         }else{
             JOptionPane.showMessageDialog(rootPane, "inva;id");
         }

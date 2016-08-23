@@ -56,11 +56,6 @@ public class ReceiveHistory extends javax.swing.JFrame {
         jButton3 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        addWindowListener(new java.awt.event.WindowAdapter() {
-            public void windowOpened(java.awt.event.WindowEvent evt) {
-                formWindowOpened(evt);
-            }
-        });
 
         jLabel1.setIcon(new javax.swing.ImageIcon("C:\\Users\\Jithinpv\\Documents\\NetBeansProjects\\video-data-hiding\\images\\configure1.png")); // NOI18N
         jLabel1.setText("jLabel1");
@@ -104,11 +99,6 @@ public class ReceiveHistory extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
-        jTable1.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jTable1MouseClicked(evt);
-            }
-        });
         jScrollPane1.setViewportView(jTable1);
         if (jTable1.getColumnModel().getColumnCount() > 0) {
             jTable1.getColumnModel().getColumn(0).setResizable(false);
@@ -117,11 +107,6 @@ public class ReceiveHistory extends javax.swing.JFrame {
         }
 
         jButton2.setText("Show Password");
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
-            }
-        });
 
         jButton3.setText("HOME");
         jButton3.addActionListener(new java.awt.event.ActionListener() {
@@ -165,7 +150,7 @@ public class ReceiveHistory extends javax.swing.JFrame {
                             .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(65, 65, 65))))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(143, 143, 143)
+                .addGap(144, 144, 144)
                 .addComponent(jButton3)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jButton1)
@@ -199,13 +184,10 @@ public class ReceiveHistory extends javax.swing.JFrame {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jButton2))))
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(20, 20, 20)
-                        .addComponent(jButton1))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(18, 18, 18)
-                        .addComponent(jButton3)))
+                .addGap(20, 20, 20)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jButton1)
+                    .addComponent(jButton3))
                 .addContainerGap(50, Short.MAX_VALUE))
         );
 
@@ -225,70 +207,6 @@ public class ReceiveHistory extends javax.swing.JFrame {
         Home home = new Home();
         home.setVisible(true);
     }//GEN-LAST:event_jButton3ActionPerformed
-
-    private void jTable1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MouseClicked
-        // TODO add your handling code here:
-        String id = jTable1.getValueAt(jTable1.getSelectedRow(), 0).toString();
-        Dbcon dbcon = new Dbcon();
-        ResultSet rs = dbcon.select("select * from tbl_file_process_history where history_id='" + id + "'");
-        try {
-            if (rs.next()) {
-                String name = rs.getString(8);
-                jTextField1.setText(name);
-                String size = rs.getString(7);
-                jTextField2.setText(size);
-                String algo = rs.getString(6);
-                int algorithm_id = Integer.parseInt(algo);
-                if (algorithm_id == 1) {
-                    algo = "DES";
-                } else if (algorithm_id == 2) {
-                    algo = "TDES";
-                } else {
-                    algo = "RSA";
-                }
-                jTextField3.setText(algo);
-                String password = rs.getString(4);
-                jPasswordField1.setText(password);
-                jTextField4.setText("");
-            }
-        } catch (SQLException ex) {
-            ex.printStackTrace();
-        }
-
-    }//GEN-LAST:event_jTable1MouseClicked
-
-    private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
-        // TODO add your handling code here:
-        Dbcon dbcon = new Dbcon();
-        DefaultTableModel dt = (DefaultTableModel) jTable1.getModel();
-        try {
-
-            ResultSet rs = dbcon.select("select * from tbl_file_process_history order by history_id asc");
-            while (rs.next()) {
-                dt.addRow(new String[]{rs.getString(1), rs.getString(8), rs.getString(6), rs.getString(7)});
-            }
-            jTable1.setModel(dt);
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }//GEN-LAST:event_formWindowOpened
-
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        // TODO add your handling code here:
-        String id = jTable1.getValueAt(jTable1.getSelectedRow(), 0).toString();
-        Dbcon dbcon = new Dbcon();
-        ResultSet rs = dbcon.select("select * from tbl_file_process_history where history_id='" + id + "'");
-        try {
-            if (rs.next()) {
-                String password = rs.getString(4);
-                jTextField4.setText(password);
-            }
-        } catch (Exception e) {
-
-        }
-
-    }//GEN-LAST:event_jButton2ActionPerformed
 
     /**
      * @param args the command line arguments

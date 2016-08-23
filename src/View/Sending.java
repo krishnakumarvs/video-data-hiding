@@ -6,6 +6,12 @@
 
 package View;
 
+import db.Dbcon;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 /**
  *
  * @author Jithinpv
@@ -41,7 +47,7 @@ public class Sending extends javax.swing.JFrame {
 
         jCheckBox1.setText("abc@gmail.com");
 
-        jCheckBox2.setText("liya@gmail.com");
+        jCheckBox2.setText("jeena");
 
         jButton1.setText("HOME");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
@@ -51,6 +57,11 @@ public class Sending extends javax.swing.JFrame {
         });
 
         jButton2.setText("OK");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -67,7 +78,7 @@ public class Sending extends javax.swing.JFrame {
                             .addComponent(jCheckBox2))
                         .addGap(30, 30, 30)
                         .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 68, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(123, Short.MAX_VALUE))
+                .addContainerGap(161, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -94,6 +105,40 @@ public class Sending extends javax.swing.JFrame {
         Home home=new Home();
         home.setVisible(true);
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        // TODO add your handling code here:
+        String receiver="";
+        String user_id="";
+        if(jCheckBox1.isSelected()){
+            receiver=jCheckBox1.getText();
+        }
+        else if(jCheckBox2.isSelected()){
+            receiver=jCheckBox2.getText();
+        }
+        Dbcon dbcon=new Dbcon();
+        ResultSet r=dbcon.select("select * from tbl_user_details where email_id='"+receiver+"'");
+        try {
+            if(r.next()){
+                
+                    user_id=r.getString(1);
+              
+            }
+        } catch (SQLException ex) {            
+            
+        }
+         ResultSet rs=dbcon.select("select * from tbl_file_process_history where history_id='"+SelectAlgorithm.history_id+"'");
+        try {
+            if(rs.next()){
+                String cover_file=rs.getString(3);
+                String password=rs.getString(4);
+                dbcon.insert("insert into tbl_transactions(sender_id,received_id,file,send,transaction_date,encryption_password)value('"+Login.logged_in_user_id+"','"+user_id+"','"+cover_file+"',1,'"+System.currentTimeMillis()+"','"+password+"')");
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        
+    }//GEN-LAST:event_jButton2ActionPerformed
 
     /**
      * @param args the command line arguments

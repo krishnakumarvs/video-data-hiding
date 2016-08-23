@@ -3,12 +3,14 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package View;
 
 import General.Configuration;
 import db.Dbcon;
 import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -25,9 +27,11 @@ public class EncryptHistory extends javax.swing.JFrame {
         this.setLocationRelativeTo(null);
         loadIcons();
     }
-     private void loadIcons() {
+
+    private void loadIcons() {
         Configuration.setIconOnLabel("Untitled-2.png", jLabel2);
-     }
+    }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -91,15 +95,20 @@ public class EncryptHistory extends javax.swing.JFrame {
 
             },
             new String [] {
-                "NAME", "ALGORITHM", "SIZE"
+                "ID", "NAME", "ALGORITHM", "SIZE"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false
+                false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
                 return canEdit [columnIndex];
+            }
+        });
+        jTable1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTable1MouseClicked(evt);
             }
         });
         jScrollPane1.setViewportView(jTable1);
@@ -107,9 +116,15 @@ public class EncryptHistory extends javax.swing.JFrame {
             jTable1.getColumnModel().getColumn(0).setResizable(false);
             jTable1.getColumnModel().getColumn(1).setResizable(false);
             jTable1.getColumnModel().getColumn(2).setResizable(false);
+            jTable1.getColumnModel().getColumn(3).setResizable(false);
         }
 
         jButton4.setText("show password");
+        jButton4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton4ActionPerformed(evt);
+            }
+        });
 
         jButton2.setText("HOME");
         jButton2.addActionListener(new java.awt.event.ActionListener() {
@@ -129,11 +144,12 @@ public class EncryptHistory extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(16, 16, 16)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 332, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
                         .addGap(148, 148, 148)
-                        .addComponent(jButton2)))
+                        .addComponent(jButton2))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(16, 16, 16)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 325, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(7, 7, 7)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addGap(85, 85, 85)
@@ -215,20 +231,20 @@ public class EncryptHistory extends javax.swing.JFrame {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
         this.dispose();
-        Sending sending=new Sending();
+        Sending sending = new Sending();
         sending.setVisible(true);
-        
+
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
         // TODO add your handling code here:
-         Dbcon dbcon = new Dbcon();
+        Dbcon dbcon = new Dbcon();
         DefaultTableModel dt = (DefaultTableModel) jTable1.getModel();
         try {
 
             ResultSet rs = dbcon.select("select * from tbl_file_process_history order by history_id asc");
             while (rs.next()) {
-                //dt.addRow(new String[]{ rs.getString(1),rs.getString(2), rs.getString(3), rs.getString(4),rs.getString(5),rs.getString(6),rs.getString(7)});
+                dt.addRow(new String[]{rs.getString(1), rs.getString(8), rs.getString(6), rs.getString(7)});
             }
             jTable1.setModel(dt);
 
@@ -240,10 +256,64 @@ public class EncryptHistory extends javax.swing.JFrame {
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
         this.dispose();
-        Home home=new Home();
+        Home home = new Home();
         home.setVisible(true);
     }//GEN-LAST:event_jButton2ActionPerformed
 
+    private void jTable1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MouseClicked
+        // TODO add your handling code here:
+        String id = jTable1.getValueAt(jTable1.getSelectedRow(), 0).toString();
+        Dbcon dbcon = new Dbcon();
+        ResultSet rs = dbcon.select("select * from tbl_file_process_history where history_id='" + id + "'");
+        try {
+            if (rs.next()) {
+                String name=rs.getString(8);
+                jTextField1.setText(name);
+                 String size=rs.getString(7);
+                jTextField2.setText(size);
+                String algo=rs.getString(6);
+                int algorithm_id=Integer.parseInt(algo);
+                if(algorithm_id==1){
+                    algo="DES";
+                }else if(algorithm_id==2){
+                    algo="TDES";
+                }
+                else{
+                    algo="RSA";
+                }
+                jTextField4.setText(algo);
+                String password=rs.getString(4);
+                jPasswordField1.setText(password);
+                jTextField5.setText("");
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+
+    }//GEN-LAST:event_jTable1MouseClicked
+
+    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+        // TODO add your handling code here:
+        
+        String id = jTable1.getValueAt(jTable1.getSelectedRow(), 0).toString();
+        Dbcon dbcon = new Dbcon();
+        ResultSet rs = dbcon.select("select * from tbl_file_process_history where history_id='" + id + "'");
+        try {
+            if (rs.next()) {
+                String password=rs.getString(4);
+                jTextField5.setText(password);
+            }
+            }catch(Exception e){
+                  
+                    }
+        
+                    
+    }//GEN-LAST:event_jButton4ActionPerformed
+
+    /**
+     * @param args the command line arguments
+     */
+       
     /**
      * @param args the command line arguments
      */

@@ -3,7 +3,6 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package View;
 
 import General.Configuration;
@@ -26,6 +25,7 @@ public class ReceiveHistory extends javax.swing.JFrame {
         this.setLocationRelativeTo(null);
         loadIcons();
     }
+
     private void loadIcons() {
         Configuration.setIconOnLabel("Untitled-2.png", jLabel1);
     }
@@ -215,14 +215,14 @@ public class ReceiveHistory extends javax.swing.JFrame {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
         this.dispose();
-        Receiving receiving=new Receiving();
+        Receiving receiving = new Receiving();
         receiving.setVisible(true);
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         // TODO add your handling code here:
         this.dispose();
-        Home home=new Home();
+        Home home = new Home();
         home.setVisible(true);
     }//GEN-LAST:event_jButton3ActionPerformed
 
@@ -233,22 +233,21 @@ public class ReceiveHistory extends javax.swing.JFrame {
         ResultSet rs = dbcon.select("select * from tbl_file_process_history where history_id='" + id + "'");
         try {
             if (rs.next()) {
-                String name=rs.getString(8);
+                String name = rs.getString(8);
                 jTextField1.setText(name);
-                 String size=rs.getString(7);
+                String size = rs.getString(7);
                 jTextField2.setText(size);
-                String algo=rs.getString(6);
-                int algorithm_id=Integer.parseInt(algo);
-                if(algorithm_id==1){
-                    algo="DES";
-                }else if(algorithm_id==2){
-                    algo="TDES";
-                }
-                else{
-                    algo="RSA";
+                String algo = rs.getString(6);
+                int algorithm_id = Integer.parseInt(algo);
+                if (algorithm_id == 1) {
+                    algo = "DES";
+                } else if (algorithm_id == 2) {
+                    algo = "TDES";
+                } else {
+                    algo = "RSA";
                 }
                 jTextField3.setText(algo);
-                String password=rs.getString(4);
+                String password = rs.getString(4);
                 jPasswordField1.setText(password);
                 jTextField4.setText("");
             }
@@ -277,18 +276,18 @@ public class ReceiveHistory extends javax.swing.JFrame {
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
-          String id = jTable1.getValueAt(jTable1.getSelectedRow(), 0).toString();
+        String id = jTable1.getValueAt(jTable1.getSelectedRow(), 0).toString();
         Dbcon dbcon = new Dbcon();
         ResultSet rs = dbcon.select("select * from tbl_file_process_history where history_id='" + id + "'");
         try {
             if (rs.next()) {
-                String password=rs.getString(4);
+                String password = rs.getString(4);
                 jTextField4.setText(password);
             }
-            }catch(Exception e){
-                  
-                    }
-        
+        } catch (Exception e) {
+
+        }
+
     }//GEN-LAST:event_jButton2ActionPerformed
 
     /**

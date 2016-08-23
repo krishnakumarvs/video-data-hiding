@@ -102,7 +102,7 @@ public class ReceiveHistory extends javax.swing.JFrame {
             jTable1.getColumnModel().getColumn(2).setResizable(false);
         }
 
-        jButton2.setText("Show Message");
+        jButton2.setText("Show Password");
 
         jButton3.setText("HOME");
         jButton3.addActionListener(new java.awt.event.ActionListener() {
@@ -137,7 +137,7 @@ public class ReceiveHistory extends javax.swing.JFrame {
                                 .addGap(39, 39, 39))
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(jButton2)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 35, Short.MAX_VALUE)))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 31, Short.MAX_VALUE)))
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(jTextField1)
                             .addComponent(jTextField2)

@@ -11,6 +11,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JCheckBox;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -37,17 +39,20 @@ public class Sending extends javax.swing.JFrame {
 
         jLabel1 = new javax.swing.JLabel();
         jCheckBox1 = new javax.swing.JCheckBox();
-        jCheckBox2 = new javax.swing.JCheckBox();
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
+        jCheckBox2 = new javax.swing.JCheckBox();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowOpened(java.awt.event.WindowEvent evt) {
+                formWindowOpened(evt);
+            }
+        });
 
-        jLabel1.setText("Email id");
+        jLabel1.setText("Select Receiver:");
 
-        jCheckBox1.setText("abc@gmail.com");
-
-        jCheckBox2.setText("jeena");
+        jCheckBox1.setText("kk");
 
         jButton1.setText("HOME");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
@@ -63,6 +68,8 @@ public class Sending extends javax.swing.JFrame {
             }
         });
 
+        jCheckBox2.setText("jeena");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -70,15 +77,14 @@ public class Sending extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGap(80, 80, 80)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jCheckBox2)
                     .addComponent(jCheckBox1)
                     .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 149, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jButton1)
-                            .addComponent(jCheckBox2))
-                        .addGap(30, 30, 30)
+                        .addComponent(jButton1)
+                        .addGap(36, 36, 36)
                         .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 68, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(161, Short.MAX_VALUE))
+                .addContainerGap(95, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -87,13 +93,13 @@ public class Sending extends javax.swing.JFrame {
                 .addComponent(jLabel1)
                 .addGap(34, 34, 34)
                 .addComponent(jCheckBox1)
-                .addGap(28, 28, 28)
+                .addGap(18, 18, 18)
                 .addComponent(jCheckBox2)
-                .addGap(37, 37, 37)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 63, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton1)
                     .addComponent(jButton2))
-                .addContainerGap(66, Short.MAX_VALUE))
+                .addGap(60, 60, 60))
         );
 
         pack();
@@ -132,13 +138,30 @@ public class Sending extends javax.swing.JFrame {
             if(rs.next()){
                 String cover_file=rs.getString(3);
                 String password=rs.getString(4);
-                dbcon.insert("insert into tbl_transactions(sender_id,received_id,file,send,transaction_date,encryption_password)value('"+Login.logged_in_user_id+"','"+user_id+"','"+cover_file+"',1,'"+System.currentTimeMillis()+"','"+password+"')");
+               int ins= dbcon.insert("insert into tbl_transactions(sender_id,received_id,file,send,transaction_date,encryption_password)value('"+Login.logged_in_user_id+"','"+user_id+"','"+cover_file+"',1,'"+System.currentTimeMillis()+"','"+password+"')");
+               if(ins>0){
+                   JOptionPane.showMessageDialog(rootPane, "Sent Successfully");
+               }
             }
         } catch (SQLException ex) {
             ex.printStackTrace();
         }
         
     }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
+        // TODO add your handling code here:
+        Dbcon dbcon=new Dbcon();
+        ResultSet rs=dbcon.select("select * from tbl_user_details");
+        try {
+            while(rs.next()){
+                String email=rs.getString(3);
+                System.out.println(email);
+            }
+        } catch (SQLException ex) {
+          ex.printStackTrace();
+        }
+    }//GEN-LAST:event_formWindowOpened
 
     /**
      * @param args the command line arguments

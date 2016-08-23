@@ -3,10 +3,13 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package View;
 
 import db.Dbcon;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import sun.security.util.Password;
 
@@ -127,25 +130,41 @@ public class ChangePassword extends javax.swing.JFrame {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
         this.dispose();
-        Home home=new Home();
+        Home home = new Home();
         home.setVisible(true);
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
-        String password=new String(jPasswordField1.getPassword());
-        String newPassword=new String(jPasswordField2.getPassword());
-        String confirmPassword=new String(jPasswordField3.getPassword());
-        if(newPassword.equals(confirmPassword))
-        {
-        Dbcon dbcon=new Dbcon();
-        int r=dbcon.update("update tbl_user_details set password='"+confirmPassword+"' where user_id='"+Login.logged_in_user_id+"'");
-            if(r>0){
-            JOptionPane.showMessageDialog(rootPane, "Your New Password is "+confirmPassword);
-             }
-        }else{
-            JOptionPane.showMessageDialog(rootPane, "inva;id");
+        Dbcon dbcon = new Dbcon();
+        ResultSet rs = dbcon.select("select * from tbl_user_details where user_id='" + Login.logged_in_user_id + "'");
+        try {
+            if (rs.next()) {
+                String pswrd = rs.getString(5);
+                String password = new String(jPasswordField1.getPassword());
+                if (!pswrd.equals(password)) {
+                    JOptionPane.showMessageDialog(rootPane, "Wrong password");
+                } else {
+                    String newPassword = new String(jPasswordField2.getPassword());
+                    String confirmPassword = new String(jPasswordField3.getPassword());
+                    if (newPassword.equals(confirmPassword)) {
+
+                        int r = dbcon.update("update tbl_user_details set password='" + confirmPassword + "' where user_id='" + Login.logged_in_user_id + "'");
+                        if (r > 0) {
+                            JOptionPane.showMessageDialog(rootPane, "Your New Password is " + confirmPassword);
+                        }
+                    } else {
+                        JOptionPane.showMessageDialog(rootPane, "invalid");
+                    }
+                }
+
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
         }
+        //String password=new String(jPasswordField1.getPassword());
+
+
     }//GEN-LAST:event_jButton2ActionPerformed
 
     /**

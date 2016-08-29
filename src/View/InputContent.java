@@ -3,7 +3,6 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package View;
 
 import General.Configuration;
@@ -22,8 +21,6 @@ import javax.swing.filechooser.FileNameExtensionFilter;
  * @author Jithinpv
  */
 public class InputContent extends javax.swing.JFrame {
-   
-    
 
     /**
      * Creates new form InputContent
@@ -33,9 +30,10 @@ public class InputContent extends javax.swing.JFrame {
         this.setLocationRelativeTo(null);
         loadIcons();
     }
-      private void loadIcons() {
+
+    private void loadIcons() {
         Configuration.setIconOnLabel("Untitled-2.png", jLabel2);
-      }
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -124,31 +122,37 @@ public class InputContent extends javax.swing.JFrame {
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(20, 20, 20)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 164, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 164, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGap(12, 12, 12)
                         .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(38, 38, 38)
+                        .addGap(26, 26, 26)
                         .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(28, 28, 28)
+                        .addGap(18, 18, 18)
                         .addComponent(jButton1)))
-                .addContainerGap(24, Short.MAX_VALUE))
+                .addContainerGap(54, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(52, 52, 52)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 79, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel4)
-                    .addComponent(jLabel5)
-                    .addComponent(jButton1))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 7, Short.MAX_VALUE)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGap(65, 65, 65)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel4)
+                            .addComponent(jLabel5)
+                            .addComponent(jButton1)))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGap(22, 22, 22)
+                        .addComponent(jLabel2)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jLabel3)
-                .addContainerGap())
+                .addContainerGap(19, Short.MAX_VALUE))
         );
 
         jTabbedPane1.addTab("File", jPanel2);
@@ -221,18 +225,22 @@ public class InputContent extends javax.swing.JFrame {
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         // TODO add your handling code here:
-        
-        String msg=jTextArea1.getText();
-        String password=new String(jPasswordField1.getPassword());
-       
-       {
-           Dbcon dbcon=new Dbcon();
-           dbcon.update("update tbl_file_process_history set password='"+password+"' where user_id='"+Login.logged_in_user_id+"'");
-           this.dispose();
-        SelectAlgorithm selectAlgorithm=new SelectAlgorithm();
-        selectAlgorithm.setVisible(true);
-       }
-       
+
+        String msg = jTextArea1.getText();
+        String password = new String(jPasswordField1.getPassword());
+
+        {
+            Dbcon dbcon = new Dbcon();
+            int ins = dbcon.update("update tbl_file_process_history set password='" + password + "' where user_id='" + Login.logged_in_user_id + "'");
+            if (ins > 0) {
+               
+                this.dispose();
+                SelectAlgorithm selectAlgorithm = new SelectAlgorithm();
+                selectAlgorithm.setVisible(true);
+            }
+
+        }
+
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
@@ -244,9 +252,9 @@ public class InputContent extends javax.swing.JFrame {
         chooser.setFileFilter(filter);
         int returnVal = chooser.showOpenDialog(this);
         if (returnVal == JFileChooser.APPROVE_OPTION) {
-             String path=chooser.getSelectedFile().getPath();
+            String path = chooser.getSelectedFile().getPath();
             jLabel3.setText(chooser.getSelectedFile().getName());
-           String name=chooser.getSelectedFile().getName();
+            String name = chooser.getSelectedFile().getName();
             System.out.println("You chose to open this file: "
                     + path);
             BufferedImage img = null;
@@ -258,19 +266,19 @@ public class InputContent extends javax.swing.JFrame {
             } catch (IOException e) {
                 e.printStackTrace();
             }
-           long  size=(chooser.getSelectedFile().length())/1024;
-            
-           
+            long size = (chooser.getSelectedFile().length()) / 1024;
+
         }
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
         // TODO add your handling code here:
-        int index=jTabbedPane1.getSelectedIndex();
+        //jButton3.setEnabled(false);
+        int index = jTabbedPane1.getSelectedIndex();
         System.out.println(index);
-        if(jPanel1.isShowing()){
+        if (jPanel1.isShowing()) {
             System.out.println("message");
-        }else if(jPanel2.isShowing()){
+        } else if (jPanel2.isShowing()) {
             System.out.println("file");
         }
     }//GEN-LAST:event_formWindowOpened
@@ -279,13 +287,13 @@ public class InputContent extends javax.swing.JFrame {
         // TODO add your handling code here:
         jTextArea1.setText("");
         jPasswordField1.setText("");
-       // jLabel2.setIcon(null);
+        // jLabel2.setIcon(null);
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
         // TODO add your handling code here:
         this.dispose();
-        Home home=new Home();
+        Home home = new Home();
         home.setVisible(true);
     }//GEN-LAST:event_jButton4ActionPerformed
 

@@ -244,7 +244,16 @@ public class EncryptHistory extends javax.swing.JFrame {
 
             ResultSet rs = dbcon.select("select * from tbl_file_process_history order by history_id asc");
             while (rs.next()) {
-                dt.addRow(new String[]{rs.getString(1), rs.getString(8), rs.getString(6), rs.getString(7)});
+                String algo=rs.getString(6);
+                int algorithm=Integer.parseInt(algo);
+                if(algorithm==1){
+                    algo="DES";
+                }else if(algorithm==2){
+                    algo="TDES";
+                }else{
+                    algo="RSA";
+                }
+                dt.addRow(new String[]{rs.getString(1), rs.getString(8), algo, rs.getString(7)});
             }
             jTable1.setModel(dt);
 

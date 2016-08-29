@@ -152,6 +152,7 @@ public class Profile extends javax.swing.JFrame {
 
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
         // TODO add your handling code here:
+        jButton2.setEnabled(false);
         jTextField1.setEditable(false);
         jTextField2.setEditable(false);
         jTextField3.setEditable(false);
@@ -180,6 +181,7 @@ public class Profile extends javax.swing.JFrame {
         jTextField1.setEditable(true);
         jTextField2.setEditable(true);
         jTextField3.setEditable(true);
+        jButton2.setEnabled(true);
        // jPasswordField1.setEditable(true);
     }//GEN-LAST:event_jButton1ActionPerformed
 

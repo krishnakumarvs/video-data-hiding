@@ -113,7 +113,7 @@ public class Profile extends javax.swing.JFrame {
                         .addComponent(jButton1)
                         .addGap(34, 34, 34)
                         .addComponent(jButton2)))
-                .addContainerGap(67, Short.MAX_VALUE))
+                .addContainerGap(32, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)

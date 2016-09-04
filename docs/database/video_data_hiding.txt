@@ -2,8 +2,7 @@
 SQLyog Community v11.24 (32 bit)
 MySQL - 5.5.8 : Database - video_data_hiding
 *********************************************************************
-*/
-
+*/
 /*!40101 SET NAMES utf8 */;
 
 /*!40101 SET SQL_MODE=''*/;
@@ -24,7 +23,11 @@ CREATE TABLE `tbl_encrption_algorithms` (
   `algorithm_name` varchar(100) DEFAULT NULL,
   `algorithm_description` varchar(1000) DEFAULT NULL,
   PRIMARY KEY (`algorithm_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
+
+/*Data for the table `tbl_encrption_algorithms` */
+
+insert  into `tbl_encrption_algorithms`(`algorithm_id`,`algorithm_name`,`algorithm_description`) values (1,'DES','Encryption of a block of the message takes place in 16 stages or rounds.<br> From the input key, sixteen 48 bit keys are generated, one for each round.<br> In each round, eight so-called S-boxes are used.<br> These S-boxes are fixed in the specification of the standard.<br> Using the S-boxes, groups of six bits are mapped to groups of four bits. The contents of these S-boxes has been determined by the U.S. National Security Agency (NSA).<br> The S-boxes appear to be randomly filled, but this is not the case. Recently it has been discovered that these S-boxes, determined in the 1970s, are resistant against an attack called differential cryptanalysis which was first known in the 1990s. '),(2,'TDES','Triple DES is advantageous because it has a significantly sized key length, which is longer than most key lengths affiliated with other encryption modes.<br> However, the DES algorithm was replaced by the Advanced Encryption Standard by the National Institute of Standards and Technology (NIST).<br><br> Thus, the Triple DES is now considered to be obsolete. Yet, it is often used in conjunction with Triple DES.<br> It derives from single DES but the technique is used in triplicate and involves three sub keys and key padding when necessary, such as instances where the keys must be increased to 64 bits in length. Known for its compatibility and flexibility, software can easily be converted for Triple DES inclusion. Therefore, it may not be nearly as obsolete as deemed by NIST.'),(3,'RSA','RSA was first described in 1977 by Ron Rivest, Adi Shamir and Leonard Adleman of the Massachusetts Institute of Technology. <br>Public-key cryptography, also known as asymmetric cryptography, uses two different but mathematically linked keys, one public and one private. The public key can be shared with everyone, whereas the private key must be kept secret. In RSA cryptography, both the public and the private keys can encrypt a message; the opposite key from the one used to encrypt a message is used to decrypt it.<br><br> This attribute is one reason why RSA has become the most widely used asymmetric algorithm: It provides a method of assuring the confidentiality, integrity, authenticity and non-reputability of electronic communications and data storage.');
 
 /*Table structure for table `tbl_file_process_history` */
 
@@ -35,19 +38,20 @@ CREATE TABLE `tbl_file_process_history` (
   `user_id` int(11) DEFAULT NULL,
   `cover_file` varchar(500) DEFAULT NULL,
   `password` varchar(100) DEFAULT NULL,
-  `cipher_type` int(11) DEFAULT NULL,
   `encryption_algorithm_id` int(11) DEFAULT NULL,
   `cover_file_size` double DEFAULT NULL,
   `cover_file_name` varchar(50) DEFAULT NULL,
   `cipher_file` varchar(500) DEFAULT NULL,
   `cipher_file_name` varchar(50) DEFAULT NULL,
   `cipher_file_size` double DEFAULT NULL,
-  `encrption_start_time` datetime DEFAULT NULL,
-  `encryption_complete_time` datetime DEFAULT NULL,
+  `encrption_start_time` varchar(100) DEFAULT NULL,
+  `encryption_complete_time` varchar(100) DEFAULT NULL,
   `encrption_duration` int(11) DEFAULT NULL,
   `file_processed_date` date DEFAULT NULL,
+  `encryption_file_type` int(11) DEFAULT NULL COMMENT '0 - text , 1 - file',
   PRIMARY KEY (`history_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=47 DEFAULT CHARSET=latin1;
+
 
 /*Table structure for table `tbl_transactions` */
 
@@ -59,12 +63,11 @@ CREATE TABLE `tbl_transactions` (
   `received_id` int(11) DEFAULT NULL,
   `file` varchar(500) DEFAULT NULL,
   `send` tinyint(1) DEFAULT NULL,
-  `transaction_date` datetime DEFAULT NULL,
-  `encryption_password` varchar(100) DEFAULT NULL,
+  `transaction_date` varchar(100) DEFAULT NULL,
+  `history_id` int(11) DEFAULT NULL,
   PRIMARY KEY (`transaction_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=20 DEFAULT CHARSET=latin1;
 
-/*Table structure for table `tbl_user_details` */
 
 DROP TABLE IF EXISTS `tbl_user_details`;
 
@@ -74,10 +77,13 @@ CREATE TABLE `tbl_user_details` (
   `email_id` varchar(100) DEFAULT NULL,
   `phone_number` varchar(10) DEFAULT NULL,
   `password` varchar(100) DEFAULT NULL,
-  `created_at` date DEFAULT NULL,
-  `last_updated_at` date DEFAULT NULL,
+  `created_at` varchar(100) DEFAULT NULL,
+  `last_updated_at` varchar(100) DEFAULT NULL,
   PRIMARY KEY (`user_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
+
+/*Data for the table `tbl_user_details` */
+
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
 /*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;

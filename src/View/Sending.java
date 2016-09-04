@@ -233,10 +233,10 @@ public class Sending extends javax.swing.JFrame {
                         System.out.println(dtm.getValueAt(i, 1) + " is selected");
                         int userId = Integer.parseInt(dtm.getValueAt(i, 5).toString());
                         sendFile(userId);
+                        Thread.sleep(1000);
                     }
                     progress_bar.setValue((int) chunkSum);
                     chunkSum = chunkSum + chunk;
-                    Thread.sleep(1000);
                 }
                 progress_bar.setValue(100);
 

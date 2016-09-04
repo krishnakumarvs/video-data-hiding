@@ -12,6 +12,9 @@ import Security.Encryption;
 import Security.VedioByLoader;
 import db.Dbcon;
 import java.io.File;
+import java.security.NoSuchAlgorithmException;
+import javax.crypto.KeyGenerator;
+import javax.crypto.SecretKey;
 import javax.swing.JOptionPane;
 import org.apache.commons.io.FilenameUtils;
 
@@ -20,7 +23,7 @@ import org.apache.commons.io.FilenameUtils;
  * @author Jithinpv
  */
 public class Processing extends javax.swing.JFrame {
-    
+
     int history_id;
     File coverFile;
     String password;
@@ -36,7 +39,7 @@ public class Processing extends javax.swing.JFrame {
         initComponents();
         this.setLocationRelativeTo(null);
     }
-    
+
     public Processing(int history_id, File coverFile, String password, int id) {
         initComponents();
         this.setLocationRelativeTo(null);
@@ -141,16 +144,16 @@ public class Processing extends javax.swing.JFrame {
         Sending sending = new Sending(history_id, outputCipherFile);
         sending.setVisible(true);
     }//GEN-LAST:event_jButton1ActionPerformed
-    
+
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
         this.dispose();
         Home home = new Home();
         home.setVisible(true);
     }//GEN-LAST:event_jButton2ActionPerformed
-    
+
     class progressBarThread extends Thread {
-        
+
         public void run() {
             int val = 0;
             try {
@@ -158,7 +161,7 @@ public class Processing extends javax.swing.JFrame {
                 while (val <= 100) {
                     progress_bar.setValue(++val);
                     Thread.sleep(10);
-                    
+
                 }
                 while (!isCompleted) {
                     System.out.println("Chekcing is complete " + isCompleted);
@@ -169,15 +172,31 @@ public class Processing extends javax.swing.JFrame {
                 } else {
                     JOptionPane.showMessageDialog(rootPane, "Failed! Please try again");
                 }
-                
+
             } catch (Exception e) {
                 e.printStackTrace();
             }
         }
     }
-    
+
+    private String encryptMessage(String message) {
+        String cipher = null;
+        try {
+            String encptionAlgorithm = "DES";
+            if (id == 1) {
+            }
+            SecretKey key = KeyGenerator.getInstance(encptionAlgorithm).generateKey();
+            
+            
+        } catch (NoSuchAlgorithmException ex) {
+            ex.printStackTrace();
+        }
+
+        return cipher;
+    }
+
     class videoEncryptionThread extends Thread {
-        
+
         public void run() {
             new progressBarThread().start();
             int type = InputContent.encryptionDataType;
@@ -189,11 +208,14 @@ public class Processing extends javax.swing.JFrame {
                     TextBitPack textBitPack = new TextBitPack();
                     textBitPack.setCoverFile(coverFile);
                     textBitPack.setCompression(50);
-                    textBitPack.setMsg(InputContent.message);
+
+                    String cipher = InputContent.message;
+                    //kakes
+                    textBitPack.setMsg(cipher);
                     textBitPack.setPassword(password);
                     outputCipherFile = new File(Configuration.videoPool + "hash_t_" + System.currentTimeMillis() + "." + FilenameUtils.getExtension(coverFile.getPath()));
                     textBitPack.setOutputFile(outputCipherFile);
-                    
+
                     result = VedioByLoader.embedMessage(textBitPack);
                     isCompleted = true;
                     if (result) {
@@ -209,7 +231,7 @@ public class Processing extends javax.swing.JFrame {
                     outputCipherFile = new File(Configuration.videoPool + "hash_f_" + System.currentTimeMillis() + "." + FilenameUtils.getExtension(coverFile.getPath()));
                     fileBitPack.setOutputFile(outputCipherFile);
                     fileBitPack.setPassword(password);
-                    
+
                     result = VedioByLoader.embedFile(fileBitPack);
                     isCompleted = true;
                     if (result) {
@@ -223,9 +245,9 @@ public class Processing extends javax.swing.JFrame {
             }
         }
     }
-    
+
 private void start_buttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_start_buttonActionPerformed
-    
+
     start_button.setEnabled(false);
     new videoEncryptionThread().start();
     // TODO add your handling code here:
@@ -260,7 +282,7 @@ private void start_buttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
-            
+
             public void run() {
                 new Processing().setVisible(true);
             }

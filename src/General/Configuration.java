@@ -25,6 +25,7 @@ public class Configuration {
     public static String videoPool = "vedioPool/";
     public static String fileTransfers = "fileTransfers/";
     public static String tempFiles = "tempFiles/";
+    public static String sendPasswordSubject = "Video data hiding- forgot password ";
 
     public static void setIconOnLabel(String fileString, JLabel label) {
         // convert string file path to image icona and set on this label

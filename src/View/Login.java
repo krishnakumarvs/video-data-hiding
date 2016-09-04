@@ -15,7 +15,7 @@ import javax.swing.JOptionPane;
  */
 public class Login extends javax.swing.JFrame {
 
-    public static int logged_in_user_id = 0;
+    public static int logged_in_user_id = 1;
 
     /**
      * Creates new form Login

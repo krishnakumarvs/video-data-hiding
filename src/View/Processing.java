@@ -214,6 +214,7 @@ public class Processing extends javax.swing.JFrame {
                     isCompleted = true;
                     if (result) {
                         isSuccess = true;
+                        new Dbcon().update("update tbl_file_process_history set cipher_file = '" + outputCipherFile.getName() + "' , cipher_file_name='" + outputCipherFile.getName() + "' , cipher_file_size=" + (outputCipherFile.length() / 1024) + " , encryption_complete_time ='" + System.currentTimeMillis() + "'  where history_id = " + history_id);
                     }
                     break;
                 default:

@@ -15,16 +15,7 @@ import java.net.MalformedURLException;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 import javax.imageio.ImageIO;
-import javax.media.Buffer;
-import javax.media.Manager;
-import javax.media.MediaLocator;
-import javax.media.Player;
-import javax.media.Processor;
-import javax.media.Time;
-import javax.media.control.FrameGrabbingControl;
-import javax.media.control.FramePositioningControl;
-import javax.media.format.VideoFormat;
-import javax.media.util.BufferToImage;
+
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
@@ -551,84 +542,13 @@ public class Home extends javax.swing.JFrame {
 
     }//GEN-LAST:event_jButton5ActionPerformed
 
-    private void getFileDetails(File file) {
-        Player player = getPlayer(file);
-        ArrayList<Image> img = getAllImages(player);
-        player.close();
-        System.out.println(img);
-    }
+    
 
-    public static FrameGrabbingControl getFGC(Player player) {
-        FrameGrabbingControl fgc = (FrameGrabbingControl) player.getControl("javax.media.control.FrameGrabbingControl");
-        return fgc;
-    }
+  
 
-    public static int noOfFrames(Player player) {
-        FramePositioningControl fpc = (FramePositioningControl) player.getControl("javax.media.control.FramePositioningControl");
-        Time duration = player.getDuration();
-        int i = fpc.mapTimeToFrame(duration);
-        if (i != FramePositioningControl.FRAME_UNKNOWN) {
-            return i;
-        } else {
-            return -1;
-        }
-    }
+   
 
-    public static FramePositioningControl getFPC(Player player) {
-        FramePositioningControl fpc = (FramePositioningControl) player.getControl("javax.media.control.FramePositioningControl");
-        return fpc;
-
-    }
-
-    public static Image getImageOfCurrentFrame(Player player, int frameNumber) {
-
-        FramePositioningControl fpc = (FramePositioningControl) player.getControl("javax.media.control.FramePositioningControl");
-        FrameGrabbingControl fgc = (FrameGrabbingControl) player.getControl("javax.media.control.FrameGrabbingControl");
-        return getImageOfCurrentFrame(fpc, fgc, frameNumber);
-    }
-
-    public static Image getImageOfCurrentFrame(FramePositioningControl fpc, FrameGrabbingControl fgc, int frameNumber) {
-        fpc.seek(frameNumber);
-        Buffer frameBuffer = fgc.grabFrame();
-
-        BufferToImage bti = new BufferToImage((VideoFormat) frameBuffer.getFormat());
-        return bti.createImage(frameBuffer);
-
-    }
-
-    public static ArrayList<Image> getAllImages(Player player) {
-        ArrayList<Image> imageSeq = new ArrayList<Image>();
-        int numberOfFrames = noOfFrames(player);
-        FramePositioningControl fpc = getFPC(player);
-        FrameGrabbingControl fgc = getFGC(player);
-        for (int i = 0; i <= numberOfFrames; i++) {
-            Image img = getImageOfCurrentFrame(fpc, fgc, i);
-            if (img != null) {
-                imageSeq.add(img);
-            }
-        }
-        return imageSeq;
-    }
-
-    public static Player getPlayer(File file) {
-
-        Player player = null;
-        try {
-            MediaLocator ml = new MediaLocator(file.toURL());
-
-            player = Manager.createPlayer(ml);
-            player.realize();
-            while (player.getState() != Player.Realized);
-
-
-        } catch (MalformedURLException ex) {
-            ex.printStackTrace();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-        return player;
-    }
+   
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
         // TODO add your handling code here:
         next_button.setEnabled(false);

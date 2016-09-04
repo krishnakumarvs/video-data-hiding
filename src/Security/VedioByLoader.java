@@ -387,7 +387,7 @@ public class VedioByLoader {
         return true;
     }
 
-    public static File retrieveFile(Encryption info, String password, boolean overwrite, String retreivedFileName) throws Exception {
+    public static File retrieveFile(Encryption info, String password, boolean overwrite, String retreivedFilePath) throws Exception {
         File dataFile = null;
         features = info.getFeatures();
         masterFile = info.getFile();
@@ -426,7 +426,7 @@ public class VedioByLoader {
             ZipInputStream zipIn = new ZipInputStream(new ByteArrayInputStream(fileArray));
             ZipEntry entry = zipIn.getNextEntry();
             //dataFile = new File(Configuration.retreivedFilePoolLocation + entry.getName());
-            dataFile = new File(retreivedFileName);
+            dataFile = new File(retreivedFilePath + "/" + entry.getName());
 
 
             byteArrayIn = new byte[1024];

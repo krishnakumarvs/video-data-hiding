@@ -3,8 +3,15 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package View;
+
+import General.Configuration;
+import Security.Encryption;
+import Security.VedioByLoader;
+import java.awt.Desktop;
+import java.io.File;
+import java.io.IOException;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -12,12 +19,31 @@ package View;
  */
 public class Decrypt extends javax.swing.JFrame {
 
+    File fileToBeDecrypted;
+    int encryption_file_type;
+    String password;
+    boolean isCompleted = false;
+    boolean isSuccess = false;
+    String decryptedData;
+    String errorMesage = "";
+    String temporaryFilePath;
+
     /**
      * Creates new form Decrypt
      */
     public Decrypt() {
         initComponents();
         this.setLocationRelativeTo(null);
+    }
+
+    public Decrypt(File fileToBeDecrypted, int encryption_file_type, String password) {
+        initComponents();
+        this.setLocationRelativeTo(null);
+        this.fileToBeDecrypted = fileToBeDecrypted;
+        this.encryption_file_type = encryption_file_type;
+        this.password = password;
+        open_decypt_file_button.setEnabled(false);
+
     }
 
     /**
@@ -31,22 +57,24 @@ public class Decrypt extends javax.swing.JFrame {
 
         jSeparator1 = new javax.swing.JSeparator();
         jLabel1 = new javax.swing.JLabel();
-        jProgressBar1 = new javax.swing.JProgressBar();
-        jLabel2 = new javax.swing.JLabel();
+        progress_bar = new javax.swing.JProgressBar();
+        processing_label = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTextArea1 = new javax.swing.JTextArea();
+        message_area = new javax.swing.JTextArea();
         jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
+        start_button = new javax.swing.JButton();
+        open_decypt_file_button = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jLabel1.setText("Decrypted");
+        jLabel1.setText("Decrypting Status");
 
-        jLabel2.setText("Processing...");
+        processing_label.setText("Process not started");
 
-        jTextArea1.setColumns(20);
-        jTextArea1.setRows(5);
-        jScrollPane1.setViewportView(jTextArea1);
+        message_area.setColumns(20);
+        message_area.setEditable(false);
+        message_area.setRows(5);
+        jScrollPane1.setViewportView(message_area);
 
         jButton1.setText("HOME");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
@@ -55,10 +83,17 @@ public class Decrypt extends javax.swing.JFrame {
             }
         });
 
-        jButton2.setText("BACK");
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
+        start_button.setText("START");
+        start_button.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
+                start_buttonActionPerformed(evt);
+            }
+        });
+
+        open_decypt_file_button.setText("Open decrpted file");
+        open_decypt_file_button.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                open_decypt_file_buttonActionPerformed(evt);
             }
         });
 
@@ -71,59 +106,173 @@ public class Decrypt extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(jButton1)
-                        .addGap(18, 18, 18)
-                        .addComponent(jButton2))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(jButton1))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(46, 46, 46)
+                                .addComponent(open_decypt_file_button))))
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, 96, Short.MAX_VALUE)
-                            .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addGap(18, 18, 18)
-                        .addComponent(jProgressBar1, javax.swing.GroupLayout.PREFERRED_SIZE, 225, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(25, Short.MAX_VALUE))
+                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(start_button)
+                            .addComponent(progress_bar, javax.swing.GroupLayout.PREFERRED_SIZE, 225, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(processing_label, javax.swing.GroupLayout.DEFAULT_SIZE, 225, Short.MAX_VALUE))))
+                .addContainerGap(23, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(71, 71, 71)
-                        .addComponent(jLabel1))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addGap(63, 63, 63)
-                        .addComponent(jProgressBar1, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(36, 36, 36)
-                .addComponent(jLabel2)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addContainerGap()
+                        .addComponent(start_button, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(progress_bar, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(34, 34, 34)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap(35, Short.MAX_VALUE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGap(71, 71, 71)
+                        .addComponent(jLabel1)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(processing_label)
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(open_decypt_file_button)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jButton1)
-                            .addComponent(jButton2))
-                        .addGap(81, 81, 81))))
+                        .addComponent(jButton1))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap())
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        // TODO add your handling code here:
-        this.dispose();
-        Receiving receiving=new Receiving();
-        receiving.setVisible(true);
-    }//GEN-LAST:event_jButton2ActionPerformed
-
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
         this.dispose();
-        Home home=new Home();
+        Home home = new Home();
         home.setVisible(true);
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    class progressBarThread extends Thread {
+
+        public void run() {
+            int val = 0;
+            try {
+                progress_bar.setValue(val);
+                while (val <= 100) {
+                    progress_bar.setValue(++val);
+                    processing_label.setText("Data retreival percentage - " + val + " %");
+                    Thread.sleep(10);
+
+                }
+                while (!isCompleted) {
+                    System.out.println("Chekcing is complete " + isCompleted);
+                    Thread.sleep(1000);
+                }
+                if (isSuccess) {
+                    processing_label.setText("Data retreival completed!");
+                    JOptionPane.showMessageDialog(rootPane, "Sucessfully retreved data!");
+                    message_area.setText(decryptedData);
+                    if (encryption_file_type == 1) {
+                        open_decypt_file_button.setEnabled(true);
+                    }
+                } else {
+                    JOptionPane.showMessageDialog(rootPane, errorMesage);
+                }
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    class DecrptyThread extends Thread {
+
+        public void run() {
+            try {
+                System.out.println("Starting decrption thread " + encryption_file_type);
+                switch (encryption_file_type) {
+                    case 0:
+                        // decrpt text
+                        System.out.println("Going to decrypt");
+                        Encryption encryption = new Encryption(fileToBeDecrypted);
+                        if (!encryption.checkForbiddenZone()) {
+                            JOptionPane.showMessageDialog(rootPane, "Could not find any embedded data in the video");
+                        } else {
+                            System.out.println("Start processing the image file");
+                            isCompleted = false;
+                            isSuccess = false;
+                            new progressBarThread().start();
+                            try {
+                                decryptedData = VedioByLoader.retrieveMessage(encryption, password);
+                                System.out.println(decryptedData);
+                                isSuccess = true;
+
+                            } catch (Exception e) {
+                                errorMesage = "Sorry, wrong password";
+                                //e.printStackTrace();
+                            }
+                            isCompleted = true;
+                        }
+
+                        break;
+                    case 1:
+                        // decrypt file
+                        Encryption encryption_file = new Encryption(fileToBeDecrypted);
+                        if (!encryption_file.checkForbiddenZone()) {
+                            JOptionPane.showMessageDialog(rootPane, "Could not find any embedded data in the video");
+                        } else {
+                            try {
+                                isCompleted = false;
+                                isSuccess = false;
+                                new progressBarThread().start();
+                                File retrieveFileLocation = new File(Configuration.tempFiles + System.currentTimeMillis());
+                                if (retrieveFileLocation.mkdir()) {
+                                    File retrieveFile = VedioByLoader.retrieveFile(encryption_file, password, true, retrieveFileLocation.getAbsolutePath());
+                                    if (retrieveFile != null) {
+                                        isSuccess = true;
+                                        temporaryFilePath = retrieveFileLocation.getAbsolutePath();
+                                    } else {
+                                        errorMesage = "Incorrect password";
+                                    }
+                                }
+                            } catch (Exception e) {
+                                errorMesage = "Incorrect password";
+                            }
+                            isCompleted = true;
+                        }
+                        break;
+                    default:
+                        // do nothing
+                        break;
+                }
+
+                //VedioByLoader.retrieveFile(null, null, null, null);
+            } catch (Exception ex) {
+                ex.printStackTrace();
+            }
+        }
+    }
+
+private void start_buttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_start_buttonActionPerformed
+
+    isCompleted = false;
+    isSuccess = false;
+    start_button.setEnabled(false);
+    new DecrptyThread().start();
+    // TODO add your handling code here:
+}//GEN-LAST:event_start_buttonActionPerformed
+
+private void open_decypt_file_buttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_open_decypt_file_buttonActionPerformed
+    try {
+        Desktop.getDesktop().open(new File(temporaryFilePath));
+    } catch (IOException ex) {
+        ex.printStackTrace();
+    }
+}//GEN-LAST:event_open_decypt_file_buttonActionPerformed
 
     /**
      * @param args the command line arguments
@@ -154,20 +303,21 @@ public class Decrypt extends javax.swing.JFrame {
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
+
             public void run() {
                 new Decrypt().setVisible(true);
             }
         });
     }
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JProgressBar jProgressBar1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JSeparator jSeparator1;
-    private javax.swing.JTextArea jTextArea1;
+    private javax.swing.JTextArea message_area;
+    private javax.swing.JButton open_decypt_file_button;
+    private javax.swing.JLabel processing_label;
+    private javax.swing.JProgressBar progress_bar;
+    private javax.swing.JButton start_button;
     // End of variables declaration//GEN-END:variables
 }

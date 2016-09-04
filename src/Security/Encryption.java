@@ -221,7 +221,7 @@ public class Encryption {
         }
     }
 
-    public boolean isValid() {
+    public boolean checkForbiddenZone() {
         if (starter.equals("stegnograph")) {
             return true;
         } else {

@@ -7,6 +7,7 @@ package View;
 
 import General.Configuration;
 import db.Dbcon;
+import java.io.File;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import javax.swing.table.DefaultTableModel;
@@ -16,8 +17,9 @@ import javax.swing.table.DefaultTableModel;
  * @author Jithinpv
  */
 public class ReceiveHistory extends javax.swing.JFrame {
-    
+
     String secretPassword;
+    File fileToBeDecrypted;
 
     /**
      * Creates new form RecieveHistory
@@ -27,14 +29,15 @@ public class ReceiveHistory extends javax.swing.JFrame {
         this.setLocationRelativeTo(null);
         loadIcons();
         loadPreviousTransaction();
+        decrypt_button.setEnabled(false);
     }
-    
+
     private void loadPreviousTransaction() {
         Dbcon dbcon = new Dbcon();
         DefaultTableModel dt = (DefaultTableModel) history_table.getModel();
         try {
-            
-            String query = "SELECT trans.*, usert.user_name , history.encryption_algorithm_id, algo.algorithm_name, history.cipher_file_size,history.cipher_file_name,history.password "
+
+            String query = "SELECT trans.*, usert.user_name , history.encryption_algorithm_id, algo.algorithm_name, history.cipher_file_size,history.cipher_file_name,history.password, history.encryption_file_type "
                     + " FROM tbl_transactions AS trans , "
                     + " tbl_user_details AS usert ,"
                     + " tbl_file_process_history AS history,"
@@ -44,7 +47,7 @@ public class ReceiveHistory extends javax.swing.JFrame {
                     + " AND algo.algorithm_id = history.encryption_algorithm_id"
                     + " AND trans.received_id =" + Login.logged_in_user_id;
             ResultSet rs = dbcon.select(query);
-            String arr[] = new String[6];
+            String arr[] = new String[7];
             while (rs.next()) {
                 arr[0] = rs.getString("transaction_id");
                 arr[1] = rs.getString("user_name");
@@ -52,17 +55,18 @@ public class ReceiveHistory extends javax.swing.JFrame {
                 arr[3] = (Long.parseLong(rs.getString("cipher_file_size").trim())) + " Kb";
                 arr[4] = rs.getString("cipher_file_name");
                 arr[5] = rs.getString("password");
+                arr[6] = rs.getString("encryption_file_type");
                 dt.addRow(arr);
             }
-            
-            
+
+
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
-    
+
     private void loadIcons() {
-        Configuration.setIconOnLabel("Untitled-2.png", jLabel1);
+        Configuration.setIconOnLabel("Untitled-2.png", file_format);
     }
 
     /**
@@ -74,12 +78,13 @@ public class ReceiveHistory extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jLabel1 = new javax.swing.JLabel();
+        buttonGroup1 = new javax.swing.ButtonGroup();
+        file_format = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
+        decrypt_button = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         history_table = new javax.swing.JTable();
         cipher_name_text = new javax.swing.JTextField();
@@ -89,11 +94,14 @@ public class ReceiveHistory extends javax.swing.JFrame {
         show_pass_text = new javax.swing.JTextField();
         jButton3 = new javax.swing.JButton();
         password_text = new javax.swing.JPasswordField();
+        jLabel6 = new javax.swing.JLabel();
+        hidden_data_text = new javax.swing.JRadioButton();
+        hidden_data_file = new javax.swing.JRadioButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jLabel1.setText("jLabel1");
-        jLabel1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        file_format.setText("jLabel1");
+        file_format.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
         jLabel2.setText("Name");
 
@@ -103,10 +111,10 @@ public class ReceiveHistory extends javax.swing.JFrame {
 
         jLabel5.setText("Algorithm");
 
-        jButton1.setText("DECRYPT");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        decrypt_button.setText("DECRYPT");
+        decrypt_button.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                decrypt_buttonActionPerformed(evt);
             }
         });
 
@@ -115,14 +123,14 @@ public class ReceiveHistory extends javax.swing.JFrame {
 
             },
             new String [] {
-                "TRANSFER ID", "FROM", "ALGORITHM", "SIZE", "FILENAME", "PASSWORD"
+                "TRANSFER ID", "FROM", "ALGORITHM", "SIZE", "FILENAME", "PASSWORD", "ENCRYPTION_TYPE"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Integer.class, java.lang.Object.class, java.lang.Object.class
+                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Integer.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class
             };
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false
+                false, false, false, false, false, false, true
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -145,6 +153,9 @@ public class ReceiveHistory extends javax.swing.JFrame {
         history_table.getColumnModel().getColumn(5).setMinWidth(0);
         history_table.getColumnModel().getColumn(5).setPreferredWidth(0);
         history_table.getColumnModel().getColumn(5).setMaxWidth(0);
+        history_table.getColumnModel().getColumn(6).setMinWidth(0);
+        history_table.getColumnModel().getColumn(6).setPreferredWidth(0);
+        history_table.getColumnModel().getColumn(6).setMaxWidth(0);
 
         jButton2.setText("Show Password");
         jButton2.addActionListener(new java.awt.event.ActionListener() {
@@ -160,6 +171,17 @@ public class ReceiveHistory extends javax.swing.JFrame {
             }
         });
 
+        jLabel6.setText("Embeded data");
+
+        buttonGroup1.add(hidden_data_text);
+        hidden_data_text.setSelected(true);
+        hidden_data_text.setText("Text");
+        hidden_data_text.setEnabled(false);
+
+        buttonGroup1.add(hidden_data_file);
+        hidden_data_file.setText("File");
+        hidden_data_file.setEnabled(false);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -170,7 +192,7 @@ public class ReceiveHistory extends javax.swing.JFrame {
                         .addGap(144, 144, 144)
                         .addComponent(jButton3)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 417, Short.MAX_VALUE)
-                        .addComponent(jButton1)
+                        .addComponent(decrypt_button)
                         .addGap(300, 300, 300))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(27, 27, 27)
@@ -178,28 +200,32 @@ public class ReceiveHistory extends javax.swing.JFrame {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
                                 .addGap(138, 138, 138)
-                                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(file_format, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(163, 163, 163))
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 26, Short.MAX_VALUE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 24, Short.MAX_VALUE)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                            .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                            .addComponent(jLabel3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 66, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                        .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 66, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 66, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                        .addComponent(jLabel6, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(jButton2, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                     .addGroup(layout.createSequentialGroup()
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                                .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                                .addComponent(jLabel3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 66, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                            .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 66, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 66, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                        .addGap(39, 39, 39)
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                            .addComponent(cipher_name_text, javax.swing.GroupLayout.DEFAULT_SIZE, 230, Short.MAX_VALUE)
-                                            .addComponent(size_text, javax.swing.GroupLayout.DEFAULT_SIZE, 230, Short.MAX_VALUE)
-                                            .addComponent(algorithm_text, javax.swing.GroupLayout.DEFAULT_SIZE, 230, Short.MAX_VALUE)
-                                            .addComponent(password_text, javax.swing.GroupLayout.Alignment.TRAILING)))
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addComponent(jButton2)
                                         .addGap(18, 18, 18)
-                                        .addComponent(show_pass_text)))
+                                        .addComponent(show_pass_text))
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(hidden_data_text, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(47, 47, 47)
+                                        .addComponent(hidden_data_file, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addComponent(cipher_name_text, javax.swing.GroupLayout.DEFAULT_SIZE, 230, Short.MAX_VALUE)
+                                    .addComponent(size_text, javax.swing.GroupLayout.DEFAULT_SIZE, 230, Short.MAX_VALUE)
+                                    .addComponent(algorithm_text, javax.swing.GroupLayout.DEFAULT_SIZE, 230, Short.MAX_VALUE)
+                                    .addComponent(password_text, javax.swing.GroupLayout.Alignment.TRAILING))
                                 .addGap(7, 7, 7)))))
                 .addGap(111, 111, 111))
         );
@@ -207,9 +233,9 @@ public class ReceiveHistory extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(40, 40, 40)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(file_format, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(cipher_name_text, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -226,14 +252,19 @@ public class ReceiveHistory extends javax.swing.JFrame {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel4)
                             .addComponent(password_text, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 90, Short.MAX_VALUE)
+                        .addGap(18, 18, 18)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel6)
+                            .addComponent(hidden_data_text)
+                            .addComponent(hidden_data_file))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(show_pass_text, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jButton2)))
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 349, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(20, 20, 20)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton1)
+                    .addComponent(decrypt_button)
                     .addComponent(jButton3))
                 .addContainerGap(50, Short.MAX_VALUE))
         );
@@ -241,36 +272,54 @@ public class ReceiveHistory extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void decrypt_buttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_decrypt_buttonActionPerformed
         // TODO add your handling code here:
         this.dispose();
-        Receiving receiving = new Receiving();
+        int encryption_file_type = 0;
+        if (hidden_data_text.isSelected()) {
+            encryption_file_type = 0;
+        } else {
+            encryption_file_type = 1;
+        }
+        Receiving receiving = new Receiving(fileToBeDecrypted, encryption_file_type);
         receiving.setVisible(true);
-    }//GEN-LAST:event_jButton1ActionPerformed
-    
+    }//GEN-LAST:event_decrypt_buttonActionPerformed
+
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         // TODO add your handling code here:
         this.dispose();
         Home home = new Home();
         home.setVisible(true);
     }//GEN-LAST:event_jButton3ActionPerformed
-    
+
 private void history_tableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_history_tableMouseClicked
     int selectedRow = history_table.getSelectedRow();
     String cipherName = history_table.getValueAt(selectedRow, 4).toString();
     String password = history_table.getValueAt(selectedRow, 5).toString();
     String algorithm = history_table.getValueAt(selectedRow, 2).toString();
     String size = history_table.getValueAt(selectedRow, 3).toString();
-    
+    String encrption_file_type = history_table.getValueAt(selectedRow, 6).toString();
+
+
     cipher_name_text.setText(cipherName);
+    fileToBeDecrypted = new File(Configuration.videoPool + cipherName);
+    Configuration.setDefaultFileIcon(fileToBeDecrypted, file_format);
+    System.out.println(fileToBeDecrypted.getAbsolutePath());
     algorithm_text.setText(algorithm);
     size_text.setText(size + " Kb");
     password_text.setText(password);
-    
+    if (encrption_file_type.trim().equals("0")) {
+        hidden_data_text.setSelected(true);
+    } else {
+        hidden_data_file.setSelected(true);
+    }
+
+    decrypt_button.setEnabled(true);
+
 }//GEN-LAST:event_history_tableMouseClicked
-    
+
 private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-    
+
     show_pass_text.setText(new String(password_text.getPassword()));
 
     // TODO add your handling code here:
@@ -305,7 +354,7 @@ private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRS
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
-            
+
             public void run() {
                 new ReceiveHistory().setVisible(true);
             }
@@ -313,16 +362,20 @@ private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRS
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextField algorithm_text;
+    private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.JTextField cipher_name_text;
+    private javax.swing.JButton decrypt_button;
+    private javax.swing.JLabel file_format;
+    private javax.swing.JRadioButton hidden_data_file;
+    private javax.swing.JRadioButton hidden_data_text;
     private javax.swing.JTable history_table;
-    private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
-    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JPasswordField password_text;
     private javax.swing.JTextField show_pass_text;

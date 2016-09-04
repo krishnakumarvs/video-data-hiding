@@ -24,6 +24,7 @@ public class Configuration {
     public static String iconFolder = "images/";
     public static String videoPool = "vedioPool/";
     public static String fileTransfers = "fileTransfers/";
+    public static String tempFiles = "tempFiles/";
 
     public static void setIconOnLabel(String fileString, JLabel label) {
         // convert string file path to image icona and set on this label
@@ -68,6 +69,11 @@ public class Configuration {
             File f_fileTransfers = new File(fileTransfers);
             if (!f_fileTransfers.exists()) {
                 f_fileTransfers.mkdir();
+            }
+
+            File f_tempFiles = new File(tempFiles);
+            if (!f_tempFiles.exists()) {
+                f_tempFiles.mkdir();
             }
 
         } catch (Exception e) {

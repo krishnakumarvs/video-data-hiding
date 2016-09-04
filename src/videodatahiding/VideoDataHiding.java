@@ -6,6 +6,7 @@
 
 package videodatahiding;
 
+import General.Configuration;
 import View.Login;
 
 /**
@@ -21,6 +22,8 @@ public class VideoDataHiding {
         // TODO code application logic here
          Login login = new Login();
          login.setVisible(true);
+         
+         Configuration.initializeEnvironment();
     }
     
 }

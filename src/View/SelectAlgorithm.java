@@ -6,6 +6,7 @@
 package View;
 
 import db.Dbcon;
+import java.io.File;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
@@ -14,14 +15,27 @@ import java.sql.SQLException;
  * @author Jithinpv
  */
 public class SelectAlgorithm extends javax.swing.JFrame {
- public static int history_id=0;
+
+    int history_id;
+    File coverFile;
+    String password;
+
     /**
      * Creates new form SelectAlgorithm
      */
     public SelectAlgorithm() {
         initComponents();
         this.setLocationRelativeTo(null);
-        
+
+    }
+
+    public SelectAlgorithm(int history_id, File coverFile, String password) {
+        initComponents();
+        this.setLocationRelativeTo(null);
+        this.history_id = history_id;
+        this.coverFile = coverFile;
+        this.password = password;
+
     }
 
     /**
@@ -75,7 +89,6 @@ public class SelectAlgorithm extends javax.swing.JFrame {
 
         jTextArea1.setColumns(20);
         jTextArea1.setRows(5);
-        jTextArea1.setText("Encryption of a block of the message takes place in 16 stages or rounds.\nFrom the input key, sixteen 48 bit keys are generated, one for each \nround. In each round, eight so-called S-boxes are used. These S-boxes \nare fixed in the specification of the standard.\n Using the S-boxes, groups of six bits are mapped to groups of four bits.\nThe contents of these S-boxes has been determined by the U.S. National \nSecurity Agency (NSA). The S-boxes appear to be randomly filled, but \nthis is not the case. Recently it has been discovered that these S-boxes,\ndetermined in the 1970s, are resistant against an attack called \ndifferential cryptanalysis which was first known in the 1990s.\nThe block of the message is divided into two halves. The right half is\n expanded from 32 to 48 bits using another fixed table. The result is \ncombined with the subkey for that round using the XOR operation. Using\n the S-boxes the 48 resulting bits are then transformed again to 32 \nbits, which are subsequently permutated again using yet another fixed\ntable. This by now thoroughly shuffled right half is now combined with\n the left half using the XOR operation. In the next round, this \ncombination is used as the new left half.");
         jScrollPane1.setViewportView(jTextArea1);
 
         jLabel2.setText("DES Details");
@@ -98,29 +111,28 @@ public class SelectAlgorithm extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(layout.createSequentialGroup()
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(layout.createSequentialGroup()
-                            .addGap(56, 56, 56)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addGroup(layout.createSequentialGroup()
-                                    .addComponent(jRadioButton1)
-                                    .addGap(51, 51, 51)
-                                    .addComponent(jRadioButton2)
-                                    .addGap(47, 47, 47)
-                                    .addComponent(jRadioButton3))
-                                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 199, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGroup(layout.createSequentialGroup()
-                            .addGap(44, 44, 44)
-                            .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addContainerGap(279, Short.MAX_VALUE))
-                .addGroup(layout.createSequentialGroup()
-                    .addContainerGap()
-                    .addComponent(jScrollPane1)
-                    .addGap(51, 51, 51)))
+            .addGroup(layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(56, 56, 56)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jRadioButton1)
+                                .addGap(51, 51, 51)
+                                .addComponent(jRadioButton2)
+                                .addGap(47, 47, 47)
+                                .addComponent(jRadioButton3))
+                            .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 199, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(44, 44, 44)
+                        .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(279, Short.MAX_VALUE))
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 541, Short.MAX_VALUE)
+                .addGap(51, 51, 51))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(0, 0, Short.MAX_VALUE)
+                .addGap(0, 219, Short.MAX_VALUE)
                 .addComponent(jButton1)
                 .addGap(54, 54, 54)
                 .addComponent(jButton2)
@@ -156,31 +168,21 @@ public class SelectAlgorithm extends javax.swing.JFrame {
         String tdes = jRadioButton2.getText();
         String rsa = jRadioButton3.getText();
         int id;
-        if(jRadioButton1.isSelected()){
-             id=1;
-        }else if(jRadioButton2.isSelected()){
-              id=2;
-        }else{
-             id=3;
+        if (jRadioButton1.isSelected()) {
+            id = 1;
+        } else if (jRadioButton2.isSelected()) {
+            id = 2;
+        } else {
+            id = 3;
         }
-        
+
 
         Dbcon dbcon = new Dbcon();
-        ResultSet r=dbcon.select("select max(history_id) from tbl_file_process_history");
-         try {
-                    if(r.next()){
-                       System.out.println(r.getString(1));
-                       SelectAlgorithm.history_id=Integer.parseInt(r.getString(1));
-                       System.out.println(SelectAlgorithm.history_id);
-                       
-                    } 
-                } catch (SQLException ex) {
-                    ex.printStackTrace();
-                }
-        
-        dbcon.update("update tbl_file_process_history set encryption_algorithm_id='"+id+"',encrption_start_time='"+System.currentTimeMillis()+"' where history_id='"+SelectAlgorithm.history_id+"'");
+
+
+        dbcon.update("update tbl_file_process_history set encryption_algorithm_id='" + id + "',encrption_start_time='" + System.currentTimeMillis() + "' where history_id='" + history_id + "'");
         this.dispose();
-        Processing processing = new Processing();
+        Processing processing = new Processing(history_id, coverFile, password, id);
         processing.setVisible(true);
     }//GEN-LAST:event_jButton1ActionPerformed
 
@@ -267,12 +269,12 @@ public class SelectAlgorithm extends javax.swing.JFrame {
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
+
             public void run() {
                 new SelectAlgorithm().setVisible(true);
             }
         });
     }
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.ButtonGroup buttonGroup7;
     private javax.swing.JButton jButton1;

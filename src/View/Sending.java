@@ -3,16 +3,18 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package View;
 
+import General.Configuration;
 import db.Dbcon;
+import java.io.File;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.swing.JCheckBox;
+import java.util.ArrayList;
+import java.util.Date;
 import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+import org.apache.commons.io.FileUtils;
 
 /**
  *
@@ -20,12 +22,61 @@ import javax.swing.JOptionPane;
  */
 public class Sending extends javax.swing.JFrame {
 
+    int history_id;
+    File outputCipherFile;
+
     /**
      * Creates new form Sending
      */
     public Sending() {
         initComponents();
         this.setLocationRelativeTo(null);
+        loadValuesToTable();
+    }
+
+    public Sending(int history_id, File outputCipherFile) {
+        initComponents();
+        this.setLocationRelativeTo(null);
+        this.history_id = history_id;
+        this.outputCipherFile = outputCipherFile;
+        loadValuesToTable();
+    }
+
+    private void clearTable() {
+        DefaultTableModel dm = (DefaultTableModel) user_table.getModel();
+        int rowCount = dm.getRowCount();
+        for (int i = rowCount - 1; i >= 0; i--) {
+            dm.removeRow(i);
+        }
+    }
+
+    private void loadValuesToTable() {
+        clearTable();
+        try {
+            String sql = "select * from tbl_user_details";
+            System.out.println(sql);
+            ResultSet rs = new Dbcon().select(sql);
+            DefaultTableModel model = (DefaultTableModel) user_table.getModel();
+            Object arr[] = new Object[6];
+            int count = 0;
+            while (rs.next()) {
+                String user_name = rs.getString("user_name");
+                String email_id = rs.getString("email_id");
+                String phone_number = rs.getString("phone_number");
+                String user_id = rs.getString("user_id");
+
+                arr[0] = (++count) + "";
+                arr[1] = user_name;
+                arr[2] = email_id;
+                arr[3] = phone_number;
+                arr[4] = false;
+                arr[5] = user_id;
+
+                model.addRow(arr);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     /**
@@ -38,10 +89,11 @@ public class Sending extends javax.swing.JFrame {
     private void initComponents() {
 
         jLabel1 = new javax.swing.JLabel();
-        jCheckBox1 = new javax.swing.JCheckBox();
         jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
-        jCheckBox2 = new javax.swing.JCheckBox();
+        send_button = new javax.swing.JButton();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        user_table = new javax.swing.JTable();
+        progress_bar = new javax.swing.JProgressBar();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         addWindowListener(new java.awt.event.WindowAdapter() {
@@ -50,9 +102,7 @@ public class Sending extends javax.swing.JFrame {
             }
         });
 
-        jLabel1.setText("Select Receiver:");
-
-        jCheckBox1.setText("kk");
+        jLabel1.setText("Select Recepients");
 
         jButton1.setText("HOME");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
@@ -61,45 +111,78 @@ public class Sending extends javax.swing.JFrame {
             }
         });
 
-        jButton2.setText("OK");
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
+        send_button.setText("SEND");
+        send_button.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
+                send_buttonActionPerformed(evt);
             }
         });
 
-        jCheckBox2.setText("jeena");
+        user_table.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "No", "User name", "Email Id", "Phone number", "Send", "userid"
+            }
+        ) {
+            Class[] types = new Class [] {
+                java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Boolean.class, java.lang.Object.class
+            };
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, true, true
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        jScrollPane1.setViewportView(user_table);
+        user_table.getColumnModel().getColumn(0).setMinWidth(50);
+        user_table.getColumnModel().getColumn(0).setPreferredWidth(50);
+        user_table.getColumnModel().getColumn(0).setMaxWidth(50);
+        user_table.getColumnModel().getColumn(4).setMinWidth(50);
+        user_table.getColumnModel().getColumn(4).setPreferredWidth(50);
+        user_table.getColumnModel().getColumn(4).setMaxWidth(50);
+        user_table.getColumnModel().getColumn(5).setMinWidth(0);
+        user_table.getColumnModel().getColumn(5).setPreferredWidth(0);
+        user_table.getColumnModel().getColumn(5).setMaxWidth(0);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(80, 80, 80)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jCheckBox2)
-                    .addComponent(jCheckBox1)
-                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 149, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jButton1)
-                        .addGap(36, 36, 36)
-                        .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 68, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(95, Short.MAX_VALUE))
+                .addGap(23, 23, 23)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(progress_bar, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 522, Short.MAX_VALUE)
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addGroup(layout.createSequentialGroup()
+                            .addComponent(send_button, javax.swing.GroupLayout.PREFERRED_SIZE, 68, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addComponent(jButton1))
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 522, Short.MAX_VALUE)
+                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 166, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(24, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(52, 52, 52)
-                .addComponent(jLabel1)
-                .addGap(34, 34, 34)
-                .addComponent(jCheckBox1)
                 .addGap(18, 18, 18)
-                .addComponent(jCheckBox2)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 63, Short.MAX_VALUE)
+                .addComponent(jLabel1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton1)
-                    .addComponent(jButton2))
-                .addGap(60, 60, 60))
+                    .addComponent(send_button)
+                    .addComponent(jButton1))
+                .addGap(18, 18, 18)
+                .addComponent(progress_bar, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(35, 35, 35))
         );
 
         pack();
@@ -108,58 +191,78 @@ public class Sending extends javax.swing.JFrame {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
         this.dispose();
-        Home home=new Home();
+        Home home = new Home();
         home.setVisible(true);
     }//GEN-LAST:event_jButton1ActionPerformed
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+    private void sendFile(int toUserId) {
+        Configuration.loadUserFileTransferLocation(Configuration.fileTransfers + toUserId);
+        //outputCipherFile
+        boolean sendFile = sendFile(outputCipherFile, new File(Configuration.fileTransfers + toUserId + "/" + outputCipherFile.getName()));
+        int insert = new Dbcon().insert("insert into tbl_transactions (sender_id, received_id, file, transaction_date, history_id,send) values (" + Login.logged_in_user_id + "," + toUserId + " ,  '" + outputCipherFile.getName() + "' , '" + System.currentTimeMillis() + "' , " + history_id + ",1)");
+        System.out.println("Insert " + insert);
+    }
+
+    private boolean sendFile(File fromFile, File toFile) {
+        System.out.println("From file " + fromFile.getAbsolutePath());
+        System.out.println("To file " + toFile.getAbsolutePath());
+
+        boolean sendSucess = false;
+        try {
+            FileUtils.copyFile(fromFile, toFile);
+            sendSucess = false;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return sendSucess;
+    }
+
+    class sendFileThread extends Thread {
+
+        public void run() {
+            try {
+                DefaultTableModel dtm = (DefaultTableModel) user_table.getModel();
+                int nRow = dtm.getRowCount(), nCol = dtm.getColumnCount();
+
+                double chunk = 100 / nRow;
+                double chunkSum = 0;
+
+                for (int i = 0; i < nRow; i++) {
+                    boolean isSelected = (boolean) dtm.getValueAt(i, 4);
+                    if (isSelected) {
+                        System.out.println(dtm.getValueAt(i, 1) + " is selected");
+                        int userId = Integer.parseInt(dtm.getValueAt(i, 5).toString());
+                        sendFile(userId);
+                    }
+                    progress_bar.setValue((int) chunkSum);
+                    chunkSum = chunkSum + chunk;
+                    Thread.sleep(1000);
+                }
+                progress_bar.setValue(100);
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    private void send_buttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_send_buttonActionPerformed
         // TODO add your handling code here:
-        String receiver="";
-        String user_id="";
-        if(jCheckBox1.isSelected()){
-            receiver=jCheckBox1.getText();
-        }
-        else if(jCheckBox2.isSelected()){
-            receiver=jCheckBox2.getText();
-        }
-        Dbcon dbcon=new Dbcon();
-        ResultSet r=dbcon.select("select * from tbl_user_details where email_id='"+receiver+"'");
-        try {
-            if(r.next()){
-                
-                    user_id=r.getString(1);
-              
-            }
-        } catch (SQLException ex) {            
-            
-        }
-         ResultSet rs=dbcon.select("select * from tbl_file_process_history where history_id='"+SelectAlgorithm.history_id+"'");
-        try {
-            if(rs.next()){
-                String cover_file=rs.getString(3);
-                String password=rs.getString(4);
-               int ins= dbcon.insert("insert into tbl_transactions(sender_id,received_id,file,send,transaction_date,encryption_password)value('"+Login.logged_in_user_id+"','"+user_id+"','"+cover_file+"',1,'"+System.currentTimeMillis()+"','"+password+"')");
-               if(ins>0){
-                   JOptionPane.showMessageDialog(rootPane, "Sent Successfully");
-               }
-            }
-        } catch (SQLException ex) {
-            ex.printStackTrace();
-        }
-        
-    }//GEN-LAST:event_jButton2ActionPerformed
+        send_button.setEnabled(false);
+        new sendFileThread().start();
+    }//GEN-LAST:event_send_buttonActionPerformed
 
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
         // TODO add your handling code here:
-        Dbcon dbcon=new Dbcon();
-        ResultSet rs=dbcon.select("select * from tbl_user_details");
+        Dbcon dbcon = new Dbcon();
+        ResultSet rs = dbcon.select("select * from tbl_user_details");
         try {
-            while(rs.next()){
-                String email=rs.getString(3);
+            while (rs.next()) {
+                String email = rs.getString(3);
                 System.out.println(email);
             }
         } catch (SQLException ex) {
-          ex.printStackTrace();
+            ex.printStackTrace();
         }
     }//GEN-LAST:event_formWindowOpened
 
@@ -192,17 +295,18 @@ public class Sending extends javax.swing.JFrame {
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
+
             public void run() {
                 new Sending().setVisible(true);
             }
         });
     }
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JCheckBox jCheckBox1;
-    private javax.swing.JCheckBox jCheckBox2;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JProgressBar progress_bar;
+    private javax.swing.JButton send_button;
+    private javax.swing.JTable user_table;
     // End of variables declaration//GEN-END:variables
 }

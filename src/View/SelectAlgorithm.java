@@ -26,15 +26,19 @@ public class SelectAlgorithm extends javax.swing.JFrame {
     public SelectAlgorithm() {
         initComponents();
         this.setLocationRelativeTo(null);
+        algorith_details.setContentType("text/html");
+        algorithmSelected();
 
     }
 
     public SelectAlgorithm(int history_id, File coverFile, String password) {
         initComponents();
         this.setLocationRelativeTo(null);
+        algorith_details.setContentType("text/html");
         this.history_id = history_id;
         this.coverFile = coverFile;
         this.password = password;
+        algorithmSelected();
 
     }
 
@@ -52,11 +56,11 @@ public class SelectAlgorithm extends javax.swing.JFrame {
         jRadioButton1 = new javax.swing.JRadioButton();
         jRadioButton2 = new javax.swing.JRadioButton();
         jRadioButton3 = new javax.swing.JRadioButton();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        jTextArea1 = new javax.swing.JTextArea();
         jLabel2 = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        algorith_details = new javax.swing.JTextPane();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -87,10 +91,6 @@ public class SelectAlgorithm extends javax.swing.JFrame {
             }
         });
 
-        jTextArea1.setColumns(20);
-        jTextArea1.setRows(5);
-        jScrollPane1.setViewportView(jTextArea1);
-
         jLabel2.setText("DES Details");
 
         jButton1.setText("START");
@@ -107,36 +107,35 @@ public class SelectAlgorithm extends javax.swing.JFrame {
             }
         });
 
+        jScrollPane2.setViewportView(algorith_details);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
+                .addGap(56, 56, 56)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(56, 56, 56)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jRadioButton1)
-                                .addGap(51, 51, 51)
-                                .addComponent(jRadioButton2)
-                                .addGap(47, 47, 47)
-                                .addComponent(jRadioButton3))
-                            .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 199, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(44, 44, 44)
-                        .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(jRadioButton1)
+                        .addGap(51, 51, 51)
+                        .addComponent(jRadioButton2)
+                        .addGap(47, 47, 47)
+                        .addComponent(jRadioButton3))
+                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 199, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(279, Short.MAX_VALUE))
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 541, Short.MAX_VALUE)
-                .addGap(51, 51, 51))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addGap(0, 219, Short.MAX_VALUE)
                 .addComponent(jButton1)
                 .addGap(54, 54, 54)
                 .addComponent(jButton2)
                 .addGap(205, 205, 205))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(24, 24, 24)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 556, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(22, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -151,8 +150,8 @@ public class SelectAlgorithm extends javax.swing.JFrame {
                 .addGap(35, 35, 35)
                 .addComponent(jLabel2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 359, Short.MAX_VALUE)
-                .addGap(18, 18, 18)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 366, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton2)
                     .addComponent(jButton1))
@@ -192,7 +191,7 @@ public class SelectAlgorithm extends javax.swing.JFrame {
             ResultSet rs = dbcon.select("select * from tbl_encrption_algorithms where algorithm_id=1");
             try {
                 if (rs.next()) {
-                    jTextArea1.setText(rs.getString(3));
+                    algorith_details.setText("<html>" + rs.getString(3) + "</html>");
                 }
             } catch (Exception ex) {
                 ex.printStackTrace();
@@ -201,7 +200,7 @@ public class SelectAlgorithm extends javax.swing.JFrame {
             ResultSet rs = dbcon.select("select * from tbl_encrption_algorithms where algorithm_id=2");
             try {
                 if (rs.next()) {
-                    jTextArea1.setText(rs.getString(3));
+                    algorith_details.setText(rs.getString(3));
                 }
             } catch (Exception ex) {
                 ex.printStackTrace();
@@ -210,7 +209,7 @@ public class SelectAlgorithm extends javax.swing.JFrame {
             ResultSet rs = dbcon.select("select * from tbl_encrption_algorithms where algorithm_id=3");
             try {
                 if (rs.next()) {
-                    jTextArea1.setText(rs.getString(3));
+                    algorith_details.setText(rs.getString(3));
                 }
             } catch (Exception ex) {
                 ex.printStackTrace();
@@ -276,6 +275,7 @@ public class SelectAlgorithm extends javax.swing.JFrame {
         });
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JTextPane algorith_details;
     private javax.swing.ButtonGroup buttonGroup7;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
@@ -284,7 +284,6 @@ public class SelectAlgorithm extends javax.swing.JFrame {
     private javax.swing.JRadioButton jRadioButton1;
     private javax.swing.JRadioButton jRadioButton2;
     private javax.swing.JRadioButton jRadioButton3;
-    private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTextArea jTextArea1;
+    private javax.swing.JScrollPane jScrollPane2;
     // End of variables declaration//GEN-END:variables
 }

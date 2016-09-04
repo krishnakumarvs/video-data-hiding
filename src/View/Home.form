@@ -298,7 +298,7 @@
                               <EmptySpace pref="8" max="-2" attributes="0"/>
                           </Group>
                       </Group>
-                      <EmptySpace type="separate" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="18" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Component id="last_send_icon_2" alignment="1" min="-2" pref="50" max="-2" attributes="0"/>
                           <Group type="102" alignment="0" attributes="0">
@@ -407,7 +407,6 @@
                           <Component id="last_receive_sender_2" alignment="1" min="-2" pref="29" max="-2" attributes="0"/>
                           <Component id="last_receive_arrow_2" alignment="1" min="-2" pref="30" max="-2" attributes="0"/>
                       </Group>
-                      <EmptySpace min="10" pref="10" max="10" attributes="0"/>
                   </Group>
                   <Component id="last_receive_icon_2" alignment="0" min="-2" pref="50" max="-2" attributes="0"/>
               </Group>
@@ -419,7 +418,6 @@
                           <Component id="last_receive_sender_3" alignment="1" min="-2" pref="29" max="-2" attributes="0"/>
                           <Component id="last_receive_arrow_3" alignment="1" min="-2" pref="30" max="-2" attributes="0"/>
                       </Group>
-                      <EmptySpace min="10" pref="10" max="10" attributes="0"/>
                   </Group>
                   <Component id="last_receive_icon_3" alignment="0" min="-2" pref="50" max="-2" attributes="0"/>
               </Group>
@@ -431,7 +429,6 @@
                           <Component id="last_receive_sender_4" alignment="1" min="-2" pref="29" max="-2" attributes="0"/>
                           <Component id="last_receive_arrow_4" alignment="1" min="-2" pref="30" max="-2" attributes="0"/>
                       </Group>
-                      <EmptySpace min="10" pref="10" max="10" attributes="0"/>
                   </Group>
                   <Component id="last_receive_icon_4" alignment="0" min="-2" pref="50" max="-2" attributes="0"/>
               </Group>
@@ -443,7 +440,6 @@
                           <Component id="last_receive_sender_5" alignment="1" min="-2" pref="29" max="-2" attributes="0"/>
                           <Component id="last_receive_arrow_5" alignment="1" min="-2" pref="30" max="-2" attributes="0"/>
                       </Group>
-                      <EmptySpace min="10" pref="10" max="10" attributes="0"/>
                   </Group>
                   <Component id="last_receive_icon_5" alignment="0" min="-2" pref="50" max="-2" attributes="0"/>
               </Group>
@@ -530,13 +526,6 @@
       </Properties>
     </Component>
     <Component class="javax.swing.JLabel" name="last_send_arrow_1">
-      <Properties>
-        <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
-          <Border info="org.netbeans.modules.form.compat2.border.LineBorderInfo">
-            <LineBorder/>
-          </Border>
-        </Property>
-      </Properties>
     </Component>
     <Component class="javax.swing.JButton" name="jButton4">
       <Properties>
@@ -604,13 +593,6 @@
       </Properties>
     </Component>
     <Component class="javax.swing.JLabel" name="last_send_arrow_2">
-      <Properties>
-        <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
-          <Border info="org.netbeans.modules.form.compat2.border.LineBorderInfo">
-            <LineBorder/>
-          </Border>
-        </Property>
-      </Properties>
     </Component>
     <Component class="javax.swing.JLabel" name="last_send_receiver_2">
       <Properties>
@@ -628,13 +610,6 @@
       </Properties>
     </Component>
     <Component class="javax.swing.JLabel" name="last_send_arrow_3">
-      <Properties>
-        <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
-          <Border info="org.netbeans.modules.form.compat2.border.LineBorderInfo">
-            <LineBorder/>
-          </Border>
-        </Property>
-      </Properties>
     </Component>
     <Component class="javax.swing.JLabel" name="last_send_receiver_3">
       <Properties>
@@ -652,13 +627,6 @@
       </Properties>
     </Component>
     <Component class="javax.swing.JLabel" name="last_send_arrow_4">
-      <Properties>
-        <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
-          <Border info="org.netbeans.modules.form.compat2.border.LineBorderInfo">
-            <LineBorder/>
-          </Border>
-        </Property>
-      </Properties>
     </Component>
     <Component class="javax.swing.JLabel" name="last_send_receiver_4">
       <Properties>
@@ -676,13 +644,6 @@
       </Properties>
     </Component>
     <Component class="javax.swing.JLabel" name="last_send_arrow_5">
-      <Properties>
-        <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
-          <Border info="org.netbeans.modules.form.compat2.border.LineBorderInfo">
-            <LineBorder/>
-          </Border>
-        </Property>
-      </Properties>
     </Component>
     <Component class="javax.swing.JLabel" name="last_send_receiver_5">
       <Properties>

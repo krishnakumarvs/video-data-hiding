@@ -7,21 +7,11 @@ package View;
 
 import General.Configuration;
 import db.Dbcon;
-import java.awt.Image;
-import java.awt.image.BufferedImage;
 import java.io.File;
-import java.io.IOException;
-import java.net.MalformedURLException;
 import java.sql.ResultSet;
-import java.util.ArrayList;
-import javax.imageio.ImageIO;
 
-import javax.swing.Icon;
-import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
-import javax.swing.JOptionPane;
 import javax.swing.filechooser.FileNameExtensionFilter;
-import javax.swing.filechooser.FileSystemView;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.FilenameUtils;
 
@@ -43,6 +33,184 @@ public class Home extends javax.swing.JFrame {
         initComponents();
         this.setLocationRelativeTo(null);
         loadIcons();
+        loadLastSendFiles();
+        loadLastReceivedFiles();
+    }
+
+    private void loadLastReceivedFiles() {
+        String query = "SELECT trans.*, usert.user_name , history.encryption_algorithm_id, algo.algorithm_name, history.cipher_file_size,history.cipher_file_name,history.password, history.encryption_file_type "
+                + " FROM tbl_transactions AS trans , "
+                + " tbl_user_details AS usert ,"
+                + " tbl_file_process_history AS history,"
+                + " tbl_encrption_algorithms AS algo"
+                + " WHERE history.history_id = trans.history_id"
+                + " AND trans.sender_id = usert.user_id"
+                + " AND algo.algorithm_id = history.encryption_algorithm_id"
+                + " AND trans.received_id =" + Login.logged_in_user_id;
+        ResultSet select = new Dbcon().select(query);
+        try {
+            last_receive_sender_1.setVisible(false);
+            last_receive_arrow_1.setVisible(false);
+            last_receive_icon_1.setVisible(false);
+
+            last_receive_sender_2.setVisible(false);
+            last_receive_arrow_2.setVisible(false);
+            last_receive_icon_2.setVisible(false);
+
+            last_receive_sender_3.setVisible(false);
+            last_receive_arrow_3.setVisible(false);
+            last_receive_icon_3.setVisible(false);
+
+            last_receive_sender_4.setVisible(false);
+            last_receive_arrow_4.setVisible(false);
+            last_receive_icon_4.setVisible(false);
+
+            last_receive_sender_5.setVisible(false);
+            last_receive_arrow_5.setVisible(false);
+            last_receive_icon_5.setVisible(false);
+
+
+            if (select.next()) {
+                // last item
+                last_receive_sender_1.setVisible(true);
+                last_receive_arrow_1.setVisible(true);
+                last_receive_icon_1.setVisible(true);
+
+                Configuration.setDefaultFileIcon(new File(Configuration.videoPool + select.getString("cipher_file_name")), last_receive_icon_1);
+                last_receive_sender_1.setText(select.getString("user_name"));
+
+                if (select.next()) {
+                    // second last item
+                    last_receive_sender_2.setVisible(true);
+                    last_receive_arrow_2.setVisible(true);
+                    last_receive_icon_2.setVisible(true);
+
+                    Configuration.setDefaultFileIcon(new File(Configuration.videoPool + select.getString("cipher_file_name")), last_receive_icon_2);
+                    last_receive_sender_2.setText(select.getString("user_name"));
+
+                    if (select.next()) {
+                        // third last item
+                        last_receive_sender_3.setVisible(true);
+                        last_receive_arrow_3.setVisible(true);
+                        last_receive_icon_3.setVisible(true);
+
+                        Configuration.setDefaultFileIcon(new File(Configuration.videoPool + select.getString("cipher_file_name")), last_receive_icon_3);
+                        last_receive_sender_3.setText(select.getString("user_name"));
+
+                        if (select.next()) {
+                            // second last item
+                            last_receive_sender_4.setVisible(true);
+                            last_receive_arrow_4.setVisible(true);
+                            last_receive_icon_4.setVisible(true);
+
+                            Configuration.setDefaultFileIcon(new File(Configuration.videoPool + select.getString("cipher_file_name")), last_receive_icon_4);
+                            last_receive_sender_4.setText(select.getString("user_name"));
+
+                            if (select.next()) {
+                                // second last item
+                                last_receive_sender_5.setVisible(true);
+                                last_receive_arrow_5.setVisible(true);
+                                last_receive_icon_5.setVisible(true);
+
+                                Configuration.setDefaultFileIcon(new File(Configuration.videoPool + select.getString("cipher_file_name")), last_receive_icon_5);
+                                last_receive_sender_5.setText(select.getString("user_name"));
+                            }
+                        }
+                    }
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void loadLastSendFiles() {
+        String query = "SELECT trans.*, usert.user_name , history.encryption_algorithm_id, algo.algorithm_name, history.cipher_file_size,history.cipher_file_name,history.password, history.encryption_file_type "
+                + " FROM tbl_transactions AS trans , "
+                + " tbl_user_details AS usert ,"
+                + " tbl_file_process_history AS history,"
+                + " tbl_encrption_algorithms AS algo"
+                + " WHERE history.history_id = trans.history_id"
+                + " AND trans.received_id = usert.user_id"
+                + " AND algo.algorithm_id = history.encryption_algorithm_id"
+                + " AND trans.sender_id =" + Login.logged_in_user_id
+                + " ORDER BY trans.transaction_id DESC";
+        System.out.println(query);
+        ResultSet select = new Dbcon().select(query);
+        try {
+            last_send_icon_1.setVisible(false);
+            last_send_arrow_1.setVisible(false);
+            last_send_receiver_1.setVisible(false);
+
+            last_send_icon_2.setVisible(false);
+            last_send_arrow_2.setVisible(false);
+            last_send_receiver_2.setVisible(false);
+
+            last_send_icon_3.setVisible(false);
+            last_send_arrow_3.setVisible(false);
+            last_send_receiver_3.setVisible(false);
+
+            last_send_icon_4.setVisible(false);
+            last_send_arrow_4.setVisible(false);
+            last_send_receiver_4.setVisible(false);
+
+            last_send_icon_5.setVisible(false);
+            last_send_arrow_5.setVisible(false);
+            last_send_receiver_5.setVisible(false);
+
+            if (select.next()) {
+                // last send file
+                System.out.println(select.getString("cipher_file_name"));
+                last_send_icon_1.setVisible(true);
+                last_send_arrow_1.setVisible(true);
+                last_send_receiver_1.setVisible(true);
+                Configuration.setDefaultFileIcon(new File(Configuration.videoPool + select.getString("cipher_file_name")), last_send_icon_1);
+                last_send_receiver_1.setText(select.getString("user_name"));
+
+                if (select.next()) {
+                    // second last send file
+                    System.out.println(select.getString("cipher_file_name"));
+                    last_send_icon_2.setVisible(true);
+                    last_send_arrow_2.setVisible(true);
+                    last_send_receiver_2.setVisible(true);
+                    Configuration.setDefaultFileIcon(new File(Configuration.videoPool + select.getString("cipher_file_name")), last_send_icon_2);
+                    last_send_receiver_2.setText(select.getString("user_name"));
+
+                    if (select.next()) {
+                        // third last send file
+                        System.out.println(select.getString("cipher_file_name"));
+                        last_send_icon_3.setVisible(true);
+                        last_send_arrow_3.setVisible(true);
+                        last_send_receiver_3.setVisible(true);
+                        Configuration.setDefaultFileIcon(new File(Configuration.videoPool + select.getString("cipher_file_name")), last_send_icon_3);
+                        last_send_receiver_3.setText(select.getString("user_name"));
+
+                        if (select.next()) {
+                            // second last send file
+                            System.out.println(select.getString("cipher_file_name"));
+                            last_send_icon_4.setVisible(true);
+                            last_send_arrow_4.setVisible(true);
+                            last_send_receiver_4.setVisible(true);
+                            Configuration.setDefaultFileIcon(new File(Configuration.videoPool + select.getString("cipher_file_name")), last_send_icon_4);
+                            last_send_receiver_4.setText(select.getString("user_name"));
+
+                            if (select.next()) {
+                                // second last send file
+                                System.out.println(select.getString("cipher_file_name"));
+                                last_send_icon_5.setVisible(true);
+                                last_send_arrow_5.setVisible(true);
+                                last_send_receiver_5.setVisible(true);
+                                Configuration.setDefaultFileIcon(new File(Configuration.videoPool + select.getString("cipher_file_name")), last_send_icon_5);
+                                last_send_receiver_5.setText(select.getString("user_name"));
+                            }
+                        }
+                    }
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
     }
 
     private void loadIcons() {
@@ -198,8 +366,6 @@ public class Home extends javax.swing.JFrame {
 
         jLabel11.setText("Receiving Data");
 
-        last_send_arrow_1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
-
         jButton4.setText("HISTORY");
         jButton4.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -214,17 +380,17 @@ public class Home extends javax.swing.JFrame {
             }
         });
 
-        jLabel8.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        jLabel8.setFont(new java.awt.Font("Tahoma", 1, 12));
         jLabel8.setText("File Name");
 
-        jLabel24.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        jLabel24.setFont(new java.awt.Font("Tahoma", 1, 12));
         jLabel24.setText("File Size");
 
         file_name_label.setText("No file selected");
 
         file_size_label.setText("0 Kb");
 
-        jLabel25.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        jLabel25.setFont(new java.awt.Font("Tahoma", 1, 12));
         jLabel25.setText("File Format");
 
         file_format_text.setText("No file selected");
@@ -232,28 +398,20 @@ public class Home extends javax.swing.JFrame {
         last_send_icon_2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         last_send_icon_2.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
-        last_send_arrow_2.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
-
         last_send_receiver_2.setText("Recever name");
 
         last_send_icon_3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         last_send_icon_3.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
-
-        last_send_arrow_3.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
         last_send_receiver_3.setText("Recever name");
 
         last_send_icon_4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         last_send_icon_4.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
-        last_send_arrow_4.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
-
         last_send_receiver_4.setText("Recever name");
 
         last_send_icon_5.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         last_send_icon_5.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
-
-        last_send_arrow_5.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
         last_send_receiver_5.setText("Recever name");
 
@@ -558,8 +716,7 @@ public class Home extends javax.swing.JFrame {
                         .addGap(10, 10, 10)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(last_receive_sender_2, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(last_receive_arrow_2, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(10, 10, 10))
+                            .addComponent(last_receive_arrow_2, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addComponent(last_receive_icon_2, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -567,8 +724,7 @@ public class Home extends javax.swing.JFrame {
                         .addGap(10, 10, 10)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(last_receive_sender_3, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(last_receive_arrow_3, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(10, 10, 10))
+                            .addComponent(last_receive_arrow_3, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addComponent(last_receive_icon_3, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -576,8 +732,7 @@ public class Home extends javax.swing.JFrame {
                         .addGap(10, 10, 10)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(last_receive_sender_4, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(last_receive_arrow_4, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(10, 10, 10))
+                            .addComponent(last_receive_arrow_4, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addComponent(last_receive_icon_4, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -585,8 +740,7 @@ public class Home extends javax.swing.JFrame {
                         .addGap(10, 10, 10)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(last_receive_sender_5, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(last_receive_arrow_5, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(10, 10, 10))
+                            .addComponent(last_receive_arrow_5, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addComponent(last_receive_icon_5, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 14, Short.MAX_VALUE)
                 .addComponent(jButton4)
@@ -650,7 +804,7 @@ public class Home extends javax.swing.JFrame {
         // TODO add your handling code here:
         JFileChooser chooser = new JFileChooser();
         FileNameExtensionFilter filter = new FileNameExtensionFilter(
-                "Vedio files", "avi", "mov", "3gp","mp4","mpg");
+                "Vedio files", "avi", "mov", "3gp", "mp4", "mpg");
 
         chooser.setFileFilter(filter);
         int returnVal = chooser.showOpenDialog(this);

@@ -46,6 +46,8 @@ public class Login extends javax.swing.JFrame {
 
         jLabel1.setText("Username");
 
+        jTextField1.setText("kk");
+
         jLabel2.setText("Password");
 
         jButton1.setText("LOGIN");
@@ -69,12 +71,14 @@ public class Login extends javax.swing.JFrame {
             }
         });
 
+        jPasswordField1.setText("123");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap(226, Short.MAX_VALUE)
                 .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(30, 30, 30))
             .addGroup(layout.createSequentialGroup()

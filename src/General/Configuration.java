@@ -42,11 +42,15 @@ public class Configuration {
     }
 
     public static void setDefaultFileIcon(File file, JLabel label) {
-        Icon ico = FileSystemView.getFileSystemView().getSystemIcon(file);
-        Image image = ((ImageIcon) ico).getImage();
-        Image scaledInstance = image.getScaledInstance(label.getWidth(), label.getHeight(), Image.SCALE_SMOOTH);
-        ImageIcon imageIcon = new ImageIcon(scaledInstance);
-        label.setIcon(imageIcon);
+        try {
+            Icon ico = FileSystemView.getFileSystemView().getSystemIcon(file);
+            Image image = ((ImageIcon) ico).getImage();
+            Image scaledInstance = image.getScaledInstance(label.getWidth(), label.getHeight(), Image.SCALE_SMOOTH);
+            ImageIcon imageIcon = new ImageIcon(scaledInstance);
+            label.setIcon(imageIcon);
+        } catch (Exception e) {
+            System.out.println("Could not load image " + file.getAbsolutePath());
+        }
     }
 
     public static void loadUserFileTransferLocation(String userId) {
@@ -77,7 +81,7 @@ public class Configuration {
             if (!f_tempFiles.exists()) {
                 f_tempFiles.mkdir();
             }
-            
+
             File f_rsaKeys = new File(rsaKeys);
             if (!f_rsaKeys.exists()) {
                 f_rsaKeys.mkdir();

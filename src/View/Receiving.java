@@ -62,9 +62,9 @@ public class Receiving extends javax.swing.JFrame {
 
         buttonGroup1 = new javax.swing.ButtonGroup();
         jLabel1 = new javax.swing.JLabel();
-        jRadioButton1 = new javax.swing.JRadioButton();
-        jRadioButton2 = new javax.swing.JRadioButton();
-        jRadioButton3 = new javax.swing.JRadioButton();
+        des_button = new javax.swing.JRadioButton();
+        tripple_des_button = new javax.swing.JRadioButton();
+        rsa_button = new javax.swing.JRadioButton();
         jLabel2 = new javax.swing.JLabel();
         password_text = new javax.swing.JPasswordField();
         jButton1 = new javax.swing.JButton();
@@ -81,15 +81,15 @@ public class Receiving extends javax.swing.JFrame {
 
         jLabel1.setText("Select Algorithm");
 
-        buttonGroup1.add(jRadioButton1);
-        jRadioButton1.setSelected(true);
-        jRadioButton1.setText("DES");
+        buttonGroup1.add(des_button);
+        des_button.setSelected(true);
+        des_button.setText("DES");
 
-        buttonGroup1.add(jRadioButton2);
-        jRadioButton2.setText("TDES");
+        buttonGroup1.add(tripple_des_button);
+        tripple_des_button.setText("TDES");
 
-        buttonGroup1.add(jRadioButton3);
-        jRadioButton3.setText("RSA");
+        buttonGroup1.add(rsa_button);
+        rsa_button.setText("RSA");
 
         jLabel2.setText("Password");
 
@@ -142,11 +142,11 @@ public class Receiving extends javax.swing.JFrame {
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                                     .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 163, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addGroup(layout.createSequentialGroup()
-                                        .addComponent(jRadioButton1)
+                                        .addComponent(des_button)
                                         .addGap(18, 18, 18)
-                                        .addComponent(jRadioButton2)))
+                                        .addComponent(tripple_des_button)))
                                 .addGap(18, 18, 18)
-                                .addComponent(jRadioButton3))
+                                .addComponent(rsa_button))
                             .addGroup(layout.createSequentialGroup()
                                 .addGap(138, 138, 138)
                                 .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 69, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -188,9 +188,9 @@ public class Receiving extends javax.swing.JFrame {
                 .addComponent(jLabel1)
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jRadioButton1)
-                    .addComponent(jRadioButton2)
-                    .addComponent(jRadioButton3))
+                    .addComponent(des_button)
+                    .addComponent(tripple_des_button)
+                    .addComponent(rsa_button))
                 .addGap(38, 38, 38)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel2)
@@ -211,8 +211,19 @@ public class Receiving extends javax.swing.JFrame {
         if (password.equals("") || password.length() < 8) {
             JOptionPane.showMessageDialog(rootPane, "Password must be greater than or equal to 8");
         } else {
+
+            int encryption_algorithm_id = 1;
+            if (tripple_des_button.isSelected()) {
+                encryption_algorithm_id = 2;
+            } else if (rsa_button.isSelected()) {
+                encryption_algorithm_id = 3;
+            } else if (des_button.isSelected()) {
+                encryption_algorithm_id = 1;
+            }
+            System.out.println("encryption_algorithm_id " + encryption_algorithm_id);
+
             this.dispose();
-            Decrypt decrypt = new Decrypt(fileToBeDecrypted, encryption_file_type, password);
+            Decrypt decrypt = new Decrypt(fileToBeDecrypted, encryption_file_type, password, encryption_algorithm_id);
             decrypt.setVisible(true);
         }
 
@@ -262,6 +273,7 @@ public class Receiving extends javax.swing.JFrame {
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.ButtonGroup buttonGroup1;
+    private javax.swing.JRadioButton des_button;
     private javax.swing.JLabel file_extension_label;
     private javax.swing.JLabel file_name_label;
     private javax.swing.JLabel file_size_label;
@@ -272,10 +284,9 @@ public class Receiving extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel7;
-    private javax.swing.JRadioButton jRadioButton1;
-    private javax.swing.JRadioButton jRadioButton2;
-    private javax.swing.JRadioButton jRadioButton3;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JPasswordField password_text;
+    private javax.swing.JRadioButton rsa_button;
+    private javax.swing.JRadioButton tripple_des_button;
     // End of variables declaration//GEN-END:variables
 }

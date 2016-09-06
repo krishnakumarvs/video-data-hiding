@@ -5,10 +5,21 @@
  */
 package View;
 
+import EncryptionAlgorithms.DesEncrypter;
+import EncryptionAlgorithms.RSAEncryptor;
+import EncryptionAlgorithms.TrippleDes;
 import db.Dbcon;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.ObjectInputStream;
+import java.security.PublicKey;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import javax.crypto.KeyGenerator;
+import javax.crypto.SecretKey;
+import javax.crypto.SecretKeyFactory;
+import javax.crypto.spec.DESKeySpec;
+import javax.xml.bind.DatatypeConverter;
 
 /**
  *
@@ -167,18 +178,58 @@ public class SelectAlgorithm extends javax.swing.JFrame {
         String tdes = jRadioButton2.getText();
         String rsa = jRadioButton3.getText();
         int id;
+
+        String message = InputContent.message.trim();
+
+        System.out.println("Encrpting text : " + message);
         if (jRadioButton1.isSelected()) {
             id = 1;
+            // des
+            try {
+                String desKey = "0123456789abcdef";
+                byte[] keyBytes = DatatypeConverter.parseHexBinary(desKey);
+                SecretKeyFactory factory = SecretKeyFactory.getInstance("DES");
+                SecretKey key = factory.generateSecret(new DESKeySpec(keyBytes));
+                DesEncrypter encrypter = new DesEncrypter(key);
+
+                String encrypted = encrypter.encrypt(message);
+                InputContent.message = encrypted;
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         } else if (jRadioButton2.isSelected()) {
             id = 2;
+            //triple des
+            try {
+                TrippleDes trippleDes = new TrippleDes();
+                String encrypted = trippleDes.encrypt(message);
+                InputContent.message = encrypted;
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         } else {
             id = 3;
+            //rsa
+            try {
+                if (!RSAEncryptor.areKeysPresent()) {
+                    RSAEncryptor.generateKey();
+                }
+
+                ObjectInputStream inputStream = null;
+
+                // Encrypt the string using the public key
+                inputStream = new ObjectInputStream(new FileInputStream(RSAEncryptor.PUBLIC_KEY_FILE));
+                final PublicKey publicKey = (PublicKey) inputStream.readObject();
+                InputContent.message = RSAEncryptor.encrypt(message, publicKey);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
+
+        System.out.println("message is encryptrd to -------------------- " + InputContent.message);
 
 
         Dbcon dbcon = new Dbcon();
-
-
         dbcon.update("update tbl_file_process_history set encryption_algorithm_id='" + id + "',encrption_start_time='" + System.currentTimeMillis() + "' where history_id='" + history_id + "'");
         this.dispose();
         Processing processing = new Processing(history_id, coverFile, password, id);

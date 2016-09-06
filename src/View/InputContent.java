@@ -20,7 +20,7 @@ public class InputContent extends javax.swing.JFrame {
 
     int history_id;
     public static int encryptionDataType = 0;
-    public static String message = "";
+    public static String message = "kakes tk";
     File coverFile;
     public static File fileToBeEmbedded;
     // 0 - Text

@@ -5,13 +5,24 @@
  */
 package View;
 
+import EncryptionAlgorithms.DesEncrypter;
+import EncryptionAlgorithms.RSAEncryptor;
+import EncryptionAlgorithms.TrippleDes;
 import General.Configuration;
 import Security.Encryption;
 import Security.VedioByLoader;
 import java.awt.Desktop;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.security.PrivateKey;
+import javax.crypto.KeyGenerator;
+import javax.crypto.SecretKey;
+import javax.crypto.SecretKeyFactory;
+import javax.crypto.spec.DESKeySpec;
 import javax.swing.JOptionPane;
+import javax.xml.bind.DatatypeConverter;
 
 /**
  *
@@ -27,6 +38,7 @@ public class Decrypt extends javax.swing.JFrame {
     String decryptedData;
     String errorMesage = "";
     String temporaryFilePath;
+    int encryption_algorithm_id;
 
     /**
      * Creates new form Decrypt
@@ -36,12 +48,13 @@ public class Decrypt extends javax.swing.JFrame {
         this.setLocationRelativeTo(null);
     }
 
-    public Decrypt(File fileToBeDecrypted, int encryption_file_type, String password) {
+    public Decrypt(File fileToBeDecrypted, int encryption_file_type, String password, int encryption_algorithm_id) {
         initComponents();
         this.setLocationRelativeTo(null);
         this.fileToBeDecrypted = fileToBeDecrypted;
         this.encryption_file_type = encryption_file_type;
         this.password = password;
+        this.encryption_algorithm_id = encryption_algorithm_id;
         open_decypt_file_button.setEnabled(false);
 
     }
@@ -189,6 +202,53 @@ public class Decrypt extends javax.swing.JFrame {
         }
     }
 
+    private String decryptMessage(String message) {
+        String plainText = "";
+        System.out.println("Message received as : " + message);
+        System.out.println("encryption_algorithm_id" + encryption_algorithm_id);
+        switch (encryption_algorithm_id) {
+            case 1:
+                //des
+                System.out.println("Trying to decrpt with DES");
+                try {
+                    String desKey = "0123456789abcdef";
+                    byte[] keyBytes = DatatypeConverter.parseHexBinary(desKey);
+                    SecretKeyFactory factory = SecretKeyFactory.getInstance("DES");
+                    SecretKey key = factory.generateSecret(new DESKeySpec(keyBytes));
+                    DesEncrypter encrypter = new DesEncrypter(key);
+                    plainText = encrypter.decrypt(message);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                break;
+            case 2:
+                System.out.println("Trying to decrpt with TRIPPLE DES");
+                try {
+                    TrippleDes trippleDes = new TrippleDes();
+                    plainText = trippleDes.decrypt(message);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                break;
+            case 3:
+                System.out.println("Trying to decrpt with RSA");
+                try {
+                    ObjectInputStream inputStream = null;
+                    inputStream = new ObjectInputStream(new FileInputStream(RSAEncryptor.PRIVATE_KEY_FILE));
+                    final PrivateKey privateKey = (PrivateKey) inputStream.readObject();
+                    plainText = RSAEncryptor.decrypt(message, privateKey);
+                    break;
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            default:
+                // Do nothihng
+                break;
+        }
+
+        return plainText;
+    }
+
     class DecrptyThread extends Thread {
 
         public void run() {
@@ -208,6 +268,8 @@ public class Decrypt extends javax.swing.JFrame {
                             new progressBarThread().start();
                             try {
                                 decryptedData = VedioByLoader.retrieveMessage(encryption, password);
+
+                                decryptedData = decryptMessage(decryptedData);
                                 System.out.println(decryptedData);
                                 isSuccess = true;
 

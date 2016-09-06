@@ -30,10 +30,15 @@ public class DesEncrypter {
         return new sun.misc.BASE64Encoder().encode(enc);
     }
 
-    public String decrypt(String str) throws Exception {
+    public String decrypt(String str) {
         // Decode base64 to get bytes
-        byte[] dec = new sun.misc.BASE64Decoder().decodeBuffer(str);
-        byte[] utf8 = dcipher.doFinal(dec);
-        return new String(utf8, "UTF8");
+        try {
+            byte[] dec = new sun.misc.BASE64Decoder().decodeBuffer(str);
+            byte[] utf8 = dcipher.doFinal(dec);
+            return new String(utf8, "UTF8");
+        } catch (Exception e) {
+            return "Message could not be decypted";
+        }
+
     }
 }

@@ -6,9 +6,8 @@
 package View;
 
 import General.Configuration;
-import Model.FileBitPack;
-import Model.TextBitPack;
-import Security.Encryption;
+import Security.FileBitPack;
+import Security.TextBitPack;
 import Security.VedioByLoader;
 import db.Dbcon;
 import java.io.File;

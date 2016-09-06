@@ -26,6 +26,7 @@ public class Configuration {
     public static String fileTransfers = "fileTransfers/";
     public static String tempFiles = "tempFiles/";
     public static String sendPasswordSubject = "Video data hiding- forgot password ";
+    public static String rsaKeys = "rsaKeys/";
 
     public static void setIconOnLabel(String fileString, JLabel label) {
         // convert string file path to image icona and set on this label
@@ -75,6 +76,11 @@ public class Configuration {
             File f_tempFiles = new File(tempFiles);
             if (!f_tempFiles.exists()) {
                 f_tempFiles.mkdir();
+            }
+            
+            File f_rsaKeys = new File(rsaKeys);
+            if (!f_rsaKeys.exists()) {
+                f_rsaKeys.mkdir();
             }
 
         } catch (Exception e) {

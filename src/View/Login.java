@@ -46,8 +46,6 @@ public class Login extends javax.swing.JFrame {
 
         jLabel1.setText("Username");
 
-        jTextField1.setText("kk");
-
         jLabel2.setText("Password");
 
         jButton1.setText("LOGIN");
@@ -70,8 +68,6 @@ public class Login extends javax.swing.JFrame {
                 jLabel3MouseClicked(evt);
             }
         });
-
-        jPasswordField1.setText("123");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);

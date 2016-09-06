@@ -1,0 +1,22 @@
+These are the pending tasks, complete easier ones first and move the task to completed section once it is over
+
+-----------------------------------------
+To complete
+
+Registration all validations(email, phone etc)
+Forgot passwork email sending testing and verification
+Embed message frame(afrter choosing cover file) validation for password, must be more than or equal to 8
+Same page, afer selecting image show its thumbain(default thumbnail function in configuration file)
+Same page show file detqails, size, name etc
+
+Encrytion page show send button only after sucessfull encryption.
+Processing details text must percentage of encryption completed( see decryption page)
+
+Send page after sending to all show Joptio pane with completed message.
+Show send button only if atleast one is selected, or ask user to select atleast one user to send the data.
+
+Check database and make sure all details are stored, some feild like date etc are not stored, store it, also show the data and other relevent data in history page.
+
+----------------------------------------
+Completed
+

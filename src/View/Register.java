@@ -147,49 +147,73 @@ public class Register extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private boolean isValidPhone(String phone) {
+        boolean validPhone = true;
+        try {
+            Long.parseLong(phone);
+            if (phone.length() != 10) {
+                return false;
+            }
+        } catch (NumberFormatException e) {
+            return false;
+        }
+        return validPhone;
+    }
+    
+
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
-        String userName=jTextField1.getText();
-        String email=jTextField2.getText();
-        String phoneNumber=jTextField3.getText();
-        String password=new String(jPasswordField1.getPassword());
-        String confirmPassword=new String(jPasswordField2.getPassword());
-        if(userName.equals("")){
+        String userName = jTextField1.getText();
+        String email = jTextField2.getText();
+        String phoneNumber = jTextField3.getText();
+        String password = new String(jPasswordField1.getPassword());
+        String confirmPassword = new String(jPasswordField2.getPassword());
+        if (userName.equals("")) {
             
             JOptionPane.showMessageDialog(rootPane, "Enter your name");
-        }else if(email.equals("")){
+        } else if (email.equals("")) {
             
             JOptionPane.showMessageDialog(rootPane, "Enter your email");
-        }else if(phoneNumber.equals("")){
+        } else if (!isValidEmailAddress(email)) {
+            JOptionPane.showMessageDialog(rootPane, "Enter a valid email address");
+        } else if (phoneNumber.equals("")) {
             
             JOptionPane.showMessageDialog(rootPane, "Enter your phonenumber");
-        }else if(password.equals("")){
+        } else if (!isValidPhone(phoneNumber)) {
+            JOptionPane.showMessageDialog(rootPane, "Enter phone number in correct format");
+        } else if (password.equals("")) {
             
             JOptionPane.showMessageDialog(rootPane, "Enter your password");
-        }else if(confirmPassword.equals("")){
+        } else if (confirmPassword.equals("")) {
             
             JOptionPane.showMessageDialog(rootPane, "Enter your confirmPassword");
-        }
-             else if(password.equals(confirmPassword)){
-                Dbcon dbcon=new Dbcon();
-                int ins=dbcon.insert("insert into tbl_user_details(user_name,email_id,phone_number,password,created_at,last_updated_at)values('"+userName+"','"+email+"','"+phoneNumber+"','"+password+"','"+System.currentTimeMillis()+"','"+System.currentTimeMillis()+"')");
-                if(ins>0){
+        } else if (password.equals(confirmPassword)) {
+            Dbcon dbcon = new Dbcon();
+            int ins = dbcon.insert("insert into tbl_user_details(user_name,email_id,phone_number,password,created_at,last_updated_at)values('" + userName + "','" + email + "','" + phoneNumber + "','" + password + "','" + System.currentTimeMillis() + "','" + System.currentTimeMillis() + "')");
+            if (ins > 0) {
+                JOptionPane.showMessageDialog(rootPane, "Inserted successfully...");
                 this.dispose();
-                Login login=new Login();
+                Login login = new Login();
                 login.setVisible(true);
-                }
-                }else{
-                    JOptionPane.showMessageDialog(rootPane, "invalid");
-                }
+            }
+        } else {
+            JOptionPane.showMessageDialog(rootPane, "invalid");
+        }
         
-        
-        
-    }//GEN-LAST:event_jButton1ActionPerformed
 
+    }//GEN-LAST:event_jButton1ActionPerformed
+    
+    private boolean isValidEmailAddress(String email) {
+        String ePattern = "^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@((\\[[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\])|(([a-zA-Z\\-0-9]+\\.)+[a-zA-Z]{2,}))$";
+        java.util.regex.Pattern p = java.util.regex.Pattern.compile(ePattern);
+        java.util.regex.Matcher m = p.matcher(email);
+        return m.matches();
+    }
+    
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
         this.dispose();
-        Login login=new Login();
+        Login login = new Login();
         login.setVisible(true);
     }//GEN-LAST:event_jButton2ActionPerformed
 

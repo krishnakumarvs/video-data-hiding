@@ -10,6 +10,7 @@ import db.Dbcon;
 import java.io.File;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.table.DefaultTableModel;
@@ -103,11 +104,11 @@ public class EncryptHistory extends javax.swing.JFrame {
 
             },
             new String [] {
-                "ID", "NAME", "ALGORITHM"
+                "ID", "NAME", "ALGORITHM", "DATE"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false
+                false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -120,9 +121,12 @@ public class EncryptHistory extends javax.swing.JFrame {
             }
         });
         jScrollPane1.setViewportView(jTable1);
-        jTable1.getColumnModel().getColumn(0).setResizable(false);
-        jTable1.getColumnModel().getColumn(1).setResizable(false);
-        jTable1.getColumnModel().getColumn(2).setResizable(false);
+        if (jTable1.getColumnModel().getColumnCount() > 0) {
+            jTable1.getColumnModel().getColumn(0).setResizable(false);
+            jTable1.getColumnModel().getColumn(1).setResizable(false);
+            jTable1.getColumnModel().getColumn(2).setResizable(false);
+            jTable1.getColumnModel().getColumn(3).setResizable(false);
+        }
 
         jTextField1.setEditable(false);
 
@@ -252,7 +256,7 @@ public class EncryptHistory extends javax.swing.JFrame {
                             .addComponent(hidden_data_file))
                         .addGap(71, 71, 71))
                     .addGroup(layout.createSequentialGroup()
-                        .addContainerGap(79, Short.MAX_VALUE)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 398, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(27, 27, 27)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -294,7 +298,12 @@ public class EncryptHistory extends javax.swing.JFrame {
                 } else {
                     algo = "RSA";
                 }
-                dt.addRow(new String[]{rs.getString(1), rs.getString(8), algo});
+                String enc_date = rs.getString("file_processed_date");
+                long date2 = Long.parseLong(enc_date);
+                Date date3 = new Date(date2);
+                String date = date3.toString();
+
+                dt.addRow(new String[]{rs.getString(1), rs.getString(8), algo, date});
             }
             jTable1.setModel(dt);
 

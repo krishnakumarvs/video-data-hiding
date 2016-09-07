@@ -65,6 +65,11 @@ public class Processing extends javax.swing.JFrame {
         start_button = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowOpened(java.awt.event.WindowEvent evt) {
+                formWindowOpened(evt);
+            }
+        });
 
         jLabel1.setText("Processing");
 
@@ -104,7 +109,7 @@ public class Processing extends javax.swing.JFrame {
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(29, 29, 29)
-                                .addComponent(progress_bar, javax.swing.GroupLayout.DEFAULT_SIZE, 240, Short.MAX_VALUE))
+                                .addComponent(progress_bar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 181, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addComponent(jButton1)
@@ -168,6 +173,7 @@ public class Processing extends javax.swing.JFrame {
                 }
                 if (isSuccess) {
                     JOptionPane.showMessageDialog(rootPane, "Sucessfully embeded!");
+                    jButton1.setEnabled(true);
                 } else {
                     JOptionPane.showMessageDialog(rootPane, "Failed! Please try again");
                 }
@@ -219,7 +225,7 @@ public class Processing extends javax.swing.JFrame {
                     isCompleted = true;
                     if (result) {
                         isSuccess = true;
-                        new Dbcon().update("update tbl_file_process_history set cipher_file = '" + outputCipherFile.getName() + "' , cipher_file_name='" + outputCipherFile.getName() + "' , cipher_file_size=" + (outputCipherFile.length() / 1024) + " , encryption_complete_time ='" + System.currentTimeMillis() + "'  where history_id = " + history_id);
+                        new Dbcon().update("update tbl_file_process_history set cipher_file = '" + outputCipherFile.getName() + "' , cipher_file_name='" + outputCipherFile.getName() + "' , cipher_file_size=" + (outputCipherFile.length() / 1024) + " , encryption_complete_time ='" + System.currentTimeMillis() + "',file_processed_date='" + System.currentTimeMillis() + "'   where history_id = " + history_id);
                     }
                     break;
                 case 1: // File encryption
@@ -235,7 +241,7 @@ public class Processing extends javax.swing.JFrame {
                     isCompleted = true;
                     if (result) {
                         isSuccess = true;
-                        new Dbcon().update("update tbl_file_process_history set cipher_file = '" + outputCipherFile.getName() + "' , cipher_file_name='" + outputCipherFile.getName() + "' , cipher_file_size=" + (outputCipherFile.length() / 1024) + " , encryption_complete_time ='" + System.currentTimeMillis() + "'  where history_id = " + history_id);
+                        new Dbcon().update("update tbl_file_process_history set cipher_file = '" + outputCipherFile.getName() + "' , cipher_file_name='" + outputCipherFile.getName() + "' , cipher_file_size=" + (outputCipherFile.length() / 1024) + " , encryption_complete_time ='" + System.currentTimeMillis() + "',file_processed_date='" + System.currentTimeMillis() + "'  where history_id = " + history_id);
                     }
                     break;
                 default:
@@ -249,8 +255,14 @@ private void start_buttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-
 
     start_button.setEnabled(false);
     new videoEncryptionThread().start();
+    
     // TODO add your handling code here:
 }//GEN-LAST:event_start_buttonActionPerformed
+
+    private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
+        // TODO add your handling code here:
+        jButton1.setEnabled(false);
+    }//GEN-LAST:event_formWindowOpened
 
     /**
      * @param args the command line arguments

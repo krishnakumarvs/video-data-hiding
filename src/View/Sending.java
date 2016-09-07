@@ -142,15 +142,17 @@ public class Sending extends javax.swing.JFrame {
             }
         });
         jScrollPane1.setViewportView(user_table);
-        user_table.getColumnModel().getColumn(0).setMinWidth(50);
-        user_table.getColumnModel().getColumn(0).setPreferredWidth(50);
-        user_table.getColumnModel().getColumn(0).setMaxWidth(50);
-        user_table.getColumnModel().getColumn(4).setMinWidth(50);
-        user_table.getColumnModel().getColumn(4).setPreferredWidth(50);
-        user_table.getColumnModel().getColumn(4).setMaxWidth(50);
-        user_table.getColumnModel().getColumn(5).setMinWidth(0);
-        user_table.getColumnModel().getColumn(5).setPreferredWidth(0);
-        user_table.getColumnModel().getColumn(5).setMaxWidth(0);
+        if (user_table.getColumnModel().getColumnCount() > 0) {
+            user_table.getColumnModel().getColumn(0).setMinWidth(50);
+            user_table.getColumnModel().getColumn(0).setPreferredWidth(50);
+            user_table.getColumnModel().getColumn(0).setMaxWidth(50);
+            user_table.getColumnModel().getColumn(4).setMinWidth(50);
+            user_table.getColumnModel().getColumn(4).setPreferredWidth(50);
+            user_table.getColumnModel().getColumn(4).setMaxWidth(50);
+            user_table.getColumnModel().getColumn(5).setMinWidth(0);
+            user_table.getColumnModel().getColumn(5).setPreferredWidth(0);
+            user_table.getColumnModel().getColumn(5).setMaxWidth(0);
+        }
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -239,6 +241,7 @@ public class Sending extends javax.swing.JFrame {
                     chunkSum = chunkSum + chunk;
                 }
                 progress_bar.setValue(100);
+                JOptionPane.showMessageDialog(rootPane, "Send successfully...");
 
             } catch (Exception e) {
                 e.printStackTrace();
@@ -248,8 +251,22 @@ public class Sending extends javax.swing.JFrame {
 
     private void send_buttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_send_buttonActionPerformed
         // TODO add your handling code here:
-        send_button.setEnabled(false);
-        new sendFileThread().start();
+        DefaultTableModel dtm = (DefaultTableModel) user_table.getModel();
+        int nRow = dtm.getRowCount(), nCol = dtm.getColumnCount();
+        Boolean count = false;
+        for (int i = 0; i < nRow; i++) {
+            boolean isSelected = (boolean) dtm.getValueAt(i, 4);
+            if (isSelected) {
+                count = true;
+                new sendFileThread().start();
+                send_button.setEnabled(false);
+            }
+
+        }
+        if (count == false) {
+            JOptionPane.showMessageDialog(rootPane, "Select user");
+        }
+
     }//GEN-LAST:event_send_buttonActionPerformed
 
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened

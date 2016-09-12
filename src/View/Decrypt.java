@@ -175,10 +175,10 @@ public class Decrypt extends javax.swing.JFrame {
             int val = 0;
             try {
                 progress_bar.setValue(val);
-                while (val <= 100) {
-                    progress_bar.setValue(++val);
+                while (val < 100) {
                     processing_label.setText("Data retreival percentage - " + val + " %");
-                    Thread.sleep(10);
+                    progress_bar.setValue(++val);
+                    Thread.sleep(100);
 
                 }
                 while (!isCompleted) {

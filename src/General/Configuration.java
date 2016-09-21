@@ -27,6 +27,7 @@ public class Configuration {
     public static String tempFiles = "tempFiles/";
     public static String sendPasswordSubject = "Video data hiding- forgot password ";
     public static String rsaKeys = "rsaKeys/";
+     public static String sendImageSubject = "video - Authenticated data ";
 
     public static void setIconOnLabel(String fileString, JLabel label) {
         // convert string file path to image icona and set on this label

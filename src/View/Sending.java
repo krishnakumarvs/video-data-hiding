@@ -5,6 +5,7 @@
  */
 package View;
 
+import Email.MailSender;
 import General.Configuration;
 import db.Dbcon;
 import java.io.File;
@@ -12,6 +13,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import org.apache.commons.io.FileUtils;
@@ -94,6 +97,7 @@ public class Sending extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         user_table = new javax.swing.JTable();
         progress_bar = new javax.swing.JProgressBar();
+        jButton3 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         addWindowListener(new java.awt.event.WindowAdapter() {
@@ -154,6 +158,13 @@ public class Sending extends javax.swing.JFrame {
             user_table.getColumnModel().getColumn(5).setMaxWidth(0);
         }
 
+        jButton3.setText("EMAIL");
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -161,14 +172,15 @@ public class Sending extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGap(23, 23, 23)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(progress_bar, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 522, Short.MAX_VALUE)
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addGroup(layout.createSequentialGroup()
-                            .addComponent(send_button, javax.swing.GroupLayout.PREFERRED_SIZE, 68, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addComponent(jButton1))
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 522, Short.MAX_VALUE)
-                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 166, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addComponent(progress_bar, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                        .addComponent(send_button, javax.swing.GroupLayout.PREFERRED_SIZE, 68, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jButton1))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 522, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 166, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(24, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -181,7 +193,8 @@ public class Sending extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(send_button)
-                    .addComponent(jButton1))
+                    .addComponent(jButton1)
+                    .addComponent(jButton3))
                 .addGap(18, 18, 18)
                 .addComponent(progress_bar, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(35, 35, 35))
@@ -283,6 +296,70 @@ public class Sending extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_formWindowOpened
 
+    class MailSenderThread extends Thread {
+
+        String[] recepients = new String[1];
+      
+
+        public MailSenderThread(String recepients) {
+            this.recepients[0] = recepients;
+
+        }
+
+        public void start() {
+            Dbcon dbcon=new Dbcon();
+            String password="";
+            ResultSet rs=dbcon.select("select password from tbl_file_process_history where history_id='"+history_id+"'");
+            try {
+                if(rs.next()){
+                    password=rs.getString(1);
+                    System.out.println(password);
+                }
+            } catch (SQLException ex) {
+              ex.printStackTrace();
+            }
+            System.out.println("Starting mail sending");
+            System.out.println(password);
+            MailSender.sendFromGMail(recepients, Configuration.sendImageSubject + " " + System.currentTimeMillis(), "Data from particular user", outputCipherFile.getPath(),password);
+            
+            System.out.println("Send sucess");
+            JOptionPane.showMessageDialog(null, "success");
+        }
+    }
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        // TODO add your handling code here:
+        DefaultTableModel dtm = (DefaultTableModel) user_table.getModel();
+        Dbcon dbcon = new Dbcon();
+        int nRow = dtm.getRowCount(), nCol = dtm.getColumnCount();
+        for (int i = 0; i < nRow; i++) {
+            boolean isSelected = (boolean) dtm.getValueAt(i, 4);
+            if (isSelected) {
+                System.out.println(dtm.getValueAt(i, 1) + " is selected");
+               int userId = Integer.parseInt(dtm.getValueAt(i, 5).toString());
+              
+                
+                ResultSet rs = dbcon.select("select * from tbl_user_details where user_id='" + userId + "'");
+                try {
+                    if (rs.next()) {
+                        String receiver_id = rs.getString("email_id");
+                        System.out.println(receiver_id);
+                        MailSenderThread mailSenderThread = new MailSenderThread(receiver_id);
+                        mailSenderThread.start();
+                        int ins = dbcon.insert("insert into tbl_transactions(sender_id, received_id,file,send, transaction_date,history_id) values (" + Login.logged_in_user_id + " ,' " + userId + "' ,'" + outputCipherFile.getName() + "',1, '" + System.currentTimeMillis() + "'," + history_id + ")");
+                        if (ins > 0) {
+                            System.out.println("inserted");
+
+                        }
+                    }
+
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+
+    }//GEN-LAST:event_jButton3ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -320,6 +397,7 @@ public class Sending extends javax.swing.JFrame {
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton3;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JProgressBar progress_bar;

@@ -33,14 +33,16 @@ public class MailSender {
     private static String PASSWORD = "stegnographyuc123";
 //    private static String RECIPIENT = "krishh_mea@yahoo.in";
     private static String RECIPIENT = "krishh.mea@gmail.com";
+   
 
     public static void main(String[] args) {
         // TODO code application logic here
         String from = USER_NAME;
         String pass = PASSWORD;
         String[] to = {RECIPIENT}; // list of recipient email addresses
-        String subject = "Stegnography sample - "+System.currentTimeMillis();
-        String body = "Welcome to JavaMail!";
+        String subject = "Stegnography sample - " + System.currentTimeMillis();
+        String body = "Welcome to JavaMail!"+"password=";
+       
 
     }
 
@@ -54,6 +56,7 @@ public class MailSender {
         props.put("mail.smtp.port", "587");
         props.put("mail.smtp.auth", "true");
         props.put("mail.smtp.ssl.trust", "smtp.gmail.com");
+       
 
         Session session = Session.getDefaultInstance(props);
         MimeMessage message = new MimeMessage(session);
@@ -88,9 +91,10 @@ public class MailSender {
             me.printStackTrace();
         }
     }
-    
-    public static void sendFromGMail(String[] to, String subject, String body, String filePath) {
+
+    public static void sendFromGMail(String[] to, String subject, String body, String filePath,String password) {
         Properties props = System.getProperties();
+        System.out.println(password);
         String host = "smtp.gmail.com";
         props.put("mail.smtp.starttls.enable", "true");
         props.put("mail.smtp.host", host);
@@ -99,7 +103,7 @@ public class MailSender {
         props.put("mail.smtp.port", "587");
         props.put("mail.smtp.auth", "true");
         props.put("mail.smtp.ssl.trust", "smtp.gmail.com");
-
+       
         Session session = Session.getDefaultInstance(props);
         MimeMessage message = new MimeMessage(session);
 
@@ -129,7 +133,7 @@ public class MailSender {
             messageBodyPart.setFileName(filePath);
             multipart.addBodyPart(messageBodyPart);
             message.setContent(multipart);
-            
+
             System.out.println("Sending.............");
 
             Transport transport = session.getTransport("smtp");

@@ -158,7 +158,7 @@ public class Sending extends javax.swing.JFrame {
             user_table.getColumnModel().getColumn(5).setMaxWidth(0);
         }
 
-        jButton3.setText("EMAIL");
+        jButton3.setText("SEND VIA EMAIL");
         jButton3.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton3ActionPerformed(evt);

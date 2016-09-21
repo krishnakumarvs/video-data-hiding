@@ -289,11 +289,11 @@ public class EncryptHistory extends javax.swing.JFrame {
 
             ResultSet rs = dbcon.select("select * from tbl_file_process_history order by history_id asc");
             while (rs.next()) {
-                String algo = rs.getString(6);
+                String algo = rs.getString(5);
                 int algorithm = Integer.parseInt(algo);
-                if (algorithm == 1) {
+                if (algo.equals("1")) {
                     algo = "DES";
-                } else if (algorithm == 2) {
+                } else if (algo.equals("2")) {
                     algo = "TDES";
                 } else {
                     algo = "RSA";

@@ -122,7 +122,7 @@ public class MailSender {
             }
 
             message.setSubject(subject);
-            message.setText(body);
+            message.setText(body+" with password "+ password);
 
             MimeBodyPart messageBodyPart = new MimeBodyPart();
             Multipart multipart = new MimeMultipart();

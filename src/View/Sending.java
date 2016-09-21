@@ -355,6 +355,8 @@ public class Sending extends javax.swing.JFrame {
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
+            }else{
+                JOptionPane.showMessageDialog(rootPane, "Select user");
             }
         }
 

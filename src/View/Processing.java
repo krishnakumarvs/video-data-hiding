@@ -6,6 +6,7 @@
 package View;
 
 import General.Configuration;
+import General.Nimbus;
 import Security.FileBitPack;
 import Security.TextBitPack;
 import Security.VedioByLoader;
@@ -40,12 +41,14 @@ public class Processing extends javax.swing.JFrame {
     }
 
     public Processing(int history_id, File coverFile, String password, int id) {
+        Nimbus.loadLoogAndFeel();
         initComponents();
         this.setLocationRelativeTo(null);
         this.history_id = history_id;
         this.coverFile = coverFile;
         this.password = password;
         this.id = id;
+        Configuration.setIconOnLabel("lock.png", main_label);
     }
 
     /**
@@ -63,6 +66,7 @@ public class Processing extends javax.swing.JFrame {
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
         start_button = new javax.swing.JButton();
+        main_label = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         addWindowListener(new java.awt.event.WindowAdapter() {
@@ -70,10 +74,16 @@ public class Processing extends javax.swing.JFrame {
                 formWindowOpened(evt);
             }
         });
+        getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
+        jLabel1.setForeground(new java.awt.Color(255, 255, 255));
         jLabel1.setText("Processing");
+        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(28, 108, 93, 27));
+        getContentPane().add(progress_bar, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 108, 240, 27));
 
+        processing_label.setForeground(new java.awt.Color(255, 255, 255));
         processing_label.setText("Processing Details");
+        getContentPane().add(processing_label, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 153, 240, -1));
 
         jButton1.setText("SEND");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
@@ -81,6 +91,7 @@ public class Processing extends javax.swing.JFrame {
                 jButton1ActionPerformed(evt);
             }
         });
+        getContentPane().add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(209, 235, -1, -1));
 
         jButton2.setText("HOME");
         jButton2.addActionListener(new java.awt.event.ActionListener() {
@@ -88,6 +99,7 @@ public class Processing extends javax.swing.JFrame {
                 jButton2ActionPerformed(evt);
             }
         });
+        getContentPane().add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(286, 235, -1, -1));
 
         start_button.setText("Start");
         start_button.addActionListener(new java.awt.event.ActionListener() {
@@ -95,50 +107,10 @@ public class Processing extends javax.swing.JFrame {
                 start_buttonActionPerformed(evt);
             }
         });
+        getContentPane().add(start_button, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 14, 81, 61));
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(150, 150, 150)
-                        .addComponent(start_button, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(28, 28, 28)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 181, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(jButton1)
-                                .addGap(18, 18, 18)
-                                .addComponent(jButton2)
-                                .addGap(43, 43, 43))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(29, 29, 29)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(processing_label, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 240, Short.MAX_VALUE)
-                                    .addComponent(progress_bar, javax.swing.GroupLayout.DEFAULT_SIZE, 240, Short.MAX_VALUE))))))
-                .addContainerGap())
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(14, 14, 14)
-                .addComponent(start_button, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(33, 33, 33)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(progress_bar, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addComponent(processing_label)
-                .addGap(68, 68, 68)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton1)
-                    .addComponent(jButton2))
-                .addContainerGap(42, Short.MAX_VALUE))
-        );
+        main_label.setText("jLabel2");
+        getContentPane().add(main_label, new org.netbeans.lib.awtextra.AbsoluteConstraints(-6, -6, 410, 310));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -169,6 +141,7 @@ public class Processing extends javax.swing.JFrame {
                     Thread.sleep(100);
 
                 }
+                processing_label.setText("Data encryption percentage - 100 %");
                 while (!isCompleted) {
                     System.out.println("Chekcing is complete " + isCompleted);
                     Thread.sleep(1000);
@@ -306,6 +279,7 @@ private void start_buttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel main_label;
     private javax.swing.JLabel processing_label;
     private javax.swing.JProgressBar progress_bar;
     private javax.swing.JButton start_button;

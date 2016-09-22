@@ -8,6 +8,8 @@ package View;
 import EncryptionAlgorithms.DesEncrypter;
 import EncryptionAlgorithms.RSAEncryptor;
 import EncryptionAlgorithms.TrippleDes;
+import General.Configuration;
+import General.Nimbus;
 import db.Dbcon;
 import java.io.File;
 import java.io.FileInputStream;
@@ -35,6 +37,7 @@ public class SelectAlgorithm extends javax.swing.JFrame {
      * Creates new form SelectAlgorithm
      */
     public SelectAlgorithm() {
+        Nimbus.loadLoogAndFeel();
         initComponents();
         this.setLocationRelativeTo(null);
         algorith_details.setContentType("text/html");
@@ -43,6 +46,7 @@ public class SelectAlgorithm extends javax.swing.JFrame {
     }
 
     public SelectAlgorithm(int history_id, File coverFile, String password) {
+        Nimbus.loadLoogAndFeel();
         initComponents();
         this.setLocationRelativeTo(null);
         algorith_details.setContentType("text/html");
@@ -50,7 +54,7 @@ public class SelectAlgorithm extends javax.swing.JFrame {
         this.coverFile = coverFile;
         this.password = password;
         algorithmSelected();
-
+        Configuration.setIconOnLabel("binary.jpg", main_label);
     }
 
     /**
@@ -72,12 +76,17 @@ public class SelectAlgorithm extends javax.swing.JFrame {
         jButton2 = new javax.swing.JButton();
         jScrollPane2 = new javax.swing.JScrollPane();
         algorith_details = new javax.swing.JTextPane();
+        main_label = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
+        jLabel1.setForeground(new java.awt.Color(255, 255, 255));
         jLabel1.setText("Select Algorithm");
+        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(56, 29, 199, 24));
 
         buttonGroup7.add(jRadioButton1);
+        jRadioButton1.setForeground(new java.awt.Color(255, 255, 255));
         jRadioButton1.setSelected(true);
         jRadioButton1.setText("DES");
         jRadioButton1.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -85,24 +94,31 @@ public class SelectAlgorithm extends javax.swing.JFrame {
                 jRadioButton1MouseClicked(evt);
             }
         });
+        getContentPane().add(jRadioButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(56, 87, -1, -1));
 
         buttonGroup7.add(jRadioButton2);
+        jRadioButton2.setForeground(new java.awt.Color(255, 255, 255));
         jRadioButton2.setText("Tripple DES");
         jRadioButton2.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jRadioButton2MouseClicked(evt);
             }
         });
+        getContentPane().add(jRadioButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(152, 87, -1, -1));
 
         buttonGroup7.add(jRadioButton3);
+        jRadioButton3.setForeground(new java.awt.Color(255, 255, 255));
         jRadioButton3.setText("RSA");
         jRadioButton3.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jRadioButton3MouseClicked(evt);
             }
         });
+        getContentPane().add(jRadioButton3, new org.netbeans.lib.awtextra.AbsoluteConstraints(278, 87, -1, -1));
 
+        jLabel2.setForeground(new java.awt.Color(255, 255, 255));
         jLabel2.setText("DES Details");
+        getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(24, 145, 158, -1));
 
         jButton1.setText("START");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
@@ -110,6 +126,7 @@ public class SelectAlgorithm extends javax.swing.JFrame {
                 jButton1ActionPerformed(evt);
             }
         });
+        getContentPane().add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(219, 547, -1, -1));
 
         jButton2.setText("BACK");
         jButton2.addActionListener(new java.awt.event.ActionListener() {
@@ -117,57 +134,14 @@ public class SelectAlgorithm extends javax.swing.JFrame {
                 jButton2ActionPerformed(evt);
             }
         });
+        getContentPane().add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(338, 547, -1, -1));
 
         jScrollPane2.setViewportView(algorith_details);
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(56, 56, 56)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jRadioButton1)
-                        .addGap(51, 51, 51)
-                        .addComponent(jRadioButton2)
-                        .addGap(47, 47, 47)
-                        .addComponent(jRadioButton3))
-                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 199, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(279, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(0, 219, Short.MAX_VALUE)
-                .addComponent(jButton1)
-                .addGap(54, 54, 54)
-                .addComponent(jButton2)
-                .addGap(205, 205, 205))
-            .addGroup(layout.createSequentialGroup()
-                .addGap(24, 24, 24)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 556, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(22, Short.MAX_VALUE))
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(29, 29, 29)
-                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(34, 34, 34)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jRadioButton1)
-                    .addComponent(jRadioButton2)
-                    .addComponent(jRadioButton3))
-                .addGap(35, 35, 35)
-                .addComponent(jLabel2)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 366, Short.MAX_VALUE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton2)
-                    .addComponent(jButton1))
-                .addGap(20, 20, 20))
-        );
+        getContentPane().add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(24, 170, 556, 366));
+
+        main_label.setText("jLabel3");
+        getContentPane().add(main_label, new org.netbeans.lib.awtextra.AbsoluteConstraints(-6, -6, 610, 600));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -336,5 +310,6 @@ public class SelectAlgorithm extends javax.swing.JFrame {
     private javax.swing.JRadioButton jRadioButton2;
     private javax.swing.JRadioButton jRadioButton3;
     private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JLabel main_label;
     // End of variables declaration//GEN-END:variables
 }

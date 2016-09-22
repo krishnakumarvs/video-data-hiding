@@ -7,6 +7,7 @@ package View;
 
 import Email.MailSender;
 import General.Configuration;
+import General.Nimbus;
 import db.Dbcon;
 import java.io.File;
 import java.sql.ResultSet;
@@ -38,11 +39,13 @@ public class Sending extends javax.swing.JFrame {
     }
 
     public Sending(int history_id, File outputCipherFile) {
+        Nimbus.loadLoogAndFeel();
         initComponents();
         this.setLocationRelativeTo(null);
         this.history_id = history_id;
         this.outputCipherFile = outputCipherFile;
         loadValuesToTable();
+        Configuration.setIconOnLabel("blocks_green.jpg", main_label);
     }
 
     private void clearTable() {
@@ -98,6 +101,7 @@ public class Sending extends javax.swing.JFrame {
         user_table = new javax.swing.JTable();
         progress_bar = new javax.swing.JProgressBar();
         jButton3 = new javax.swing.JButton();
+        main_label = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         addWindowListener(new java.awt.event.WindowAdapter() {
@@ -105,8 +109,11 @@ public class Sending extends javax.swing.JFrame {
                 formWindowOpened(evt);
             }
         });
+        getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
+        jLabel1.setForeground(new java.awt.Color(255, 255, 255));
         jLabel1.setText("Select Recepients");
+        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(23, 18, 166, -1));
 
         jButton1.setText("HOME");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
@@ -114,6 +121,7 @@ public class Sending extends javax.swing.JFrame {
                 jButton1ActionPerformed(evt);
             }
         });
+        getContentPane().add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(238, 209, -1, -1));
 
         send_button.setText("SEND");
         send_button.addActionListener(new java.awt.event.ActionListener() {
@@ -121,6 +129,7 @@ public class Sending extends javax.swing.JFrame {
                 send_buttonActionPerformed(evt);
             }
         });
+        getContentPane().add(send_button, new org.netbeans.lib.awtextra.AbsoluteConstraints(23, 209, 68, -1));
 
         user_table.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -146,17 +155,18 @@ public class Sending extends javax.swing.JFrame {
             }
         });
         jScrollPane1.setViewportView(user_table);
-        if (user_table.getColumnModel().getColumnCount() > 0) {
-            user_table.getColumnModel().getColumn(0).setMinWidth(50);
-            user_table.getColumnModel().getColumn(0).setPreferredWidth(50);
-            user_table.getColumnModel().getColumn(0).setMaxWidth(50);
-            user_table.getColumnModel().getColumn(4).setMinWidth(50);
-            user_table.getColumnModel().getColumn(4).setPreferredWidth(50);
-            user_table.getColumnModel().getColumn(4).setMaxWidth(50);
-            user_table.getColumnModel().getColumn(5).setMinWidth(0);
-            user_table.getColumnModel().getColumn(5).setPreferredWidth(0);
-            user_table.getColumnModel().getColumn(5).setMaxWidth(0);
-        }
+        user_table.getColumnModel().getColumn(0).setMinWidth(50);
+        user_table.getColumnModel().getColumn(0).setPreferredWidth(50);
+        user_table.getColumnModel().getColumn(0).setMaxWidth(50);
+        user_table.getColumnModel().getColumn(4).setMinWidth(50);
+        user_table.getColumnModel().getColumn(4).setPreferredWidth(50);
+        user_table.getColumnModel().getColumn(4).setMaxWidth(50);
+        user_table.getColumnModel().getColumn(5).setMinWidth(0);
+        user_table.getColumnModel().getColumn(5).setPreferredWidth(0);
+        user_table.getColumnModel().getColumn(5).setMaxWidth(0);
+
+        getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(23, 43, 522, 155));
+        getContentPane().add(progress_bar, new org.netbeans.lib.awtextra.AbsoluteConstraints(23, 250, 522, 25));
 
         jButton3.setText("SEND VIA EMAIL");
         jButton3.addActionListener(new java.awt.event.ActionListener() {
@@ -164,41 +174,10 @@ public class Sending extends javax.swing.JFrame {
                 jButton3ActionPerformed(evt);
             }
         });
+        getContentPane().add(jButton3, new org.netbeans.lib.awtextra.AbsoluteConstraints(101, 209, 131, -1));
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(23, 23, 23)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(progress_bar, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                        .addComponent(send_button, javax.swing.GroupLayout.PREFERRED_SIZE, 68, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButton1))
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 522, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 166, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(24, Short.MAX_VALUE))
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(18, 18, 18)
-                .addComponent(jLabel1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(send_button)
-                    .addComponent(jButton1)
-                    .addComponent(jButton3))
-                .addGap(18, 18, 18)
-                .addComponent(progress_bar, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(35, 35, 35))
-        );
+        main_label.setText("jLabel2");
+        getContentPane().add(main_label, new org.netbeans.lib.awtextra.AbsoluteConstraints(-6, -6, 580, 320));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -400,6 +379,7 @@ public class Sending extends javax.swing.JFrame {
     private javax.swing.JButton jButton3;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JLabel main_label;
     private javax.swing.JProgressBar progress_bar;
     private javax.swing.JButton send_button;
     private javax.swing.JTable user_table;

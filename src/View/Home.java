@@ -6,6 +6,7 @@
 package View;
 
 import General.Configuration;
+import General.Nimbus;
 import db.Dbcon;
 import java.io.File;
 import java.sql.ResultSet;
@@ -30,11 +31,13 @@ public class Home extends javax.swing.JFrame {
      * Creates new form Home
      */
     public Home() {
+        Nimbus.loadLoogAndFeel();
         initComponents();
         this.setLocationRelativeTo(null);
         loadIcons();
         loadLastSendFiles();
         loadLastReceivedFiles();
+            Configuration.setIconOnLabel("securiyuBack.jpg", main_label);
     }
 
     private void loadLastReceivedFiles() {
@@ -299,6 +302,7 @@ public class Home extends javax.swing.JFrame {
         last_receive_sender_5 = new javax.swing.JLabel();
         last_receive_arrow_5 = new javax.swing.JLabel();
         last_receive_icon_5 = new javax.swing.JLabel();
+        main_label = new javax.swing.JLabel();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         jMenuItem5 = new javax.swing.JMenuItem();
@@ -327,12 +331,16 @@ public class Home extends javax.swing.JFrame {
                 formWindowOpened(evt);
             }
         });
+        getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 18));
+        jLabel1.setForeground(new java.awt.Color(255, 255, 255));
         jLabel1.setText("Last send files");
+        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(28, 11, 178, -1));
 
         last_send_icon_1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         last_send_icon_1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        getContentPane().add(last_send_icon_1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 69, 50, 50));
 
         jButton1.setText("Previous encyptions");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
@@ -340,18 +348,26 @@ public class Home extends javax.swing.JFrame {
                 jButton1ActionPerformed(evt);
             }
         });
+        getContentPane().add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(24, 406, 168, -1));
 
+        last_send_receiver_1.setForeground(new java.awt.Color(255, 255, 255));
         last_send_receiver_1.setText("Recever name");
+        getContentPane().add(last_send_receiver_1, new org.netbeans.lib.awtextra.AbsoluteConstraints(148, 81, 115, 30));
 
         jSeparator1.setOrientation(javax.swing.SwingConstants.VERTICAL);
+        getContentPane().add(jSeparator1, new org.netbeans.lib.awtextra.AbsoluteConstraints(267, 11, 14, 431));
 
         jSeparator2.setOrientation(javax.swing.SwingConstants.VERTICAL);
+        getContentPane().add(jSeparator2, new org.netbeans.lib.awtextra.AbsoluteConstraints(546, 46, 15, 396));
 
-        jLabel9.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        jLabel9.setFont(new java.awt.Font("Segoe UI", 1, 18));
+        jLabel9.setForeground(new java.awt.Color(255, 255, 255));
         jLabel9.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel9.setText("Select Cover File");
+        getContentPane().add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(287, 11, 233, -1));
 
         jLabel10.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        getContentPane().add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(436, 107, 58, 50));
 
         jButton2.setText("CLEAR");
         jButton2.addActionListener(new java.awt.event.ActionListener() {
@@ -359,6 +375,7 @@ public class Home extends javax.swing.JFrame {
                 jButton2ActionPerformed(evt);
             }
         });
+        getContentPane().add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 382, -1, -1));
 
         next_button.setText("NEXT");
         next_button.addActionListener(new java.awt.event.ActionListener() {
@@ -366,9 +383,13 @@ public class Home extends javax.swing.JFrame {
                 next_buttonActionPerformed(evt);
             }
         });
+        getContentPane().add(next_button, new org.netbeans.lib.awtextra.AbsoluteConstraints(433, 382, -1, -1));
 
-        jLabel11.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        jLabel11.setFont(new java.awt.Font("Segoe UI", 1, 18));
+        jLabel11.setForeground(new java.awt.Color(255, 255, 255));
         jLabel11.setText("Receiving Data");
+        getContentPane().add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(600, 11, 132, -1));
+        getContentPane().add(last_send_arrow_1, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 81, 72, 30));
 
         jButton4.setText("HISTORY");
         jButton4.addActionListener(new java.awt.event.ActionListener() {
@@ -376,6 +397,7 @@ public class Home extends javax.swing.JFrame {
                 jButton4ActionPerformed(evt);
             }
         });
+        getContentPane().add(jButton4, new org.netbeans.lib.awtextra.AbsoluteConstraints(667, 381, -1, -1));
 
         jButton5.setText("Browse");
         jButton5.addActionListener(new java.awt.event.ActionListener() {
@@ -383,71 +405,123 @@ public class Home extends javax.swing.JFrame {
                 jButton5ActionPerformed(evt);
             }
         });
+        getContentPane().add(jButton5, new org.netbeans.lib.awtextra.AbsoluteConstraints(287, 71, 207, -1));
 
         jLabel8.setFont(new java.awt.Font("Tahoma", 1, 12));
+        jLabel8.setForeground(new java.awt.Color(255, 255, 255));
         jLabel8.setText("File Name");
+        getContentPane().add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(287, 168, 249, 24));
 
-        jLabel24.setFont(new java.awt.Font("Tahoma", 1, 12));
+        jLabel24.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        jLabel24.setForeground(new java.awt.Color(255, 255, 255));
         jLabel24.setText("File Size");
+        getContentPane().add(jLabel24, new org.netbeans.lib.awtextra.AbsoluteConstraints(287, 249, 249, 24));
 
+        file_name_label.setForeground(new java.awt.Color(255, 255, 255));
         file_name_label.setText("No file selected");
+        getContentPane().add(file_name_label, new org.netbeans.lib.awtextra.AbsoluteConstraints(287, 198, 249, -1));
 
+        file_size_label.setForeground(new java.awt.Color(255, 255, 255));
         file_size_label.setText("0 Kb");
+        getContentPane().add(file_size_label, new org.netbeans.lib.awtextra.AbsoluteConstraints(287, 279, 249, -1));
 
         jLabel25.setFont(new java.awt.Font("Tahoma", 1, 12));
+        jLabel25.setForeground(new java.awt.Color(255, 255, 255));
         jLabel25.setText("File Format");
+        getContentPane().add(jLabel25, new org.netbeans.lib.awtextra.AbsoluteConstraints(287, 321, 249, 24));
 
+        file_format_text.setForeground(new java.awt.Color(255, 255, 255));
         file_format_text.setText("No file selected");
+        getContentPane().add(file_format_text, new org.netbeans.lib.awtextra.AbsoluteConstraints(287, 351, 249, 20));
 
         last_send_icon_2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         last_send_icon_2.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        getContentPane().add(last_send_icon_2, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 137, 50, 50));
+        getContentPane().add(last_send_arrow_2, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 149, 72, 30));
 
+        last_send_receiver_2.setForeground(new java.awt.Color(255, 255, 255));
         last_send_receiver_2.setText("Recever name");
+        getContentPane().add(last_send_receiver_2, new org.netbeans.lib.awtextra.AbsoluteConstraints(148, 149, 115, 30));
 
         last_send_icon_3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         last_send_icon_3.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        getContentPane().add(last_send_icon_3, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 205, 50, 50));
+        getContentPane().add(last_send_arrow_3, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 217, 72, 30));
 
+        last_send_receiver_3.setForeground(new java.awt.Color(255, 255, 255));
         last_send_receiver_3.setText("Recever name");
+        getContentPane().add(last_send_receiver_3, new org.netbeans.lib.awtextra.AbsoluteConstraints(148, 217, 115, 30));
 
         last_send_icon_4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         last_send_icon_4.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        getContentPane().add(last_send_icon_4, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 273, 50, 50));
+        getContentPane().add(last_send_arrow_4, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 285, 72, 30));
 
+        last_send_receiver_4.setForeground(new java.awt.Color(255, 255, 255));
         last_send_receiver_4.setText("Recever name");
+        getContentPane().add(last_send_receiver_4, new org.netbeans.lib.awtextra.AbsoluteConstraints(148, 285, 115, 30));
 
         last_send_icon_5.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         last_send_icon_5.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        getContentPane().add(last_send_icon_5, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 341, 50, 50));
+        getContentPane().add(last_send_arrow_5, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 353, 72, 30));
 
+        last_send_receiver_5.setForeground(new java.awt.Color(255, 255, 255));
         last_send_receiver_5.setText("Recever name");
+        getContentPane().add(last_send_receiver_5, new org.netbeans.lib.awtextra.AbsoluteConstraints(148, 353, 115, 30));
 
+        last_receive_sender_1.setForeground(new java.awt.Color(255, 255, 255));
         last_receive_sender_1.setText("Sender name");
+        getContentPane().add(last_receive_sender_1, new org.netbeans.lib.awtextra.AbsoluteConstraints(565, 85, 94, 29));
 
         last_receive_arrow_1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        getContentPane().add(last_receive_arrow_1, new org.netbeans.lib.awtextra.AbsoluteConstraints(665, 84, 80, 30));
 
         last_receive_icon_1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        getContentPane().add(last_receive_icon_1, new org.netbeans.lib.awtextra.AbsoluteConstraints(763, 74, 50, 50));
 
+        last_receive_sender_2.setForeground(new java.awt.Color(255, 255, 255));
         last_receive_sender_2.setText("Sender name");
+        getContentPane().add(last_receive_sender_2, new org.netbeans.lib.awtextra.AbsoluteConstraints(565, 146, 94, 29));
 
         last_receive_arrow_2.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        getContentPane().add(last_receive_arrow_2, new org.netbeans.lib.awtextra.AbsoluteConstraints(665, 145, 80, 30));
 
         last_receive_icon_2.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        getContentPane().add(last_receive_icon_2, new org.netbeans.lib.awtextra.AbsoluteConstraints(763, 135, 50, 50));
 
+        last_receive_sender_3.setForeground(new java.awt.Color(255, 255, 255));
         last_receive_sender_3.setText("Sender name");
+        getContentPane().add(last_receive_sender_3, new org.netbeans.lib.awtextra.AbsoluteConstraints(565, 207, 94, 29));
 
         last_receive_arrow_3.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        getContentPane().add(last_receive_arrow_3, new org.netbeans.lib.awtextra.AbsoluteConstraints(665, 206, 80, 30));
 
         last_receive_icon_3.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        getContentPane().add(last_receive_icon_3, new org.netbeans.lib.awtextra.AbsoluteConstraints(763, 196, 50, 50));
 
+        last_receive_sender_4.setForeground(new java.awt.Color(255, 255, 255));
         last_receive_sender_4.setText("Sender name");
+        getContentPane().add(last_receive_sender_4, new org.netbeans.lib.awtextra.AbsoluteConstraints(565, 268, 94, 29));
 
         last_receive_arrow_4.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        getContentPane().add(last_receive_arrow_4, new org.netbeans.lib.awtextra.AbsoluteConstraints(665, 267, 80, 30));
 
         last_receive_icon_4.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        getContentPane().add(last_receive_icon_4, new org.netbeans.lib.awtextra.AbsoluteConstraints(763, 257, 50, 50));
 
+        last_receive_sender_5.setForeground(new java.awt.Color(255, 255, 255));
         last_receive_sender_5.setText("Sender name");
+        getContentPane().add(last_receive_sender_5, new org.netbeans.lib.awtextra.AbsoluteConstraints(565, 336, 94, 29));
 
         last_receive_arrow_5.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        getContentPane().add(last_receive_arrow_5, new org.netbeans.lib.awtextra.AbsoluteConstraints(665, 335, 80, 30));
 
         last_receive_icon_5.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        getContentPane().add(last_receive_icon_5, new org.netbeans.lib.awtextra.AbsoluteConstraints(763, 325, 50, 50));
+
+        main_label.setText("jLabel2");
+        getContentPane().add(main_label, new org.netbeans.lib.awtextra.AbsoluteConstraints(-6, -6, 860, 470));
 
         jMenu1.setText("Profile");
         jMenu1.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -507,257 +581,6 @@ public class Home extends javax.swing.JFrame {
         jMenuBar1.add(jMenu9);
 
         setJMenuBar(jMenuBar1);
-
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(24, 24, 24)
-                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 168, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 71, Short.MAX_VALUE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addComponent(last_send_icon_2, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(last_send_arrow_2, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(last_send_receiver_2, javax.swing.GroupLayout.DEFAULT_SIZE, 115, Short.MAX_VALUE))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addComponent(last_send_icon_1, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(last_send_arrow_1, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(last_send_receiver_1, javax.swing.GroupLayout.DEFAULT_SIZE, 115, Short.MAX_VALUE))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addComponent(last_send_icon_3, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(last_send_arrow_3, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(last_send_receiver_3, javax.swing.GroupLayout.DEFAULT_SIZE, 115, Short.MAX_VALUE))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addComponent(last_send_icon_4, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(last_send_arrow_4, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(last_send_receiver_4, javax.swing.GroupLayout.DEFAULT_SIZE, 115, Short.MAX_VALUE))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(last_send_icon_5, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(last_send_arrow_5, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(last_send_receiver_5, javax.swing.GroupLayout.DEFAULT_SIZE, 115, Short.MAX_VALUE))))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(28, 28, 28)
-                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 178, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(0, 83, Short.MAX_VALUE)
-                        .addComponent(jButton2)
-                        .addGap(18, 18, 18)
-                        .addComponent(next_button)
-                        .addGap(46, 46, 46))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 14, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(file_format_text, javax.swing.GroupLayout.DEFAULT_SIZE, 249, Short.MAX_VALUE)
-                            .addComponent(file_size_label, javax.swing.GroupLayout.DEFAULT_SIZE, 249, Short.MAX_VALUE)
-                            .addComponent(file_name_label, javax.swing.GroupLayout.DEFAULT_SIZE, 249, Short.MAX_VALUE)
-                            .addComponent(jLabel8, javax.swing.GroupLayout.DEFAULT_SIZE, 249, Short.MAX_VALUE)
-                            .addComponent(jLabel24, javax.swing.GroupLayout.DEFAULT_SIZE, 249, Short.MAX_VALUE)
-                            .addComponent(jLabel25, javax.swing.GroupLayout.DEFAULT_SIZE, 249, Short.MAX_VALUE)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(jButton5, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 207, Short.MAX_VALUE))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addComponent(jLabel9, javax.swing.GroupLayout.DEFAULT_SIZE, 233, Short.MAX_VALUE)
-                                .addGap(16, 16, 16)))))
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 15, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(106, 106, 106)
-                                .addComponent(jButton4))
-                            .addGroup(layout.createSequentialGroup()
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addComponent(last_receive_sender_2, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(last_receive_arrow_2, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(18, 18, 18)
-                                        .addComponent(last_receive_icon_2, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addComponent(last_receive_sender_1, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(last_receive_arrow_1, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(18, 18, 18)
-                                        .addComponent(last_receive_icon_1, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addComponent(last_receive_sender_3, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(last_receive_arrow_3, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(18, 18, 18)
-                                        .addComponent(last_receive_icon_3, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addComponent(last_receive_sender_4, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(last_receive_arrow_4, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(18, 18, 18)
-                                        .addComponent(last_receive_icon_4, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addComponent(last_receive_sender_5, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(last_receive_arrow_5, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(18, 18, 18)
-                                        .addComponent(last_receive_icon_5, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))))))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(64, 64, 64)
-                        .addComponent(jLabel11, javax.swing.GroupLayout.PREFERRED_SIZE, 132, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(36, 36, 36))
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(71, 71, 71)
-                        .addComponent(jButton5)
-                        .addGap(13, 13, 13)
-                        .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(file_name_label)
-                        .addGap(37, 37, 37)
-                        .addComponent(jLabel24, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(file_size_label)
-                        .addGap(28, 28, 28)
-                        .addComponent(jLabel25, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(file_format_text, javax.swing.GroupLayout.DEFAULT_SIZE, 20, Short.MAX_VALUE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jButton2)
-                            .addComponent(next_button))
-                        .addGap(37, 37, 37))
-                    .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(jLabel9)
-                                    .addComponent(jLabel11))
-                                .addGap(10, 10, 10)
-                                .addComponent(jSeparator2, javax.swing.GroupLayout.DEFAULT_SIZE, 396, Short.MAX_VALUE))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel1)
-                                .addGap(33, 33, 33)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(last_send_icon_1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addGap(12, 12, 12)
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                            .addComponent(last_send_receiver_1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                            .addComponent(last_send_arrow_1, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 8, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                                .addGap(18, 18, 18)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(last_send_icon_2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addGap(12, 12, 12)
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                            .addComponent(last_send_receiver_2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                            .addComponent(last_send_arrow_2, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 8, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                                .addGap(18, 18, 18)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(last_send_icon_3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addGap(12, 12, 12)
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                            .addComponent(last_send_receiver_3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                            .addComponent(last_send_arrow_3, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 8, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                                .addGap(18, 18, 18)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(last_send_icon_4, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addGap(12, 12, 12)
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                            .addComponent(last_send_receiver_4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                            .addComponent(last_send_arrow_4, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 8, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                                .addGap(18, 18, 18)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(last_send_icon_5, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addGap(12, 12, 12)
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                            .addComponent(last_send_receiver_5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                            .addComponent(last_send_arrow_5, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 8, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 15, Short.MAX_VALUE)
-                                .addComponent(jButton1)
-                                .addGap(13, 13, 13))
-                            .addComponent(jSeparator1, javax.swing.GroupLayout.DEFAULT_SIZE, 431, Short.MAX_VALUE))))
-                .addContainerGap())
-            .addGroup(layout.createSequentialGroup()
-                .addGap(58, 58, 58)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(26, 26, 26)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(last_receive_sender_1, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(last_receive_arrow_1, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(16, 16, 16)
-                        .addComponent(last_receive_icon_1, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(10, 10, 10)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(last_receive_sender_2, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(last_receive_arrow_2, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addComponent(last_receive_icon_2, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(10, 10, 10)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(last_receive_sender_3, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(last_receive_arrow_3, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addComponent(last_receive_icon_3, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(10, 10, 10)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(last_receive_sender_4, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(last_receive_arrow_4, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addComponent(last_receive_icon_4, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(10, 10, 10)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(last_receive_sender_5, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(last_receive_arrow_5, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addComponent(last_receive_icon_5, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jButton4)
-                .addGap(49, 49, 49))
-        );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -992,6 +815,7 @@ private void jMenuItem5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FI
     private javax.swing.JLabel last_send_receiver_3;
     private javax.swing.JLabel last_send_receiver_4;
     private javax.swing.JLabel last_send_receiver_5;
+    private javax.swing.JLabel main_label;
     private javax.swing.JButton next_button;
     // End of variables declaration//GEN-END:variables
 }

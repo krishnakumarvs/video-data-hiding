@@ -9,6 +9,7 @@ import EncryptionAlgorithms.DesEncrypter;
 import EncryptionAlgorithms.RSAEncryptor;
 import EncryptionAlgorithms.TrippleDes;
 import General.Configuration;
+import General.Nimbus;
 import Security.Encryption;
 import Security.VedioByLoader;
 import java.awt.Desktop;
@@ -49,6 +50,7 @@ public class Decrypt extends javax.swing.JFrame {
     }
 
     public Decrypt(File fileToBeDecrypted, int encryption_file_type, String password, int encryption_algorithm_id) {
+        Nimbus.loadLoogAndFeel();
         initComponents();
         this.setLocationRelativeTo(null);
         this.fileToBeDecrypted = fileToBeDecrypted;
@@ -330,7 +332,13 @@ private void start_buttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-
 
 private void open_decypt_file_buttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_open_decypt_file_buttonActionPerformed
     try {
-        Desktop.getDesktop().open(new File(temporaryFilePath));
+        System.out.println("ReceiveHistory.encryption_algorithm_id " + ReceiveHistory.encryption_algorithm_id);
+        System.out.println("encryption_algorithm_id " + encryption_algorithm_id);
+        if(ReceiveHistory.encryption_algorithm_id.trim().equals(encryption_algorithm_id+"".trim())) {
+            Desktop.getDesktop().open(new File(temporaryFilePath));   
+        } else {
+            JOptionPane.showMessageDialog(rootPane, "Could not open the file");
+        }
     } catch (IOException ex) {
         ex.printStackTrace();
     }

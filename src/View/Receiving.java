@@ -5,6 +5,8 @@
  */
 package View;
 
+import General.Configuration;
+import General.Nimbus;
 import db.Dbcon;
 import java.io.File;
 import java.sql.ResultSet;
@@ -28,16 +30,19 @@ public class Receiving extends javax.swing.JFrame {
      * Creates new form Receiving
      */
     public Receiving() {
+        Nimbus.loadLoogAndFeel();
         initComponents();
         this.setLocationRelativeTo(null);
     }
 
     public Receiving(File fileToBeDecrypted, int encryption_file_type) {
+        Nimbus.loadLoogAndFeel();
         initComponents();
         this.setLocationRelativeTo(null);
         this.fileToBeDecrypted = fileToBeDecrypted;
         this.encryption_file_type = encryption_file_type;
         loadFileDetails();
+        Configuration.setIconOnLabel("binary.jpg", main_label);
     }
 
     private void loadFileDetails() {
@@ -76,22 +81,35 @@ public class Receiving extends javax.swing.JFrame {
         file_size_label = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
         file_extension_label = new javax.swing.JLabel();
+        main_label = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
+        jLabel1.setForeground(new java.awt.Color(255, 255, 255));
         jLabel1.setText("Select Algorithm");
+        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(32, 157, 163, -1));
 
         buttonGroup1.add(des_button);
+        des_button.setForeground(new java.awt.Color(255, 255, 255));
         des_button.setSelected(true);
         des_button.setText("DES");
+        getContentPane().add(des_button, new org.netbeans.lib.awtextra.AbsoluteConstraints(81, 189, -1, -1));
 
         buttonGroup1.add(tripple_des_button);
+        tripple_des_button.setForeground(new java.awt.Color(255, 255, 255));
         tripple_des_button.setText("TDES");
+        getContentPane().add(tripple_des_button, new org.netbeans.lib.awtextra.AbsoluteConstraints(144, 189, -1, -1));
 
         buttonGroup1.add(rsa_button);
+        rsa_button.setForeground(new java.awt.Color(255, 255, 255));
         rsa_button.setText("RSA");
+        getContentPane().add(rsa_button, new org.netbeans.lib.awtextra.AbsoluteConstraints(213, 189, -1, -1));
 
+        jLabel2.setForeground(new java.awt.Color(255, 255, 255));
         jLabel2.setText("Password");
+        getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(29, 250, 109, -1));
+        getContentPane().add(password_text, new org.netbeans.lib.awtextra.AbsoluteConstraints(169, 250, 130, -1));
 
         jButton1.setText("OK");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
@@ -99,6 +117,7 @@ public class Receiving extends javax.swing.JFrame {
                 jButton1ActionPerformed(evt);
             }
         });
+        getContentPane().add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(167, 307, 69, -1));
 
         jButton2.setText("BACK");
         jButton2.addActionListener(new java.awt.event.ActionListener() {
@@ -106,101 +125,35 @@ public class Receiving extends javax.swing.JFrame {
                 jButton2ActionPerformed(evt);
             }
         });
+        getContentPane().add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(242, 307, -1, -1));
 
+        jLabel3.setForeground(new java.awt.Color(255, 255, 255));
         jLabel3.setText("File to be decrypted");
+        getContentPane().add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(19, 23, 145, -1));
+        getContentPane().add(jSeparator1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 115, 481, 10));
 
+        file_name_label.setForeground(new java.awt.Color(255, 255, 255));
         file_name_label.setText("File name");
+        getContentPane().add(file_name_label, new org.netbeans.lib.awtextra.AbsoluteConstraints(192, 19, 279, 22));
 
+        jLabel5.setForeground(new java.awt.Color(255, 255, 255));
         jLabel5.setText("File size");
+        getContentPane().add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(19, 51, 145, -1));
 
+        file_size_label.setForeground(new java.awt.Color(255, 255, 255));
         file_size_label.setText("0 Kb");
+        getContentPane().add(file_size_label, new org.netbeans.lib.awtextra.AbsoluteConstraints(192, 47, 279, 22));
 
+        jLabel7.setForeground(new java.awt.Color(255, 255, 255));
         jLabel7.setText("File extension");
+        getContentPane().add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(19, 79, 145, -1));
 
+        file_extension_label.setForeground(new java.awt.Color(255, 255, 255));
         file_extension_label.setText("mp4");
+        getContentPane().add(file_extension_label, new org.netbeans.lib.awtextra.AbsoluteConstraints(192, 75, 279, 22));
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(19, 19, 19)
-                        .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(28, 28, 28)
-                        .addComponent(file_name_label, javax.swing.GroupLayout.DEFAULT_SIZE, 279, Short.MAX_VALUE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(29, 29, 29)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(31, 31, 31)
-                                .addComponent(password_text, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(3, 3, 3)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 163, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addComponent(des_button)
-                                        .addGap(18, 18, 18)
-                                        .addComponent(tripple_des_button)))
-                                .addGap(18, 18, 18)
-                                .addComponent(rsa_button))
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(138, 138, 138)
-                                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 69, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jButton2)))))
-                .addContainerGap())
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(19, 19, 19)
-                .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(28, 28, 28)
-                .addComponent(file_size_label, javax.swing.GroupLayout.DEFAULT_SIZE, 279, Short.MAX_VALUE)
-                .addContainerGap())
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(19, 19, 19)
-                .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(28, 28, 28)
-                .addComponent(file_extension_label, javax.swing.GroupLayout.DEFAULT_SIZE, 279, Short.MAX_VALUE)
-                .addContainerGap())
-            .addComponent(jSeparator1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 481, Short.MAX_VALUE)
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(19, 19, 19)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel3)
-                    .addComponent(file_name_label, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel5)
-                    .addComponent(file_size_label, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel7)
-                    .addComponent(file_extension_label, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 32, Short.MAX_VALUE)
-                .addComponent(jLabel1)
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(des_button)
-                    .addComponent(tripple_des_button)
-                    .addComponent(rsa_button))
-                .addGap(38, 38, 38)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel2)
-                    .addComponent(password_text, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(37, 37, 37)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton1)
-                    .addComponent(jButton2))
-                .addGap(23, 23, 23))
-        );
+        main_label.setText("jLabel4");
+        getContentPane().add(main_label, new org.netbeans.lib.awtextra.AbsoluteConstraints(-6, -6, 490, 360));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -285,6 +238,7 @@ public class Receiving extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JSeparator jSeparator1;
+    private javax.swing.JLabel main_label;
     private javax.swing.JPasswordField password_text;
     private javax.swing.JRadioButton rsa_button;
     private javax.swing.JRadioButton tripple_des_button;

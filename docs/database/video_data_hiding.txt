@@ -2,7 +2,8 @@
 SQLyog Community v11.24 (32 bit)
 MySQL - 5.5.8 : Database - video_data_hiding
 *********************************************************************
-*/
+*/
+
 /*!40101 SET NAMES utf8 */;
 
 /*!40101 SET SQL_MODE=''*/;
@@ -47,11 +48,12 @@ CREATE TABLE `tbl_file_process_history` (
   `encrption_start_time` varchar(100) DEFAULT NULL,
   `encryption_complete_time` varchar(100) DEFAULT NULL,
   `encrption_duration` int(11) DEFAULT NULL,
-  `file_processed_date` date DEFAULT NULL,
+  `file_processed_date` varchar(100) DEFAULT NULL,
   `encryption_file_type` int(11) DEFAULT NULL COMMENT '0 - text , 1 - file',
   PRIMARY KEY (`history_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=47 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+/*Data for the table `tbl_file_process_history` */
 
 /*Table structure for table `tbl_transactions` */
 
@@ -66,8 +68,11 @@ CREATE TABLE `tbl_transactions` (
   `transaction_date` varchar(100) DEFAULT NULL,
   `history_id` int(11) DEFAULT NULL,
   PRIMARY KEY (`transaction_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=20 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+/*Data for the table `tbl_transactions` */
+
+/*Table structure for table `tbl_user_details` */
 
 DROP TABLE IF EXISTS `tbl_user_details`;
 
@@ -80,10 +85,9 @@ CREATE TABLE `tbl_user_details` (
   `created_at` varchar(100) DEFAULT NULL,
   `last_updated_at` varchar(100) DEFAULT NULL,
   PRIMARY KEY (`user_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 /*Data for the table `tbl_user_details` */
-
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
 /*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;

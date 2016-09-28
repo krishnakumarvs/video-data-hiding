@@ -47,6 +47,7 @@ public class Decrypt extends javax.swing.JFrame {
     public Decrypt() {
         initComponents();
         this.setLocationRelativeTo(null);
+        Configuration.setIconOnLabel("encrypt.jpg", jLabel2);
     }
 
     public Decrypt(File fileToBeDecrypted, int encryption_file_type, String password, int encryption_algorithm_id) {
@@ -58,6 +59,7 @@ public class Decrypt extends javax.swing.JFrame {
         this.password = password;
         this.encryption_algorithm_id = encryption_algorithm_id;
         open_decypt_file_button.setEnabled(false);
+        Configuration.setIconOnLabel("encrypt.jpg", jLabel2);
 
     }
 
@@ -79,6 +81,7 @@ public class Decrypt extends javax.swing.JFrame {
         jButton1 = new javax.swing.JButton();
         start_button = new javax.swing.JButton();
         open_decypt_file_button = new javax.swing.JButton();
+        jLabel2 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         addWindowListener(new java.awt.event.WindowAdapter() {
@@ -86,15 +89,21 @@ public class Decrypt extends javax.swing.JFrame {
                 formWindowOpened(evt);
             }
         });
+        getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel1.setText("Decrypting Status");
+        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(36, 71, 110, -1));
+        getContentPane().add(progress_bar, new org.netbeans.lib.awtextra.AbsoluteConstraints(152, 63, 225, 22));
 
         processing_label.setText("Process not started");
+        getContentPane().add(processing_label, new org.netbeans.lib.awtextra.AbsoluteConstraints(152, 91, 225, -1));
 
         message_area.setEditable(false);
-        message_area.setColumns(20);
+        message_area.setColumns(1);
         message_area.setRows(5);
         jScrollPane1.setViewportView(message_area);
+
+        getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 120, 150, 142));
 
         jButton1.setText("HOME");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
@@ -102,6 +111,7 @@ public class Decrypt extends javax.swing.JFrame {
                 jButton1ActionPerformed(evt);
             }
         });
+        getContentPane().add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 230, -1, -1));
 
         start_button.setText("START");
         start_button.addActionListener(new java.awt.event.ActionListener() {
@@ -109,6 +119,7 @@ public class Decrypt extends javax.swing.JFrame {
                 start_buttonActionPerformed(evt);
             }
         });
+        getContentPane().add(start_button, new org.netbeans.lib.awtextra.AbsoluteConstraints(152, 11, -1, 41));
 
         open_decypt_file_button.setText("Open decrpted file");
         open_decypt_file_button.addActionListener(new java.awt.event.ActionListener() {
@@ -116,55 +127,10 @@ public class Decrypt extends javax.swing.JFrame {
                 open_decypt_file_buttonActionPerformed(evt);
             }
         });
+        getContentPane().add(open_decypt_file_button, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 140, 170, -1));
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(36, 36, 36)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jButton1))
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(46, 46, 46)
-                                .addComponent(open_decypt_file_button))))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(start_button)
-                            .addComponent(progress_bar, javax.swing.GroupLayout.PREFERRED_SIZE, 225, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(processing_label, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
-                .addContainerGap(23, Short.MAX_VALUE))
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(start_button, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(progress_bar, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(71, 71, 71)
-                        .addComponent(jLabel1)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(processing_label)
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(open_decypt_file_button)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jButton1))
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(33, Short.MAX_VALUE))
-        );
+        jLabel2.setText("jLabel2");
+        getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(-6, -6, 410, 310));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -195,6 +161,7 @@ public class Decrypt extends javax.swing.JFrame {
                 if (isSuccess) {
                     processing_label.setText("Data retreival completed!");
                     JOptionPane.showMessageDialog(rootPane, "Sucessfully retreved data!");
+                    
                     message_area.setText(decryptedData);
                     if (encryption_file_type == 1) {
                         open_decypt_file_button.setEnabled(true);
@@ -210,9 +177,12 @@ public class Decrypt extends javax.swing.JFrame {
     }
 
     private String decryptMessage(String message) {
+       
+        open_decypt_file_button.setVisible(false);
         String plainText = "";
         System.out.println("Message received as : " + message);
         System.out.println("encryption_algorithm_id" + encryption_algorithm_id);
+         
         switch (encryption_algorithm_id) {
             case 1:
                 //des
@@ -224,6 +194,7 @@ public class Decrypt extends javax.swing.JFrame {
                     SecretKey key = factory.generateSecret(new DESKeySpec(keyBytes));
                     DesEncrypter encrypter = new DesEncrypter(key);
                     plainText = encrypter.decrypt(message);
+                    
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -260,6 +231,8 @@ public class Decrypt extends javax.swing.JFrame {
 
         public void run() {
             try {
+                 open_decypt_file_button.setVisible(true);
+                message_area.setVisible(false);
                 System.out.println("Starting decrption thread " + encryption_file_type);
                 switch (encryption_file_type) {
                     case 0:
@@ -285,7 +258,7 @@ public class Decrypt extends javax.swing.JFrame {
                                 //e.printStackTrace();
                             }
                             isCompleted = true;
-                          
+
                         }
 
                         break;
@@ -319,13 +292,13 @@ public class Decrypt extends javax.swing.JFrame {
                         // do nothing
                         break;
                 }
-                  
-                  message_area.setVisible(true);
+
+                message_area.setVisible(true);
                 //VedioByLoader.retrieveFile(null, null, null, null);
             } catch (Exception ex) {
                 ex.printStackTrace();
             }
-          
+
         }
     }
 
@@ -342,8 +315,8 @@ private void open_decypt_file_buttonActionPerformed(java.awt.event.ActionEvent e
     try {
         System.out.println("ReceiveHistory.encryption_algorithm_id " + ReceiveHistory.encryption_algorithm_id);
         System.out.println("encryption_algorithm_id " + encryption_algorithm_id);
-        if(ReceiveHistory.encryption_algorithm_id.trim().equals(encryption_algorithm_id+"".trim())) {
-            Desktop.getDesktop().open(new File(temporaryFilePath));   
+        if (ReceiveHistory.encryption_algorithm_id.trim().equals(encryption_algorithm_id + "".trim())) {
+            Desktop.getDesktop().open(new File(temporaryFilePath));
         } else {
             JOptionPane.showMessageDialog(rootPane, "Could not open the file");
         }
@@ -355,6 +328,7 @@ private void open_decypt_file_buttonActionPerformed(java.awt.event.ActionEvent e
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
         // TODO add your handling code here:
         message_area.setVisible(false);
+         open_decypt_file_button.setVisible(false);
     }//GEN-LAST:event_formWindowOpened
 
     /**
@@ -395,6 +369,7 @@ private void open_decypt_file_buttonActionPerformed(java.awt.event.ActionEvent e
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JTextArea message_area;

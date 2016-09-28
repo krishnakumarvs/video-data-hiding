@@ -117,6 +117,7 @@ public class ReceiveHistory extends javax.swing.JFrame {
         jLabel6 = new javax.swing.JLabel();
         hidden_data_text = new javax.swing.JRadioButton();
         hidden_data_file = new javax.swing.JRadioButton();
+        jButton1 = new javax.swing.JButton();
         main_label = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -177,22 +178,23 @@ public class ReceiveHistory extends javax.swing.JFrame {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 history_tableMouseClicked(evt);
             }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                history_tableMouseEntered(evt);
+            }
         });
         jScrollPane1.setViewportView(history_table);
-        if (history_table.getColumnModel().getColumnCount() > 0) {
-            history_table.getColumnModel().getColumn(4).setMinWidth(0);
-            history_table.getColumnModel().getColumn(4).setPreferredWidth(0);
-            history_table.getColumnModel().getColumn(4).setMaxWidth(0);
-            history_table.getColumnModel().getColumn(5).setMinWidth(0);
-            history_table.getColumnModel().getColumn(5).setPreferredWidth(0);
-            history_table.getColumnModel().getColumn(5).setMaxWidth(0);
-            history_table.getColumnModel().getColumn(6).setMinWidth(0);
-            history_table.getColumnModel().getColumn(6).setPreferredWidth(0);
-            history_table.getColumnModel().getColumn(6).setMaxWidth(0);
-            history_table.getColumnModel().getColumn(7).setMinWidth(0);
-            history_table.getColumnModel().getColumn(7).setPreferredWidth(0);
-            history_table.getColumnModel().getColumn(7).setMaxWidth(0);
-        }
+        history_table.getColumnModel().getColumn(4).setMinWidth(0);
+        history_table.getColumnModel().getColumn(4).setPreferredWidth(0);
+        history_table.getColumnModel().getColumn(4).setMaxWidth(0);
+        history_table.getColumnModel().getColumn(5).setMinWidth(0);
+        history_table.getColumnModel().getColumn(5).setPreferredWidth(0);
+        history_table.getColumnModel().getColumn(5).setMaxWidth(0);
+        history_table.getColumnModel().getColumn(6).setMinWidth(0);
+        history_table.getColumnModel().getColumn(6).setPreferredWidth(0);
+        history_table.getColumnModel().getColumn(6).setMaxWidth(0);
+        history_table.getColumnModel().getColumn(7).setMinWidth(0);
+        history_table.getColumnModel().getColumn(7).setPreferredWidth(0);
+        history_table.getColumnModel().getColumn(7).setMaxWidth(0);
 
         getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(27, 40, 604, 349));
         getContentPane().add(cipher_name_text, new org.netbeans.lib.awtextra.AbsoluteConstraints(762, 116, 230, -1));
@@ -236,12 +238,22 @@ public class ReceiveHistory extends javax.swing.JFrame {
         hidden_data_file.setEnabled(false);
         getContentPane().add(hidden_data_file, new org.netbeans.lib.awtextra.AbsoluteConstraints(870, 294, 58, -1));
 
+        jButton1.setText("QUICK DECRYPT");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+        getContentPane().add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 410, 140, -1));
+
         main_label.setText("jLabel1");
         getContentPane().add(main_label, new org.netbeans.lib.awtextra.AbsoluteConstraints(-6, -6, 1120, 490));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private int enc_type = 0;
+    
     private void decrypt_buttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_decrypt_buttonActionPerformed
         // TODO add your handling code here:
         this.dispose();
@@ -251,6 +263,7 @@ public class ReceiveHistory extends javax.swing.JFrame {
         } else {
             encryption_file_type = 1;
         }
+        enc_type = encryption_file_type;
         Receiving receiving = new Receiving(fileToBeDecrypted, encryption_file_type);
         receiving.setVisible(true);
     }//GEN-LAST:event_decrypt_buttonActionPerformed
@@ -310,6 +323,20 @@ private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRS
     // TODO add your handling code here:
 }//GEN-LAST:event_jButton2ActionPerformed
 
+private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+
+    
+    this.dispose();
+    Decrypt decrypt = new Decrypt(fileToBeDecrypted, enc_type, password_text.getText(), Integer.parseInt(encryption_algorithm_id.trim()));
+    decrypt.setVisible(true);
+    
+    // TODO add your handling code here:
+}//GEN-LAST:event_jButton1ActionPerformed
+
+private void history_tableMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_history_tableMouseEntered
+// TODO add your handling code here:
+}//GEN-LAST:event_history_tableMouseEntered
+
     /**
      * @param args the command line arguments
      */
@@ -354,6 +381,7 @@ private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRS
     private javax.swing.JRadioButton hidden_data_file;
     private javax.swing.JRadioButton hidden_data_text;
     private javax.swing.JTable history_table;
+    private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JLabel jLabel2;

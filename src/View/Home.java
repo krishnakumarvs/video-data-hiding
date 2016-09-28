@@ -12,6 +12,7 @@ import java.io.File;
 import java.sql.ResultSet;
 
 import javax.swing.JFileChooser;
+import javax.swing.JOptionPane;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.FilenameUtils;
@@ -640,6 +641,17 @@ public class Home extends javax.swing.JFrame {
         if (returnVal == JFileChooser.APPROVE_OPTION) {
             coverFile = chooser.getSelectedFile();
             path = chooser.getSelectedFile().getPath();
+
+            if (FilenameUtils.getExtension(path).equals("avi")
+                    || FilenameUtils.getExtension(path).equals("mov")
+                    || FilenameUtils.getExtension(path).equals("3gp")
+                    || FilenameUtils.getExtension(path).equals("mp4")
+                    || FilenameUtils.getExtension(path).equals("mpg")) {
+            } else {
+                JOptionPane.showMessageDialog(rootPane, "Please choose a video file");
+                return;
+            }
+
             jLabel10.setText(chooser.getSelectedFile().getName());
             name = chooser.getSelectedFile().getName();
             System.out.println("You chose to open this file: "
@@ -708,7 +720,7 @@ public class Home extends javax.swing.JFrame {
         jLabel10.setIcon(null);
         jLabel10.setText(null);
         Configuration.setIconOnLabel("Untitled-2.png", jLabel10);
-        
+
     }//GEN-LAST:event_jButton2ActionPerformed
 
 private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed

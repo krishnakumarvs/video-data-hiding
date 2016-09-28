@@ -241,26 +241,30 @@ public class EncryptHistory extends javax.swing.JFrame {
 
             ResultSet rs = dbcon.select("select * from tbl_file_process_history order by history_id asc");
             while (rs.next()) {
-                String algo = rs.getString(5);
-              // System.out.println(algo+" nn");
-                if (algo.equals("1")) {
-                    algo = "DES";
-                } else if (algo.equals("2")) {
-                    algo = "TDES";
-                } else {
-                    algo = "RSA";
-                }
-                String enc_date = rs.getString("file_processed_date");
-                long date2;
                 try {
-                    date2 = Long.parseLong(enc_date);   
-                } catch (Exception e) {
-                    date2 = System.currentTimeMillis();
-                }
-                Date date3 = new Date(date2);
-                String date = date3.toString();
+                    String algo = rs.getString(5);
+                    // System.out.println(algo+" nn");
+                    if (algo.equals("1")) {
+                        algo = "DES";
+                    } else if (algo.equals("2")) {
+                        algo = "TDES";
+                    } else {
+                        algo = "RSA";
+                    }
+                    String enc_date = rs.getString("file_processed_date");
+                    long date2;
+                    try {
+                        date2 = Long.parseLong(enc_date);
+                    } catch (Exception e) {
+                        date2 = System.currentTimeMillis();
+                    }
+                    Date date3 = new Date(date2);
+                    String date = date3.toString();
 
-                dt.addRow(new String[]{rs.getString(1), rs.getString(8), algo, date});
+                    dt.addRow(new String[]{rs.getString(1), rs.getString(8), algo, date});   
+                } catch (Exception e) {
+                    System.out.println("ignore incomplete file");
+                }
             }
             jTable1.setModel(dt);
 

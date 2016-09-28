@@ -278,7 +278,6 @@ public class Sending extends javax.swing.JFrame {
     class MailSenderThread extends Thread {
 
         String[] recepients = new String[1];
-      
 
         public MailSenderThread(String recepients) {
             this.recepients[0] = recepients;
@@ -286,21 +285,36 @@ public class Sending extends javax.swing.JFrame {
         }
 
         public void start() {
-            Dbcon dbcon=new Dbcon();
-            String password="";
-            ResultSet rs=dbcon.select("select password from tbl_file_process_history where history_id='"+history_id+"'");
+            Dbcon dbcon = new Dbcon();
+            String password = "";
+            String algorithmId = "";
+            String cover_file_name = "";
+            ResultSet rs = dbcon.select("select password, encryption_algorithm_id , cover_file_name from tbl_file_process_history where history_id='" + history_id + "'");
             try {
-                if(rs.next()){
-                    password=rs.getString(1);
+                if (rs.next()) {
+                    password = rs.getString(1);
+                    algorithmId = rs.getString(2);
+                    cover_file_name = rs.getString(3);
+                    algorithmId  = algorithmId.trim();
+                    
+                    if(algorithmId.equals("1")) {
+                        algorithmId = "DES";
+                    } else if(algorithmId.equals("2")) {
+                        algorithmId = "TDES";
+                    } else {
+                        algorithmId = "RSA";
+                    }
                     System.out.println(password);
                 }
             } catch (SQLException ex) {
-              ex.printStackTrace();
+                ex.printStackTrace();
             }
             System.out.println("Starting mail sending");
-            System.out.println(password);
-            MailSender.sendFromGMail(recepients, Configuration.sendImageSubject + " " + System.currentTimeMillis(), "Data from particular user", outputCipherFile.getPath(),password);
+            System.out.println(password + " algo id = " + algorithmId);
             
+            MailSender.sendFromGMail(recepients, Configuration.sendImageSubject + " " + System.currentTimeMillis(), "Hi, File named " + cover_file_name + " is encrypted using " + algorithmId + " with password " + password );
+            //MailSender.sendFromGMail(recepients, Configuration.sendImageSubject + " " + System.currentTimeMillis(), "Data from particular user", outputCipherFile.getPath(), password);
+
             System.out.println("Send sucess");
             JOptionPane.showMessageDialog(null, "success");
         }
@@ -314,9 +328,9 @@ public class Sending extends javax.swing.JFrame {
             boolean isSelected = (boolean) dtm.getValueAt(i, 4);
             if (isSelected) {
                 System.out.println(dtm.getValueAt(i, 1) + " is selected");
-               int userId = Integer.parseInt(dtm.getValueAt(i, 5).toString());
-              
-                
+                int userId = Integer.parseInt(dtm.getValueAt(i, 5).toString());
+
+
                 ResultSet rs = dbcon.select("select * from tbl_user_details where user_id='" + userId + "'");
                 try {
                     if (rs.next()) {

@@ -48,11 +48,15 @@ public class Decrypt extends javax.swing.JFrame {
         initComponents();
         this.setLocationRelativeTo(null);
         Configuration.setIconOnLabel("encrypt.jpg", jLabel2);
+        hideInitialValues();
     }
 
     public Decrypt(File fileToBeDecrypted, int encryption_file_type, String password, int encryption_algorithm_id) {
         Nimbus.loadLoogAndFeel();
         initComponents();
+        System.out.println("Encryption id " + encryption_algorithm_id);
+        System.out.println("encryption_file_type " + encryption_file_type);
+        System.out.println("password " + password);
         this.setLocationRelativeTo(null);
         this.fileToBeDecrypted = fileToBeDecrypted;
         this.encryption_file_type = encryption_file_type;
@@ -60,7 +64,14 @@ public class Decrypt extends javax.swing.JFrame {
         this.encryption_algorithm_id = encryption_algorithm_id;
         open_decypt_file_button.setEnabled(false);
         Configuration.setIconOnLabel("encrypt.jpg", jLabel2);
+        hideInitialValues();
 
+    }
+
+    private void hideInitialValues() {
+        message_area.setVisible(false);
+        open_decypt_file_button.setVisible(false);
+        jScrollPane1.setVisible(false);
     }
 
     /**
@@ -161,10 +172,14 @@ public class Decrypt extends javax.swing.JFrame {
                 if (isSuccess) {
                     processing_label.setText("Data retreival completed!");
                     JOptionPane.showMessageDialog(rootPane, "Sucessfully retreved data!");
-                    
-                    message_area.setText(decryptedData);
+
+
                     if (encryption_file_type == 1) {
                         open_decypt_file_button.setEnabled(true);
+                    } else {
+                        message_area.setText(decryptedData);
+                        jScrollPane1.setVisible(true);
+                        message_area.setVisible(true);
                     }
                 } else {
                     JOptionPane.showMessageDialog(rootPane, errorMesage);
@@ -177,12 +192,12 @@ public class Decrypt extends javax.swing.JFrame {
     }
 
     private String decryptMessage(String message) {
-       
+
         open_decypt_file_button.setVisible(false);
         String plainText = "";
         System.out.println("Message received as : " + message);
         System.out.println("encryption_algorithm_id" + encryption_algorithm_id);
-         
+
         switch (encryption_algorithm_id) {
             case 1:
                 //des
@@ -194,7 +209,7 @@ public class Decrypt extends javax.swing.JFrame {
                     SecretKey key = factory.generateSecret(new DESKeySpec(keyBytes));
                     DesEncrypter encrypter = new DesEncrypter(key);
                     plainText = encrypter.decrypt(message);
-                    
+
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -231,7 +246,7 @@ public class Decrypt extends javax.swing.JFrame {
 
         public void run() {
             try {
-                 open_decypt_file_button.setVisible(true);
+                open_decypt_file_button.setVisible(true);
                 message_area.setVisible(false);
                 System.out.println("Starting decrption thread " + encryption_file_type);
                 switch (encryption_file_type) {
@@ -327,8 +342,6 @@ private void open_decypt_file_buttonActionPerformed(java.awt.event.ActionEvent e
 
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
         // TODO add your handling code here:
-        message_area.setVisible(false);
-         open_decypt_file_button.setVisible(false);
     }//GEN-LAST:event_formWindowOpened
 
     /**

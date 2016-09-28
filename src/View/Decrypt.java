@@ -81,13 +81,18 @@ public class Decrypt extends javax.swing.JFrame {
         open_decypt_file_button = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowOpened(java.awt.event.WindowEvent evt) {
+                formWindowOpened(evt);
+            }
+        });
 
         jLabel1.setText("Decrypting Status");
 
         processing_label.setText("Process not started");
 
-        message_area.setColumns(20);
         message_area.setEditable(false);
+        message_area.setColumns(20);
         message_area.setRows(5);
         jScrollPane1.setViewportView(message_area);
 
@@ -280,6 +285,7 @@ public class Decrypt extends javax.swing.JFrame {
                                 //e.printStackTrace();
                             }
                             isCompleted = true;
+                          
                         }
 
                         break;
@@ -313,11 +319,13 @@ public class Decrypt extends javax.swing.JFrame {
                         // do nothing
                         break;
                 }
-
+                  
+                  message_area.setVisible(true);
                 //VedioByLoader.retrieveFile(null, null, null, null);
             } catch (Exception ex) {
                 ex.printStackTrace();
             }
+          
         }
     }
 
@@ -343,6 +351,11 @@ private void open_decypt_file_buttonActionPerformed(java.awt.event.ActionEvent e
         ex.printStackTrace();
     }
 }//GEN-LAST:event_open_decypt_file_buttonActionPerformed
+
+    private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
+        // TODO add your handling code here:
+        message_area.setVisible(false);
+    }//GEN-LAST:event_formWindowOpened
 
     /**
      * @param args the command line arguments

@@ -73,6 +73,20 @@ public class ReceiveHistory extends javax.swing.JFrame {
 
     private void loadIcons() {
         Configuration.setIconOnLabel("Untitled-2.png", file_format);
+        
+        jLabel2.setVisible(false);
+        jLabel3.setVisible(false);
+        jLabel4.setVisible(false);
+        jLabel5.setVisible(false);
+        jLabel6.setVisible(false);
+        cipher_name_text.setVisible(false);
+        size_text.setVisible(false);
+        password_text.setVisible(false);
+        algorithm_text.setVisible(false);
+        hidden_data_file.setVisible(false);
+        hidden_data_text.setVisible(false);
+        show_pass_text.setVisible(false);
+        jButton2.setVisible(false);
     }
 
     /**
@@ -134,7 +148,7 @@ public class ReceiveHistory extends javax.swing.JFrame {
                 decrypt_buttonActionPerformed(evt);
             }
         });
-        getContentPane().add(decrypt_button, new org.netbeans.lib.awtextra.AbsoluteConstraints(622, 409, -1, -1));
+        getContentPane().add(decrypt_button, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 410, -1, -1));
 
         history_table.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -165,18 +179,20 @@ public class ReceiveHistory extends javax.swing.JFrame {
             }
         });
         jScrollPane1.setViewportView(history_table);
-        history_table.getColumnModel().getColumn(4).setMinWidth(0);
-        history_table.getColumnModel().getColumn(4).setPreferredWidth(0);
-        history_table.getColumnModel().getColumn(4).setMaxWidth(0);
-        history_table.getColumnModel().getColumn(5).setMinWidth(0);
-        history_table.getColumnModel().getColumn(5).setPreferredWidth(0);
-        history_table.getColumnModel().getColumn(5).setMaxWidth(0);
-        history_table.getColumnModel().getColumn(6).setMinWidth(0);
-        history_table.getColumnModel().getColumn(6).setPreferredWidth(0);
-        history_table.getColumnModel().getColumn(6).setMaxWidth(0);
-        history_table.getColumnModel().getColumn(7).setMinWidth(0);
-        history_table.getColumnModel().getColumn(7).setPreferredWidth(0);
-        history_table.getColumnModel().getColumn(7).setMaxWidth(0);
+        if (history_table.getColumnModel().getColumnCount() > 0) {
+            history_table.getColumnModel().getColumn(4).setMinWidth(0);
+            history_table.getColumnModel().getColumn(4).setPreferredWidth(0);
+            history_table.getColumnModel().getColumn(4).setMaxWidth(0);
+            history_table.getColumnModel().getColumn(5).setMinWidth(0);
+            history_table.getColumnModel().getColumn(5).setPreferredWidth(0);
+            history_table.getColumnModel().getColumn(5).setMaxWidth(0);
+            history_table.getColumnModel().getColumn(6).setMinWidth(0);
+            history_table.getColumnModel().getColumn(6).setPreferredWidth(0);
+            history_table.getColumnModel().getColumn(6).setMaxWidth(0);
+            history_table.getColumnModel().getColumn(7).setMinWidth(0);
+            history_table.getColumnModel().getColumn(7).setPreferredWidth(0);
+            history_table.getColumnModel().getColumn(7).setMaxWidth(0);
+        }
 
         getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(27, 40, 604, 349));
         getContentPane().add(cipher_name_text, new org.netbeans.lib.awtextra.AbsoluteConstraints(762, 116, 230, -1));
@@ -247,6 +263,20 @@ public class ReceiveHistory extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton3ActionPerformed
 
 private void history_tableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_history_tableMouseClicked
+     jLabel2.setVisible(true);
+        jLabel3.setVisible(true);
+        jLabel4.setVisible(true);
+        jLabel5.setVisible(true);
+        jLabel6.setVisible(true);
+        cipher_name_text.setVisible(true);
+        size_text.setVisible(true);
+        password_text.setVisible(true);
+        algorithm_text.setVisible(true);
+        hidden_data_file.setVisible(true);
+        hidden_data_text.setVisible(true);
+        show_pass_text.setVisible(true);
+        jButton2.setVisible(true);
+        
     int selectedRow = history_table.getSelectedRow();
     String cipherName = history_table.getValueAt(selectedRow, 4).toString();
     String password = history_table.getValueAt(selectedRow, 5).toString();

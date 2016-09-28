@@ -37,7 +37,7 @@ public class Home extends javax.swing.JFrame {
         loadIcons();
         loadLastSendFiles();
         loadLastReceivedFiles();
-            Configuration.setIconOnLabel("securiyuBack.jpg", main_label);
+        Configuration.setIconOnLabel("securiyuBack.jpg", main_label);
     }
 
     private void loadLastReceivedFiles() {
@@ -71,7 +71,6 @@ public class Home extends javax.swing.JFrame {
             last_receive_sender_5.setVisible(false);
             last_receive_arrow_5.setVisible(false);
             last_receive_icon_5.setVisible(false);
-
 
             if (select.next()) {
                 // last item
@@ -223,8 +222,6 @@ public class Home extends javax.swing.JFrame {
         Configuration.setIconOnLabel("Untitled-2.png", last_send_icon_4);
         Configuration.setIconOnLabel("Untitled-2.png", last_send_icon_5);
         Configuration.setIconOnLabel("Untitled-2.png", last_receive_icon_1);
-
-
 
         Configuration.setIconOnLabel("Untitled-1.png", last_send_arrow_1);
         Configuration.setIconOnLabel("Untitled-1.png", last_send_arrow_2);
@@ -648,6 +645,12 @@ public class Home extends javax.swing.JFrame {
             System.out.println("You chose to open this file: "
                     + path);
             size = (chooser.getSelectedFile().length()) / 1024;
+            jLabel8.setVisible(true);
+            file_name_label.setVisible(true);
+            file_size_label.setVisible(true);
+            jLabel24.setVisible(true);
+            file_format_text.setVisible(true);
+            jLabel25.setVisible(true);
             next_button.setEnabled(true);
             file_name_label.setText(name);
             file_size_label.setText(size + " Kb");
@@ -667,6 +670,12 @@ public class Home extends javax.swing.JFrame {
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
         // TODO add your handling code here:
         next_button.setEnabled(false);
+        jLabel8.setVisible(false);
+        file_name_label.setVisible(false);
+        file_size_label.setVisible(false);
+        jLabel24.setVisible(false);
+        file_format_text.setVisible(false);
+        jLabel25.setVisible(false);
     }//GEN-LAST:event_formWindowOpened
 
     private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
@@ -689,11 +698,17 @@ public class Home extends javax.swing.JFrame {
     }
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
-        clear();
+        jLabel8.setVisible(false);
+        file_name_label.setVisible(false);
+        file_size_label.setVisible(false);
+        jLabel24.setVisible(false);
+        file_format_text.setVisible(false);
+        jLabel25.setVisible(false);
         next_button.setEnabled(false);
         jLabel10.setIcon(null);
         jLabel10.setText(null);
         Configuration.setIconOnLabel("Untitled-2.png", jLabel10);
+        
     }//GEN-LAST:event_jButton2ActionPerformed
 
 private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed

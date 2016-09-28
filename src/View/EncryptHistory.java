@@ -140,10 +140,12 @@ public class EncryptHistory extends javax.swing.JFrame {
             }
         });
         jScrollPane1.setViewportView(jTable1);
-        jTable1.getColumnModel().getColumn(0).setResizable(false);
-        jTable1.getColumnModel().getColumn(1).setResizable(false);
-        jTable1.getColumnModel().getColumn(2).setResizable(false);
-        jTable1.getColumnModel().getColumn(3).setResizable(false);
+        if (jTable1.getColumnModel().getColumnCount() > 0) {
+            jTable1.getColumnModel().getColumn(0).setResizable(false);
+            jTable1.getColumnModel().getColumn(1).setResizable(false);
+            jTable1.getColumnModel().getColumn(2).setResizable(false);
+            jTable1.getColumnModel().getColumn(3).setResizable(false);
+        }
 
         getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(16, 79, 325, 398));
 
@@ -169,7 +171,7 @@ public class EncryptHistory extends javax.swing.JFrame {
             }
         });
         getContentPane().add(jButton4, new org.netbeans.lib.awtextra.AbsoluteConstraints(351, 342, 125, -1));
-        getContentPane().add(jTextField5, new org.netbeans.lib.awtextra.AbsoluteConstraints(588, 343, 125, -1));
+        getContentPane().add(jTextField5, new org.netbeans.lib.awtextra.AbsoluteConstraints(493, 343, 220, -1));
 
         jButton2.setText("HOME");
         jButton2.addActionListener(new java.awt.event.ActionListener() {
@@ -217,6 +219,22 @@ public class EncryptHistory extends javax.swing.JFrame {
 
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
         // TODO add your handling code here:
+        jLabel2.setVisible(false);
+        jLabel3.setVisible(false);
+        jLabel4.setVisible(false);
+        jLabel5.setVisible(false);
+        jLabel6.setVisible(false);
+        jLabel7.setVisible(false);
+        jTextField1.setVisible(false);
+        jTextField2.setVisible(false);
+        jTextField4.setVisible(false);
+        jPasswordField1.setVisible(false);
+        encypt_size_text.setVisible(false);
+        jTextField5.setVisible(false);
+        jButton4.setVisible(false);
+        jLabel8.setVisible(false);
+        hidden_data_file.setVisible(false);
+        hidden_data_text.setVisible(false);
         Dbcon dbcon = new Dbcon();
         DefaultTableModel dt = (DefaultTableModel) jTable1.getModel();
         try {
@@ -224,7 +242,7 @@ public class EncryptHistory extends javax.swing.JFrame {
             ResultSet rs = dbcon.select("select * from tbl_file_process_history order by history_id asc");
             while (rs.next()) {
                 String algo = rs.getString(5);
-                int algorithm = Integer.parseInt(algo);
+              // System.out.println(algo+" nn");
                 if (algo.equals("1")) {
                     algo = "DES";
                 } else if (algo.equals("2")) {
@@ -260,6 +278,22 @@ public class EncryptHistory extends javax.swing.JFrame {
 
     private void jTable1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MouseClicked
         // TODO add your handling code here:
+        jLabel2.setVisible(true);
+        jLabel3.setVisible(true);
+        jLabel4.setVisible(true);
+        jLabel5.setVisible(true);
+        jLabel6.setVisible(true);
+        jLabel7.setVisible(true);
+        jTextField1.setVisible(true);
+        jTextField2.setVisible(true);
+        jTextField4.setVisible(true);
+        jPasswordField1.setVisible(true);
+        encypt_size_text.setVisible(true);
+        jTextField5.setVisible(true);
+        jButton4.setVisible(true);
+        jLabel8.setVisible(true);
+        hidden_data_file.setVisible(true);
+        hidden_data_text.setVisible(true);
         String id = jTable1.getValueAt(jTable1.getSelectedRow(), 0).toString();
         Dbcon dbcon = new Dbcon();
         ResultSet rs = dbcon.select("select * from tbl_file_process_history where history_id='" + id + "'");
@@ -269,11 +303,11 @@ public class EncryptHistory extends javax.swing.JFrame {
                 jTextField1.setText(name);
                 String size = rs.getString(7);
                 jTextField2.setText(size);
-                String algo = rs.getString(6);
-                int algorithm_id = Integer.parseInt(algo);
-                if (algorithm_id == 1) {
+                String algo = rs.getString("encryption_algorithm_id");
+               System.out.println(algo);
+              if (algo.equals("1")) {
                     algo = "DES";
-                } else if (algorithm_id == 2) {
+                } else if (algo.equals("2")) {
                     algo = "TDES";
                 } else {
                     algo = "RSA";

@@ -150,6 +150,7 @@ public class InputContent extends javax.swing.JFrame {
 
         getContentPane().add(main_panel, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 11, -1, -1));
 
+        jLabel6.setForeground(new java.awt.Color(255, 255, 255));
         jLabel6.setText("Password :");
         getContentPane().add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(32, 229, 69, -1));
         getContentPane().add(jPasswordField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(111, 226, 209, -1));
@@ -203,17 +204,16 @@ public class InputContent extends javax.swing.JFrame {
             }
             Dbcon dbcon = new Dbcon();
             if (password.length() >= 8) {
-               int ins = dbcon.update("update tbl_file_process_history set password='" + password + "' , encryption_file_type = " + encryptionDataType + " where history_id='" + history_id + "'");
+                int ins = dbcon.update("update tbl_file_process_history set password='" + password + "' , encryption_file_type = " + encryptionDataType + " where history_id='" + history_id + "'");
 
                 if (ins > 0) {
                     this.dispose();
                     SelectAlgorithm selectAlgorithm = new SelectAlgorithm(history_id, coverFile, password);
                     selectAlgorithm.setVisible(true);
                 }
-                
 
-            }else{
-                    JOptionPane.showMessageDialog(main_panel, "Password characters must be greater than or equal to 8");
+            } else {
+                JOptionPane.showMessageDialog(main_panel, "Password characters must be greater than or equal to 8");
             }
         }
 
@@ -225,6 +225,11 @@ public class InputContent extends javax.swing.JFrame {
 
         int returnVal = chooser.showOpenDialog(this);
         if (returnVal == JFileChooser.APPROVE_OPTION) {
+            jLabel3.setVisible(true);
+            jLabel4.setVisible(true);
+            jLabel5.setVisible(true);
+            jTextField1.setVisible(true);
+            jTextField2.setVisible(true);
             String path = chooser.getSelectedFile().getPath();
             jTextField1.setText(chooser.getSelectedFile().getName());
             String name = chooser.getSelectedFile().getName();
@@ -236,8 +241,8 @@ public class InputContent extends javax.swing.JFrame {
                 e.printStackTrace();
             }
             long size = (chooser.getSelectedFile().length()) / 1024;
-            jTextField2.setText(size+" kb");
-            Configuration.setDefaultFileIcon(fileToBeEmbedded,jLabel2);
+            jTextField2.setText(size + " kb");
+            Configuration.setDefaultFileIcon(fileToBeEmbedded, jLabel2);
 
         }
     }//GEN-LAST:event_jButton1ActionPerformed
@@ -245,6 +250,11 @@ public class InputContent extends javax.swing.JFrame {
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
         // TODO add your handling code here:
         //jButton3.setEnabled(false);
+        jLabel3.setVisible(false);
+        jLabel4.setVisible(false);
+        jLabel5.setVisible(false);
+        jTextField1.setVisible(false);
+        jTextField2.setVisible(false);
         int index = main_panel.getSelectedIndex();
         System.out.println(index);
         if (jPanel1.isShowing()) {
@@ -256,12 +266,17 @@ public class InputContent extends javax.swing.JFrame {
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
+        jLabel3.setVisible(false);
+        jLabel4.setVisible(false);
+        jLabel5.setVisible(false);
+        jTextField1.setVisible(false);
+        jTextField2.setVisible(false);
         message_area.setText("");
         jPasswordField1.setText("");
-         Configuration.setIconOnLabel("Untitled-2.png", jLabel2);
-         jTextField1.setText("");
-         jTextField2.setText("");
-         
+        Configuration.setIconOnLabel("Untitled-2.png", jLabel2);
+        jTextField1.setText("");
+        jTextField2.setText("");
+
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed

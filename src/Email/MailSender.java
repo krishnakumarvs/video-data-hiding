@@ -94,6 +94,8 @@ public class MailSender {
 
     public static void sendFromGMail(String[] to, String subject, String body, String filePath,String password) {
         Properties props = System.getProperties();
+        System.out.println(body);
+        System.out.println(subject);
         System.out.println(password);
         String host = "smtp.gmail.com";
         props.put("mail.smtp.starttls.enable", "true");

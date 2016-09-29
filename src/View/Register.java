@@ -9,6 +9,9 @@ import General.Configuration;
 import General.Nimbus;
 import db.Dbcon;
 import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
 /**
@@ -132,32 +135,39 @@ public class Register extends javax.swing.JFrame {
         String phoneNumber = jTextField3.getText();
         String password = new String(jPasswordField1.getPassword());
         String confirmPassword = new String(jPasswordField2.getPassword());
-        Dbcon dbcon = new Dbcon();
-        ResultSet rs = dbcon.select("select * from tbl_user_details where email_id='" + email + "'");
-        try {
-            if (rs.next()) {
-                JOptionPane.showMessageDialog(rootPane, "Already existing mail id...");
-            } else {
+        if (userName.equals("")) {
 
-                if (userName.equals("")) {
+            JOptionPane.showMessageDialog(rootPane, "Enter your name");
+        } else if (email.equals("")) {
 
-                    JOptionPane.showMessageDialog(rootPane, "Enter your name");
-                } else if (email.equals("")) {
+            JOptionPane.showMessageDialog(rootPane, "Enter your email");
+        } else if (!isValidEmailAddress(email)) {
+            JOptionPane.showMessageDialog(rootPane, "Enter a valid email address");
+        } else if (phoneNumber.equals("")) {
 
-                    JOptionPane.showMessageDialog(rootPane, "Enter your email");
-                } else if (!isValidEmailAddress(email)) {
-                    JOptionPane.showMessageDialog(rootPane, "Enter a valid email address");
-                } else if (phoneNumber.equals("")) {
+            JOptionPane.showMessageDialog(rootPane, "Enter your phonenumber");
+        } else if (!isValidPhone(phoneNumber)) {
+            JOptionPane.showMessageDialog(rootPane, "Enter phone number in correct format");
+        } else if (password.equals("")) {
 
-                    JOptionPane.showMessageDialog(rootPane, "Enter your phonenumber");
-                } else if (!isValidPhone(phoneNumber)) {
-                    JOptionPane.showMessageDialog(rootPane, "Enter phone number in correct format");
-                } else if (password.equals("")) {
+            JOptionPane.showMessageDialog(rootPane, "Enter your password");
+        } else if (confirmPassword.equals("")) {
 
-                    JOptionPane.showMessageDialog(rootPane, "Enter your password");
-                } else if (confirmPassword.equals("")) {
-
-                    JOptionPane.showMessageDialog(rootPane, "Enter your confirmPassword");
+            JOptionPane.showMessageDialog(rootPane, "Enter your confirmPassword");
+        } else {
+            //usernameUnique();
+            Dbcon dbcon = new Dbcon();
+            ResultSet rs = dbcon.select("select * from tbl_user_details where email_id='"+email+"' union select * from tbl_user_details where user_name='"+userName+"'");
+            try {
+                if (rs.next()) {
+                    String mailids=rs.getString("email_id");
+                    String username=rs.getString("user_name");
+                    if(email.equals(mailids)){
+                         JOptionPane.showMessageDialog(rootPane, "Already existing mail id...");
+                    }
+                   if(userName.equals(username)){
+                       JOptionPane.showMessageDialog(rootPane, "Already existing username...");
+                   }
                 } else if (password.equals(confirmPassword)) {
 
                     int ins = dbcon.insert("insert into tbl_user_details(user_name,email_id,phone_number,password,created_at,last_updated_at)values('" + userName + "','" + email + "','" + phoneNumber + "','" + password + "','" + System.currentTimeMillis() + "','" + System.currentTimeMillis() + "')");
@@ -166,14 +176,14 @@ public class Register extends javax.swing.JFrame {
                         this.dispose();
                         Login login = new Login();
                         login.setVisible(true);
+                    } else {
+                        JOptionPane.showMessageDialog(rootPane, "invalid");
                     }
-                } else {
-                    JOptionPane.showMessageDialog(rootPane, "invalid");
                 }
-
+            } catch (Exception e) {
+                e.printStackTrace();
             }
-        } catch (Exception e) {
-            e.printStackTrace();
+
         }
 
 
@@ -192,6 +202,7 @@ public class Register extends javax.swing.JFrame {
         Login login = new Login();
         login.setVisible(true);
     }//GEN-LAST:event_jButton2ActionPerformed
+   
 
     /**
      * @param args the command line arguments
@@ -218,7 +229,7 @@ public class Register extends javax.swing.JFrame {
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
             java.util.logging.Logger.getLogger(Register.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
-        //</editor-fold>
+        //</editor-fold> 
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {

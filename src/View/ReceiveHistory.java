@@ -308,8 +308,10 @@ private void history_tableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIR
     password_text.setText(password);
     if (encrption_file_type.trim().equals("0")) {
         hidden_data_text.setSelected(true);
+        enc_type=0;
     } else {
         hidden_data_file.setSelected(true);
+        enc_type=1;
     }
 
     decrypt_button.setEnabled(true);

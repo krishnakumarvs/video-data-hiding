@@ -3,7 +3,6 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package View;
 
 import General.Configuration;
@@ -13,6 +12,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -111,7 +111,7 @@ public class Profile extends javax.swing.JFrame {
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         // TODO add your handling code here:H 
         this.dispose();
-        Home home=new Home();
+        Home home = new Home();
         home.setVisible(true);
     }//GEN-LAST:event_jButton3ActionPerformed
 
@@ -121,23 +121,23 @@ public class Profile extends javax.swing.JFrame {
         jTextField1.setEditable(false);
         jTextField2.setEditable(false);
         jTextField3.setEditable(false);
-       // jPasswordField1.setEditable(false);
-        Dbcon dbcon=new Dbcon();
-        ResultSet rs =dbcon.select("select * from tbl_user_details where user_id='"+Login.logged_in_user_id+"'");
+        // jPasswordField1.setEditable(false);
+        Dbcon dbcon = new Dbcon();
+        ResultSet rs = dbcon.select("select * from tbl_user_details where user_id='" + Login.logged_in_user_id + "'");
         try {
-            if(rs.next()){
-                String name=rs.getString(2);
+            if (rs.next()) {
+                String name = rs.getString(2);
                 jTextField1.setText(name);
-                String mail=rs.getString(3);
+                String mail = rs.getString(3);
                 jTextField2.setText(mail);
-                String phone=rs.getString(4);
+                String phone = rs.getString(4);
                 jTextField3.setText(phone);
-                String password=rs.getString(5);
+                String password = rs.getString(5);
                 //jPasswordField1.setText(password);
-                
+
             }
         } catch (Exception e) {
-           
+
         }
     }//GEN-LAST:event_formWindowOpened
 
@@ -147,20 +147,52 @@ public class Profile extends javax.swing.JFrame {
         jTextField2.setEditable(true);
         jTextField3.setEditable(true);
         jButton2.setEnabled(true);
-       // jPasswordField1.setEditable(true);
+        // jPasswordField1.setEditable(true);
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
-        String name=jTextField1.getText();
-        String mail=jTextField2.getText();
-        String phone=jTextField3.getText();
+        String name = jTextField1.getText();
+        String mail = jTextField2.getText();
+        String phone = jTextField3.getText();
+        if (name.equals("")) {
+            JOptionPane.showMessageDialog(rootPane, "Enter username");
+        } else if (mail.equals("")) {
+            JOptionPane.showMessageDialog(rootPane, "Enter mail id");
+        } else if (phone.equals("")) {
+            JOptionPane.showMessageDialog(rootPane, "Enter phone number");
+        } else if (!isValidPhone(phone)) {
+            JOptionPane.showMessageDialog(rootPane, "Enter phone number in correct format");
+        } else if (!isValidEmailAddress(mail)) {
+            JOptionPane.showMessageDialog(rootPane, "Enter a valid email address");
+        } else {
+            Dbcon dbcon = new Dbcon();
+            dbcon.update("update tbl_user_details set user_name='" + name + "',email_id='" + mail + "',phone_number='" + phone + "',last_updated_at='" + System.currentTimeMillis() + "' where user_id='" + Login.logged_in_user_id + "'");
+        }
        // String password=new String(jPasswordField1.getPassword());
-        
-        Dbcon dbcon=new Dbcon();
-        dbcon.update("update tbl_user_details set user_name='"+name+"',email_id='"+mail+"',phone_number='"+phone+"',last_updated_at='"+System.currentTimeMillis()+"' where user_id='"+Login.logged_in_user_id+"'");
-        
+
+
     }//GEN-LAST:event_jButton2ActionPerformed
+
+    private boolean isValidEmailAddress(String email) {
+        String ePattern = "^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@((\\[[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\])|(([a-zA-Z\\-0-9]+\\.)+[a-zA-Z]{2,}))$";
+        java.util.regex.Pattern p = java.util.regex.Pattern.compile(ePattern);
+        java.util.regex.Matcher m = p.matcher(email);
+        return m.matches();
+    }
+
+    private boolean isValidPhone(String phone) {
+        boolean validPhone = true;
+        try {
+            Long.parseLong(phone);
+            if (phone.length() != 10) {
+                return false;
+            }
+        } catch (NumberFormatException e) {
+            return false;
+        }
+        return validPhone;
+    }
 
     /**
      * @param args the command line arguments
